@@ -1,7 +1,8 @@
-package com.lelandcer.twodo
+package com.lelandcer.twodo.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.lelandcer.twodo.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
