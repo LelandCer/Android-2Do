@@ -1,24 +1,24 @@
-package com.lelandcer.twodo.fragments
+package com.lelandcer.twodo.features.task
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lelandcer.twodo.databinding.FragmentTwoDoListsBinding
-import com.lelandcer.twodo.fragments.placeholder.PlaceholderContent.PlaceholderItem
+import com.lelandcer.twodo.databinding.FragmentTwoDoTasksBinding
+import com.lelandcer.twodo.models.PlaceholderContent.PlaceholderItem
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class TwoDoListRecyclerViewAdapter(
+class TwoDoTaskRecyclerViewAdapter(
     private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<TwoDoListRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<TwoDoTaskRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentTwoDoListsBinding.inflate(
+            FragmentTwoDoTasksBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -35,7 +35,7 @@ class TwoDoListRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentTwoDoListsBinding) :
+    inner class ViewHolder(binding: FragmentTwoDoTasksBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
         val contentView: TextView = binding.content

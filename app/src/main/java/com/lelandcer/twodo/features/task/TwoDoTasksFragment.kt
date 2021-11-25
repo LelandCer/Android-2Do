@@ -1,20 +1,20 @@
-package com.lelandcer.twodo.fragments
+package com.lelandcer.twodo.features.task
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.lelandcer.twodo.R
-import com.lelandcer.twodo.fragments.placeholder.PlaceholderContent
+import com.lelandcer.twodo.models.PlaceholderContent
 
 /**
  * A fragment representing a list of Items.
  */
-class TwoDoListsFragment : Fragment() {
+class TwoDoTasksFragment : Fragment() {
 
     private var columnCount = 1
 
@@ -30,7 +30,7 @@ class TwoDoListsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_two_do_lists_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_two_do_tasks_list, container, false)
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -39,7 +39,7 @@ class TwoDoListsFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = TwoDoListRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                adapter = TwoDoTaskRecyclerViewAdapter(PlaceholderContent.ITEMS)
             }
         }
         return view
@@ -53,7 +53,7 @@ class TwoDoListsFragment : Fragment() {
         // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
-            TwoDoListsFragment().apply {
+            TwoDoTasksFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.fragments.placeholder
+package com.lelandcer.twodo.models
 
 import java.util.ArrayList
 import java.util.HashMap

@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.fragments
+package com.lelandcer.twodo.features.splash
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
