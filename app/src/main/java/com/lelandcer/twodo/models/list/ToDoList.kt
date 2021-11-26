@@ -1,19 +1,23 @@
 package com.lelandcer.twodo.models.list
 
 import com.lelandcer.twodo.models.id.Id
-import com.lelandcer.twodo.models.task.Task
+import com.lelandcer.twodo.models.task.ToDoTask
 import java.util.*
 
-class List(
+class ToDoList(
     var id: Id,
     var name: String,
-    var tasks: MutableCollection<Task>,
+    var toDoTasks: MutableCollection<ToDoTask>,
     var dueAt: Date,
     var createdAt: Date,
     var updatedAt: Date
 ) {
 
     override fun equals(other: Any?): Boolean =
-        other is List && id == other.id
+        other is ToDoList && id == other.id
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
 
 }

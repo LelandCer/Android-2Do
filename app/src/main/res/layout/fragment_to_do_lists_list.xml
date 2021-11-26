@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".features.list.TwoDoListsFragment"
-    tools:listitem="@layout/fragment_two_do_lists" />
+    tools:context=".features.list.ToDoListsFragment"
+    tools:listitem="@layout/fragment_to_do_lists" />
