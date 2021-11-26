@@ -21,12 +21,12 @@ Task
 Development Tasks:
 Sprint 1
 [x] Create this list
-[] Create new Android Project
-[] Add initial dependencies
-[] Create basic fragments and nav map
-[] Create splash screen
-[] Create Models
-[] Create Repository interfaces, static data for initial dev, setup DI dependency
+[x] Create new Android Project
+[x] Add initial dependencies
+[x] Create basic fragments and nav map
+[x] Create splash screen
+[x] Create Models
+[x] Create Repository interfaces, static data for initial dev, setup DI dependency
 
 Sprint 2
 [] Create ViewModel, create prototype views, connect repositories to viewmodel to views
