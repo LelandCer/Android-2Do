@@ -8,13 +8,14 @@ List
 	- Id
 	- Name
 	- Tasks
-Task
-	- Id
-	- name
 	- dueAt
-	- isCompleted
 	- createdAt
 	- updatedAt
+
+Task
+	- Id
+	- Name
+	- isCompleted
 	- completedAt
 
 
