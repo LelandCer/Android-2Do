@@ -13,5 +13,7 @@ class List(
     var updatedAt: Date
 ) {
 
+    override fun equals(other: Any?): Boolean =
+        other is List && id == other.id
 
 }
