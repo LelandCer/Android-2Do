@@ -5,6 +5,7 @@ import java.util.*
 
 class Task(
     var id: Id,
+    var listId: Id,
     var name: String,
     var isCompleted: Boolean = false,
     var completedAt: Date? = null
