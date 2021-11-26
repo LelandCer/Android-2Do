@@ -17,9 +17,7 @@ class PlaceholderTaskRepository : TaskRepository {
     }
 
     override fun create(list: List, name: String): Task {
-        val task = Task(idFactory.makeId(), name)
-        store(list, task)
-        return task
+        return Task(idFactory.makeId(), name)
     }
 
     override fun delete(task: Task) {

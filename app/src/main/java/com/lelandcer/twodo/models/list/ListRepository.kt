@@ -19,7 +19,7 @@ interface ListRepository {
     fun getById(id: Id): List?
 
     /**
-     * Create and store a new List
+     * Create a new List
      */
     fun create(name: String, dueAt: Date): List
 

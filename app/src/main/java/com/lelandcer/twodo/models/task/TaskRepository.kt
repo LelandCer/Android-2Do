@@ -17,7 +17,7 @@ interface TaskRepository {
     fun store(list: List, task: Task)
 
     /**
-     * Create and store new Task instance
+     * Create a new Task instance
      */
     fun create(list: List, name: String): Task
 

@@ -17,22 +17,20 @@ class PlaceholderListRepository : ListRepository {
 
     init {
         lists = ArrayList()
-        var list = create("First", Date())
-        addPlaceholderTasks(list)
-        list = create("Second", Date())
-        addPlaceholderTasks(list)
 
-        list = create("Third", Date())
-        addPlaceholderTasks(list)
+        createPlaceholder("Important")
+        createPlaceholder("First")
+        createPlaceholder("Second")
+        createPlaceholder("Third")
+        createPlaceholder("Do this!!!!")
+        createPlaceholder("Whenever")
 
-        list = create("Do this!!!!", Date())
-        addPlaceholderTasks(list)
+    }
 
-        list = create("Important", Date())
+    private fun createPlaceholder(name: String) {
+        val list = create(name, Date())
         addPlaceholderTasks(list)
-
-        list = create("Whenever", Date())
-        addPlaceholderTasks(list)
+        store(list)
 
     }
 
@@ -45,9 +43,7 @@ class PlaceholderListRepository : ListRepository {
     }
 
     override fun create(name: String, dueAt: Date): List {
-        val newList = List(idFactory.makeId(), name, ArrayList(), dueAt, Date(), Date())
-        lists.add(newList)
-        return newList
+        return List(idFactory.makeId(), name, ArrayList(), dueAt, Date(), Date())
     }
 
     override fun store(list: List) {
@@ -65,8 +61,9 @@ class PlaceholderListRepository : ListRepository {
 
     private fun addPlaceholderTasks(list: List) {
         val numberOfTasks = Random().nextInt(10)
-        for ( i in 0 .. numberOfTasks) {
-            taskRepository.create(list, "Need to do: " + Random().nextLong())
+        for (i in 0..numberOfTasks) {
+            val task = taskRepository.create(list, "Need to do: " + Random().nextLong())
+            taskRepository.store(list, task)
         }
 
     }
