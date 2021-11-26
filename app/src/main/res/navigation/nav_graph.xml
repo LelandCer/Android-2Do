@@ -32,5 +32,22 @@
         android:id="@+id/twoDoTasksFragment"
         android:name="com.lelandcer.twodo.features.task.ToDoTasksFragment"
         android:label="fragment_two_do_tasks_list"
-        tools:layout="@layout/fragment_to_do_tasks_list" />
+        tools:layout="@layout/fragment_to_do_tasks_list">
+        <action
+            android:id="@+id/action_twoDoTasksFragment_to_editToDoTaskFragment"
+            app:destination="@id/editToDoTaskFragment" />
+        <action
+            android:id="@+id/action_twoDoTasksFragment_to_editToDoListFragment"
+            app:destination="@id/editToDoListFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/editToDoListFragment"
+        android:name="com.lelandcer.twodo.features.list.EditToDoListFragment"
+        android:label="fragment_edit_to_do_list"
+        tools:layout="@layout/fragment_edit_to_do_list" />
+    <dialog
+        android:id="@+id/editToDoTaskFragment"
+        android:name="com.lelandcer.twodo.features.task.EditToDoTaskFragment"
+        android:label="fragment_edit_to_do_task"
+        tools:layout="@layout/fragment_edit_to_do_task" />
 </navigation>
