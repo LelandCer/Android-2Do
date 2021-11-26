@@ -5,16 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.R
+import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
+import com.lelandcer.twodo.databinding.FragmentToDoListsListBinding
 import com.lelandcer.twodo.models.PlaceholderContent
 
 /**
  * A fragment representing a list of Items.
  */
 class ToDoListsFragment : Fragment() {
+
+    private lateinit var binding: FragmentToDoListsListBinding
 
     private var columnCount = 1
 
@@ -30,19 +35,20 @@ class ToDoListsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_to_do_lists_list, container, false)
-        val rv: View = view.findViewById(R.id.lv_tdl_list)
+        binding = FragmentToDoListsListBinding.inflate(inflater, container, false)
         // Set the adapter
-        if (rv is RecyclerView) {
-            with(rv) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = ToDoListRecyclerViewAdapter(PlaceholderContent.ITEMS)
+        with(binding.lvTdlList) {
+            layoutManager = when {
+                columnCount <= 1 -> LinearLayoutManager(context)
+                else -> GridLayoutManager(context, columnCount)
             }
+            adapter = ToDoListRecyclerViewAdapter(PlaceholderContent.ITEMS)
         }
-        return view
+
+        binding.fabTdlNew.setOnClickListener {
+            findNavController().navigate(ToDoListsFragmentDirections.actionTwoDoListsFragmentToEditToDoListFragment())
+        }
+        return binding.root
     }
 
     companion object {
