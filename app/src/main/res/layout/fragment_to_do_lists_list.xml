@@ -8,6 +8,7 @@
     tools:context=".features.list.ToDoListsFragment">
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/v_to_do_list_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fragment_to_do_lists_placeholder"
@@ -28,7 +29,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/lv_to_do_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/list_margin_start"
@@ -38,7 +39,7 @@
         tools:listitem="@layout/fragment_to_do_lists" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/newListFab"
+        android:id="@+id/fab_new_to_do_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"

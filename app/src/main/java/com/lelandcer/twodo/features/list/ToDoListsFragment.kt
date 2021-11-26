@@ -31,10 +31,10 @@ class ToDoListsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_to_do_lists_list, container, false)
-
+        val rv: View = view.findViewById(R.id.lv_to_do_list)
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
+        if (rv is RecyclerView) {
+            with(rv) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
