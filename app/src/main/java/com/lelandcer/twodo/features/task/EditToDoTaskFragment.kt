@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import com.lelandcer.twodo.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -17,7 +18,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [EditToDoTaskFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EditToDoTaskFragment : Fragment() {
+class EditToDoTaskFragment : DialogFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null

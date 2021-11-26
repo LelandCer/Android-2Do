@@ -40,12 +40,12 @@
             android:id="@+id/action_twoDoTasksFragment_to_editToDoListFragment"
             app:destination="@id/editToDoListFragment" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/editToDoListFragment"
         android:name="com.lelandcer.twodo.features.list.EditToDoListFragment"
         android:label="fragment_edit_to_do_list"
         tools:layout="@layout/fragment_edit_to_do_list" />
-    <fragment
+    <dialog
         android:id="@+id/editToDoTaskFragment"
         android:name="com.lelandcer.twodo.features.task.EditToDoTaskFragment"
         android:label="fragment_edit_to_do_task"
