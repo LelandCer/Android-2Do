@@ -4,4 +4,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fragment_to_do_lists_placeholder">Nothing2Do?\n Find something!</string>
     <string name="fragment_to_do_list_fab_content_description">Tap to add a new list</string>
+    <string name="btn_close">X</string>
 </resources>
