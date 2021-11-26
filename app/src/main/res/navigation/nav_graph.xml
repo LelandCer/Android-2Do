@@ -21,16 +21,16 @@
     </fragment>
     <fragment
         android:id="@+id/twoDoListsFragment"
-        android:name="com.lelandcer.twodo.features.list.TwoDoListsFragment"
+        android:name="com.lelandcer.twodo.features.list.ToDoListsFragment"
         android:label="fragment_two_do_lists_list"
-        tools:layout="@layout/fragment_two_do_lists_list">
+        tools:layout="@layout/fragment_to_do_lists_list">
         <action
             android:id="@+id/action_twoDoListsFragment_to_twoDoTasksFragment"
             app:destination="@id/twoDoTasksFragment" />
     </fragment>
     <fragment
         android:id="@+id/twoDoTasksFragment"
-        android:name="com.lelandcer.twodo.features.task.TwoDoTasksFragment"
+        android:name="com.lelandcer.twodo.features.task.ToDoTasksFragment"
         android:label="fragment_two_do_tasks_list"
-        tools:layout="@layout/fragment_two_do_tasks_list" />
+        tools:layout="@layout/fragment_to_do_tasks_list" />
 </navigation>

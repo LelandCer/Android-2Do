@@ -10,9 +10,9 @@ import dagger.hilt.android.components.ViewModelComponent
 /**
  * Bind Task repository interface to implementation
  */
-abstract class TaskRepositoryModule {
+abstract class ToDoTaskRepositoryModule {
 
     @Binds
-    abstract fun bind(taskRepository: PlaceholderTaskRepository): TaskRepository
+    abstract fun bind(taskRepository: PlaceholderToDoTaskRepository): ToDoTaskRepository
 
 }
