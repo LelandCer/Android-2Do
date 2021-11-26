@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.lelandcer.twodo.features.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash">
+        <!--  TODO  Add better transition animation-->
+        <action
+            android:id="@+id/action_splashFragment_to_twoDoListsFragment"
+            app:destination="@id/twoDoListsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/twoDoListsFragment"
+        android:name="com.lelandcer.twodo.features.list.TwoDoListsFragment"
+        android:label="fragment_two_do_lists_list"
+        tools:layout="@layout/fragment_two_do_lists_list">
+        <action
+            android:id="@+id/action_twoDoListsFragment_to_twoDoTasksFragment"
+            app:destination="@id/twoDoTasksFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/twoDoTasksFragment"
+        android:name="com.lelandcer.twodo.features.task.TwoDoTasksFragment"
+        android:label="fragment_two_do_tasks_list"
+        tools:layout="@layout/fragment_two_do_tasks_list" />
+</navigation>
