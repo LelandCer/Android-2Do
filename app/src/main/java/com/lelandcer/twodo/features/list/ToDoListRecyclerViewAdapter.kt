@@ -37,8 +37,8 @@ class ToDoListRecyclerViewAdapter(
 
     inner class ViewHolder(binding: FragmentToDoListsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
+        val idView: TextView = binding.tvTdlCompletionPercentage
+        val contentView: TextView = binding.tvTdlName
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
