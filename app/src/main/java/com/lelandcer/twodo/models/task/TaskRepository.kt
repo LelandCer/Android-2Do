@@ -9,7 +9,7 @@ interface TaskRepository {
     /** Get all stored Tasks for a list
      * Note: no pagination for now
      */
-    fun indexFor(list: List)
+    fun indexFor(list: List): MutableCollection<Task>
 
     /**
      * Store a Task for a list
@@ -19,7 +19,7 @@ interface TaskRepository {
     /**
      * Create a new Task instance
      */
-    fun create(name: String)
+    fun create(name: String): Task
 
     /**
      * Delete a Task from storage

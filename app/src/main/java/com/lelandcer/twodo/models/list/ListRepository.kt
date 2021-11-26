@@ -11,7 +11,7 @@ interface ListRepository {
      * Note: no pagination
      * TODO add either limitations or pagination
      */
-    fun index(): MutableList<List>
+    fun index(): MutableCollection<List>
 
     /**
      * Get a specific List for a provided Id
@@ -21,7 +21,7 @@ interface ListRepository {
     /**
      * Create and store a new List
      */
-    fun create(name: String, dueAt: Date)
+    fun create(name: String, dueAt: Date): List
 
     /**
      * Store a List
