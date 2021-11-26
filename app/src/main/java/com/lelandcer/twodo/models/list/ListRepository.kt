@@ -1,5 +1,6 @@
 package com.lelandcer.twodo.models.list
 
+import com.lelandcer.twodo.models.id.Id
 import java.util.*
 
 /** Manages the storage and retrieval of Lists */
@@ -15,7 +16,7 @@ interface ListRepository {
     /**
      * Get a specific List for a provided Id
      */
-    fun getById(id: String): List?
+    fun getById(id: Id): List?
 
     /**
      * Create and store a new List
