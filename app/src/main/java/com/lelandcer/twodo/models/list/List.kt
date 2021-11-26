@@ -16,4 +16,8 @@ class List(
     override fun equals(other: Any?): Boolean =
         other is List && id == other.id
 
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
 }

@@ -14,4 +14,8 @@ class Task(
     override fun equals(other: Any?): Boolean =
         other is Task && id == other.id
 
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
 }
