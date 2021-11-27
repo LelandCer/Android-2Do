@@ -8,4 +8,6 @@
     <string name="tdl_edit_date_button">When?</string>
     <string name="tdl_edit_save_button">Save</string>
     <string name="tdl_edit_cancel_button">Cancel</string>
+    <string name="tdl_edit_when_picker_title">When do you want 2 do it?</string>
+    <string name="tdl_due_late">Too late now!</string>
 </resources>

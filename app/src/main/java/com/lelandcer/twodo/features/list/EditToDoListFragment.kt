@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR
+import com.lelandcer.twodo.R
 import com.lelandcer.twodo.databinding.FragmentEditToDoListBinding
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.list.ToDoList
@@ -59,11 +60,9 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     }
 
     private fun launchDateSelector() {
-        /** TODO extract these strings into resources */
-        /** TODO fix the "Today" can't be selected bug */
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
-                .setTitleText("When do you want 2 do it?")
+                .setTitleText(getString(R.string.tdl_edit_when_picker_title))
                 .setInputMode(INPUT_MODE_CALENDAR)
                 .build()
 
@@ -88,8 +87,8 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
     private fun dateToString(date: Date): String {
         val newText: String
-        if (date < Date()) {
-            newText = "Too late now!"
+        if (date < getDateForToday()) {
+            newText = getString(R.string.tdl_due_late)
         } else {
             val format = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
             format.timeZone = TimeZone.getTimeZone("UTC")
@@ -97,5 +96,14 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
         }
 
         return newText
+    }
+
+    private fun getDateForToday(): Date? {
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.HOUR_OF_DAY] = 0
+        calendar[Calendar.MINUTE] = 0
+        calendar[Calendar.SECOND] = 0
+        calendar[Calendar.MILLISECOND] = 0
+        return calendar.time
     }
 }
