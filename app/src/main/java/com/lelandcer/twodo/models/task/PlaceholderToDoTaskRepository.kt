@@ -3,10 +3,11 @@ package com.lelandcer.twodo.models.task
 import com.lelandcer.twodo.models.id.IdFactory
 import com.lelandcer.twodo.models.id.UUIDIdFactory
 import com.lelandcer.twodo.models.list.ToDoList
+import javax.inject.Inject
 
 /** A static placeholder repository for lists
  * TODO remove once implemented */
-class PlaceholderToDoTaskRepository : ToDoTaskRepository {
+class PlaceholderToDoTaskRepository  @Inject constructor(): ToDoTaskRepository {
     private val idFactory: IdFactory = UUIDIdFactory()
     override fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask> {
         return toDoList.toDoTasks
