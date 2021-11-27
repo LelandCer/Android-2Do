@@ -4,20 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.set
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR
 import com.lelandcer.twodo.databinding.FragmentEditToDoListBinding
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
-
+/** Fragment for creating and editing a ToDoList */
 class EditToDoListFragment : DialogFragment() {
 
     private lateinit var binding: FragmentEditToDoListBinding
@@ -52,6 +47,8 @@ class EditToDoListFragment : DialogFragment() {
     }
 
     private fun launchDateSelector() {
+        /** TODO extract these strings into resources */
+        /** TODO fix the "Today" can't be selected bug */
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("When do you want 2 do it?")
@@ -60,8 +57,8 @@ class EditToDoListFragment : DialogFragment() {
 
         datePicker.addOnPositiveButtonClickListener {
             val selectedDate = Date(it)
-            var newText = ""
-            if(selectedDate < Date()) {
+            var newText: String
+            if (selectedDate < Date()) {
                 newText = "Too late now!"
             } else {
                 val format = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
@@ -72,6 +69,6 @@ class EditToDoListFragment : DialogFragment() {
             binding.tvTdlEditSelectedDate.text = newText
 
         }
-        activity?.supportFragmentManager?.let { datePicker.show(it, "") };
+        activity?.supportFragmentManager?.let { datePicker.show(it, "") }
     }
 }
