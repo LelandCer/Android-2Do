@@ -11,11 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lelandcer.twodo.databinding.FragmentToDoListsListBinding
 import com.lelandcer.twodo.main.ToDoViewModel
-import com.lelandcer.twodo.models.PlaceholderContent
 import com.lelandcer.twodo.models.list.ToDoList
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * A fragment representing a list of Items.
@@ -50,11 +48,15 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
     override fun onChanged(toDoLists: Collection<ToDoList>?) {
         with(binding.lvTdlList) {
             layoutManager = LinearLayoutManager(context)
-            adapter = toDoLists?.toList()?.let { ToDoListRecyclerViewAdapter(it, this@ToDoListsFragment) }
+            adapter =
+                toDoLists?.toList()?.let { ToDoListRecyclerViewAdapter(it, this@ToDoListsFragment) }
         }
     }
 
     override fun onToDoListItemClicked(pos: Int, toDoList: ToDoList) {
         toDoViewModel.setCurrent(toDoList)
+        //TODO direct to ToDoTasksFragment rather than EditToDoListFragment
+        findNavController().navigate(ToDoListsFragmentDirections.actionTwoDoListsFragmentToEditToDoListFragment())
+
     }
 }
