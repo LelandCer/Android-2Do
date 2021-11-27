@@ -5,14 +5,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
-import com.lelandcer.twodo.models.PlaceholderContent.PlaceholderItem
+import com.lelandcer.twodo.models.list.ToDoList
+import java.text.SimpleDateFormat
+import java.util.*
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class ToDoListRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
+    private val values: List<ToDoList>
 ) : RecyclerView.Adapter<ToDoListRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,20 +27,20 @@ class ToDoListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        holder.completionView.text = "1/1"
+        holder.nameView.text = item.name
+        holder.dueDateView.text = SimpleDateFormat("dd/MM", Locale.getDefault()).format(item.dueAt)
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: FragmentToDoListsBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.tvTdlCompletionPercentage
-        val contentView: TextView = binding.tvTdlName
+        val completionView: TextView = binding.tvTdlCompletionPercentage
+        val nameView: TextView = binding.tvTdlName
+        val dueDateView: TextView = binding.tvTdlDueAt
 
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
-        }
+
     }
 
 }
