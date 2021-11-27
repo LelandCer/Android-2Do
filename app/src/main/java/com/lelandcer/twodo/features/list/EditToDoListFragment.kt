@@ -17,6 +17,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 /** Fragment for creating and editing a ToDoList */
 @AndroidEntryPoint
@@ -24,6 +25,8 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
     private lateinit var binding: FragmentEditToDoListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
+    @Inject lateinit var toDoListDisplay: ToDoListDisplay
+    private lateinit var toDoList: ToDoList;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +70,9 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
                 .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            binding.tvTdlEditSelectedDate.text = dateToString(Date(it))
+            toDoList.dueAt = Date(it)
+            bindList(toDoList)
+            binding.tvTdlEditSelectedDate.text = toDoListDisplay.dueAtDateFormat()
 
         }
         activity?.supportFragmentManager?.let { datePicker.show(it, "") }
@@ -75,35 +80,15 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
     override fun onChanged(toDoList: ToDoList?) {
         toDoList?.let {
+            this.toDoList = it
             bindList(toDoList)
         }
     }
 
     private fun bindList(toDoList: ToDoList) {
-        binding.etTdlEditName.setText(toDoList.name)
-        binding.tvTdlEditSelectedDate.text = dateToString(toDoList.dueAt)
-
+        val display = toDoListDisplay.forToDoLIst(toDoList)
+        binding.etTdlEditName.setText(display.name())
+        binding.tvTdlEditSelectedDate.text = display.dueAtDateFormat()
     }
 
-    private fun dateToString(date: Date): String {
-        val newText: String
-        if (date < getDateForToday()) {
-            newText = getString(R.string.tdl_due_late)
-        } else {
-            val format = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
-            format.timeZone = TimeZone.getTimeZone("UTC")
-            newText = format.format(date)
-        }
-
-        return newText
-    }
-
-    private fun getDateForToday(): Date? {
-        val calendar = Calendar.getInstance()
-        calendar[Calendar.HOUR_OF_DAY] = 0
-        calendar[Calendar.MINUTE] = 0
-        calendar[Calendar.SECOND] = 0
-        calendar[Calendar.MILLISECOND] = 0
-        return calendar.time
-    }
 }

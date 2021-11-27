@@ -14,6 +14,7 @@ import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.list.ToDoList
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
 /**
  * A fragment representing a list of Items.
@@ -22,6 +23,8 @@ import java.util.*
 class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
     ToDoListRecyclerViewAdapter.OnToDoListItemClickedListener {
 
+    @Inject
+    lateinit var toDoListDisplay: ToDoListDisplay
     private lateinit var binding: FragmentToDoListsListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
 
@@ -49,7 +52,13 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
         with(binding.lvTdlList) {
             layoutManager = LinearLayoutManager(context)
             adapter =
-                toDoLists?.toList()?.let { ToDoListRecyclerViewAdapter(it, this@ToDoListsFragment) }
+                toDoLists?.toList()?.let {
+                    ToDoListRecyclerViewAdapter(
+                        it.sortedBy { tdl -> tdl.dueAt },
+                        this@ToDoListsFragment,
+                        toDoListDisplay
+                    )
+                }
         }
     }
 
