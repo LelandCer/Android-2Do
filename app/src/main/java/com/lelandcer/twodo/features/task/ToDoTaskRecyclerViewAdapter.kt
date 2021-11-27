@@ -4,21 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.lelandcer.twodo.databinding.FragmentTwoDoTasksBinding
+import com.lelandcer.twodo.databinding.FragmentToDoTasksBinding
 import com.lelandcer.twodo.models.PlaceholderContent.PlaceholderItem
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class TwoDoTaskRecyclerViewAdapter(
+class ToDoTaskRecyclerViewAdapter(
     private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<TwoDoTaskRecyclerViewAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ToDoTaskRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentTwoDoTasksBinding.inflate(
+            FragmentToDoTasksBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -35,7 +35,7 @@ class TwoDoTaskRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentTwoDoTasksBinding) :
+    inner class ViewHolder(binding: FragmentToDoTasksBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
         val contentView: TextView = binding.content

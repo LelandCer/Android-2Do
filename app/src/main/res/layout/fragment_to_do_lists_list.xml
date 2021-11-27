@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:name="com.lelandcer.twodo.fragments.TwoDoListsFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".features.list.ToDoListsFragment">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/v_tdl_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_to_do_lists_placeholder"
+        android:visibility="invisible"
+        android:layout_gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/list_margin_top"
+        android:background="@color/black"
+        />
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/list_margin_start"
+        android:background="@color/black"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lv_tdl_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/list_margin_start"
+        android:layout_marginRight="@dimen/list_margin_start"
+        android:layout_marginTop="@dimen/list_margin_top"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/fragment_to_do_lists" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_tdl_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:contentDescription="@string/fragment_to_do_list_fab_content_description"
+        app:srcCompat="@drawable/ic_baseline_add_24"
+        android:layout_margin="16dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

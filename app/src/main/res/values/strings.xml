@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TwoDo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fragment_to_do_lists_placeholder">Nothing2Do?\n Find something!</string>
+    <string name="fragment_to_do_list_fab_content_description">Tap to add a new list</string>
+    <string name="btn_close">X</string>
+    <string name="tdl_edit_date_button">When?</string>
+    <string name="tdl_edit_save_button">Save</string>
+    <string name="tdl_edit_cancel_button">Cancel</string>
 </resources>

@@ -10,4 +10,8 @@ class UUIDId(private val uuid: UUID) : Id {
     override fun equals(other: Any?): Boolean =
         other is Id && uuid.toString() == other.getKey()
 
+    override fun hashCode(): Int {
+        return uuid.hashCode()
+    }
+
 }
