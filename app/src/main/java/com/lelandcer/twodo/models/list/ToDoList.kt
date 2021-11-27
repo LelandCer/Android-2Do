@@ -20,4 +20,20 @@ class ToDoList(
         return id.hashCode()
     }
 
+    /** Return the count for the total amount of tasks */
+    fun taskTotalCount(): Int {
+        return toDoTasks.size
+    }
+
+    /** Return the count for the tasks that are complete */
+    fun taskCompletedCount(): Int {
+        return toDoTasks.filter { toDoTask -> toDoTask.isCompleted  }.count()
+    }
+
+    /** Return true if all tasks are marked complete */
+    fun isCompleted(): Boolean {
+        return toDoTasks.none { toDoTask -> !toDoTask.isCompleted }
+
+    }
+
 }
