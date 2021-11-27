@@ -14,7 +14,10 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
     }
 
     override fun completionRatio(): String {
-        return "1/1"
+        toDoList?.let {
+            return " ${it.taskCompletedCount()} / ${it.taskTotalCount()} "
+        }
+        return ""
     }
 
     override fun name(): String {
