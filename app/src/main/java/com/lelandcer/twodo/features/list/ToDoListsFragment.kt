@@ -54,7 +54,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
             adapter =
                 toDoLists?.toList()?.let {
                     ToDoListRecyclerViewAdapter(
-                        it,
+                        it.sortedBy { tdl -> tdl.dueAt },
                         this@ToDoListsFragment,
                         toDoListDisplay
                     )
