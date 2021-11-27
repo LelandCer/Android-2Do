@@ -6,12 +6,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
 import com.lelandcer.twodo.models.list.ToDoList
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ToDoListRecyclerViewAdapter(
     private val values: List<ToDoList>,
-    private val toDoListItemClickedListener: OnToDoListItemClickedListener
+    private val toDoListItemClickedListener: OnToDoListItemClickedListener,
+    private val toDoListDisplay: ToDoListDisplay
 ) : RecyclerView.Adapter<ToDoListRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,10 +27,12 @@ class ToDoListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val toDoList = values[position]
-        holder.completionView.text = "1/1"
-        holder.nameView.text = toDoList.name
-        holder.dueDateView.text = SimpleDateFormat("dd/MM", Locale.getDefault()).format(toDoList.dueAt)
-        holder.itemView.setOnClickListener{
+        val display = toDoListDisplay.forToDoLIst(toDoList)
+        holder.completionView.text = display.completionRatio()
+        holder.nameView.text = display.name()
+        holder.dueDateView.text =
+            display.dueAt() //SimpleDateFormat("dd/MM", Locale.getDefault()).format(toDoList.dueAt)
+        holder.itemView.setOnClickListener {
             toDoListItemClickedListener.onToDoListItemClicked(position, toDoList)
         }
     }
