@@ -5,21 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.lelandcer.twodo.R
-import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
 import com.lelandcer.twodo.databinding.FragmentToDoListsListBinding
+import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.PlaceholderContent
+import com.lelandcer.twodo.models.list.ToDoList
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A fragment representing a list of Items.
  */
-class ToDoListsFragment : Fragment() {
+@AndroidEntryPoint
+class ToDoListsFragment : Fragment(), Observer< Collection<ToDoList>> {
 
     private lateinit var binding: FragmentToDoListsListBinding
+    private val toDoViewModel: ToDoViewModel by activityViewModels()
 
     private var columnCount = 1
 
@@ -29,6 +33,8 @@ class ToDoListsFragment : Fragment() {
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
+
+        toDoViewModel.toDoLists.observe(this, this)
     }
 
     override fun onCreateView(
@@ -36,14 +42,6 @@ class ToDoListsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentToDoListsListBinding.inflate(inflater, container, false)
-        // Set the adapter
-        with(binding.lvTdlList) {
-            layoutManager = when {
-                columnCount <= 1 -> LinearLayoutManager(context)
-                else -> GridLayoutManager(context, columnCount)
-            }
-            adapter = ToDoListRecyclerViewAdapter(PlaceholderContent.ITEMS)
-        }
 
         binding.fabTdlNew.setOnClickListener {
             findNavController().navigate(ToDoListsFragmentDirections.actionTwoDoListsFragmentToEditToDoListFragment())
@@ -64,5 +62,15 @@ class ToDoListsFragment : Fragment() {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
             }
+    }
+
+    override fun onChanged(t: Collection<ToDoList>?) {
+        with(binding.lvTdlList) {
+            layoutManager = when {
+                columnCount <= 1 -> LinearLayoutManager(context)
+                else -> GridLayoutManager(context, columnCount)
+            }
+            adapter = ToDoListRecyclerViewAdapter(PlaceholderContent.ITEMS)
+        }
     }
 }

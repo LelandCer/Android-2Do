@@ -6,11 +6,12 @@ import com.lelandcer.twodo.models.id.UUIDIdFactory
 import com.lelandcer.twodo.models.task.PlaceholderToDoTaskRepository
 import com.lelandcer.twodo.models.task.ToDoTaskRepository
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 /** A static placeholder repository for lists
  * TODO remove once implemented */
-class PlaceholderToDoListRepository : ToDoListRepository {
+class PlaceholderToDoListRepository @Inject constructor() : ToDoListRepository {
     private val toDoTaskRepository: ToDoTaskRepository = PlaceholderToDoTaskRepository()
     private val toDoLists: MutableList<ToDoList>
     private val idFactory: IdFactory = UUIDIdFactory()
