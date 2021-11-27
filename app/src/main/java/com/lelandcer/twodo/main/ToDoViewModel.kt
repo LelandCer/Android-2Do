@@ -7,6 +7,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.list.ToDoListRepository
 import com.lelandcer.twodo.models.task.ToDoTaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.*
 import javax.inject.Inject
 
 
@@ -22,6 +23,14 @@ class ToDoViewModel @Inject constructor(
 
     init {
         _toDoLists.value = toDoListRepository.index()
+    }
+
+    fun setCurrent(toDoList: ToDoList) {
+        _currentToDoList.value = toDoList;
+    }
+
+    fun setNewCurrent() {
+        _currentToDoList.value = toDoListRepository.create("", Date())
     }
 
 

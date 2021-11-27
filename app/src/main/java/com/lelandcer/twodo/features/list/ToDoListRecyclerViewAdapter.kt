@@ -10,7 +10,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ToDoListRecyclerViewAdapter(
-    private val values: List<ToDoList>
+    private val values: List<ToDoList>,
+    private val toDoListItemClickedListener: OnToDoListItemClickedListener
 ) : RecyclerView.Adapter<ToDoListRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,10 +27,13 @@ class ToDoListRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
+        val toDoList = values[position]
         holder.completionView.text = "1/1"
-        holder.nameView.text = item.name
-        holder.dueDateView.text = SimpleDateFormat("dd/MM", Locale.getDefault()).format(item.dueAt)
+        holder.nameView.text = toDoList.name
+        holder.dueDateView.text = SimpleDateFormat("dd/MM", Locale.getDefault()).format(toDoList.dueAt)
+        holder.itemView.setOnClickListener{
+            toDoListItemClickedListener.onToDoListItemClicked(position, toDoList)
+        }
     }
 
     override fun getItemCount(): Int = values.size
@@ -41,6 +45,10 @@ class ToDoListRecyclerViewAdapter(
         val dueDateView: TextView = binding.tvTdlDueAt
 
 
+    }
+
+    fun interface OnToDoListItemClickedListener {
+        fun onToDoListItemClicked(pos: Int, toDoList: ToDoList)
     }
 
 }

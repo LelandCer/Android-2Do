@@ -21,7 +21,8 @@ import kotlin.collections.ArrayList
  * A fragment representing a list of Items.
  */
 @AndroidEntryPoint
-class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>> {
+class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
+    ToDoListRecyclerViewAdapter.OnToDoListItemClickedListener {
 
     private lateinit var binding: FragmentToDoListsListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
@@ -40,6 +41,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>> {
         binding = FragmentToDoListsListBinding.inflate(inflater, container, false)
 
         binding.fabTdlNew.setOnClickListener {
+            toDoViewModel.setNewCurrent()
             findNavController().navigate(ToDoListsFragmentDirections.actionTwoDoListsFragmentToEditToDoListFragment())
         }
         return binding.root
@@ -48,7 +50,11 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>> {
     override fun onChanged(toDoLists: Collection<ToDoList>?) {
         with(binding.lvTdlList) {
             layoutManager = LinearLayoutManager(context)
-            adapter = toDoLists?.toList()?.let { ToDoListRecyclerViewAdapter(it) }
+            adapter = toDoLists?.toList()?.let { ToDoListRecyclerViewAdapter(it, this@ToDoListsFragment) }
         }
+    }
+
+    override fun onToDoListItemClicked(pos: Int, toDoList: ToDoList) {
+        toDoViewModel.setCurrent(toDoList)
     }
 }
