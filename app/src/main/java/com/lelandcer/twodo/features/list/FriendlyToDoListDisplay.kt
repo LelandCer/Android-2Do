@@ -27,8 +27,8 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
     override fun dueAt(): String {
         toDoList?.let {
             var difference = getDifferenceInDays(it.dueAt)
-            if(difference < 0) return "Failed"
-            return when(difference) {
+            if (difference < 0) return "Failed"
+            return when (difference) {
                 0 -> "Today"
                 1 -> "Tomorrow"
                 in 2..9 -> "$difference Days"
@@ -48,18 +48,19 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
 
     private fun dateToString(date: Date): String {
         val newText: String
-        if (date < getDateForToday()) {
+
+        if (getDifferenceInDays(date) < 0) {
             newText = "Too late now!"
         } else {
             val format = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
-            format.timeZone = TimeZone.getTimeZone("UTC")
+            format.timeZone = Calendar.getInstance().timeZone
             newText = format.format(date)
         }
 
         return newText
     }
 
-    private fun getDateForToday(): Date? {
+    private fun getDateForToday(): Date {
         val calendar = Calendar.getInstance()
         calendar[Calendar.HOUR_OF_DAY] = 0
         calendar[Calendar.MINUTE] = 0
@@ -68,14 +69,17 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
         return calendar.time
     }
 
-    private fun getDifferenceInDays(date: Date): Int{
-        val secondsInMilli: Long = 1000
-        val minutesInMilli = secondsInMilli * 60
-        val hoursInMilli = minutesInMilli * 60
-        val daysInMilli = hoursInMilli * 24
+    private fun getDifferenceInDays(date: Date): Int {
+        val daysInMilli = 24 * 60 * 60 * 1000
+        val difference = date.time - getDateForToday().time
 
-        val difference = date.time - Date().time
-        return (difference / daysInMilli).toInt()
+        if (difference < 10) {
+            val calendarToday = Calendar.getInstance()
+            val calendarDate = Calendar.getInstance()
+            calendarDate.time = date
+            return calendarDate[Calendar.DAY_OF_YEAR] - calendarToday[Calendar.DAY_OF_YEAR]
+        }
+        return (kotlin.math.floor((difference / daysInMilli).toDouble())).toInt()
 
     }
 }
