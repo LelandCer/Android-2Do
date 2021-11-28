@@ -27,10 +27,10 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
     override fun dueAt(): String {
         toDoList?.let {
             var difference = getDifferenceInDays(it.dueAt)
-            if (difference < 0) return "Failed"
+            if (difference < 0) return "Oops"
             return when (difference) {
                 0 -> "Today"
-                1 -> "Tomorrow"
+                1 -> "Soon"
                 in 2..9 -> "$difference Days"
                 else -> dueAtDateFormat()
             }

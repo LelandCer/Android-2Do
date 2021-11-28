@@ -59,7 +59,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
         binding.tvTdtName.text = display.name()
         binding.tvTdtCompletion.text = display.completionRatio()
         binding.tvTdtDueAt.text = display.dueAt()
-        binding.tvTdtDueAtFormatted.text = display.dueAtDateFormat()
+        binding.tvTdtDueAtFormatted.text = display.formatDate(toDoList.dueAt)
 
         // Set the adapter
         with(binding.rvTdtTasks) {
