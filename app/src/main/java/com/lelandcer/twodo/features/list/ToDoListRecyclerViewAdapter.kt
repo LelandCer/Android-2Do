@@ -1,15 +1,18 @@
 package com.lelandcer.twodo.features.list
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
 import com.lelandcer.twodo.models.list.ToDoList
+import com.lelandcer.twodo.models.task.ToDoTask
 
 class ToDoListRecyclerViewAdapter(
     private val values: List<ToDoList>,
-    private val toDoListItemClickedListener: OnToDoListItemClickedListener,
+    private val onInteractionListener: OnInteractionListener,
     private val toDoListDisplay: ToDoListDisplay
 ) : RecyclerView.Adapter<ToDoListRecyclerViewAdapter.ViewHolder>() {
 
@@ -33,7 +36,11 @@ class ToDoListRecyclerViewAdapter(
         holder.dueDateView.text =
             display.dueAt() //SimpleDateFormat("dd/MM", Locale.getDefault()).format(toDoList.dueAt)
         holder.itemView.setOnClickListener {
-            toDoListItemClickedListener.onToDoListItemClicked(position, toDoList)
+            onInteractionListener.onItemClicked(position, toDoList)
+        }
+
+        holder.deleteButton.setOnClickListener {
+            onInteractionListener.onItemDelete(it, toDoList)
         }
     }
 
@@ -44,12 +51,14 @@ class ToDoListRecyclerViewAdapter(
         val completionView: TextView = binding.tvTdlCompletionPercentage
         val nameView: TextView = binding.tvTdlName
         val dueDateView: TextView = binding.tvTdlDueAt
+        val deleteButton: Button = binding.btnTdlDelete
 
 
     }
 
-    fun interface OnToDoListItemClickedListener {
-        fun onToDoListItemClicked(pos: Int, toDoList: ToDoList)
+    interface OnInteractionListener {
+        fun onItemClicked(position: Int, list: ToDoList)
+        fun onItemDelete(view: View, list:ToDoList)
     }
 
 }

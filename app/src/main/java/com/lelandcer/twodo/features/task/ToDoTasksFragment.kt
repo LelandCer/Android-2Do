@@ -69,6 +69,10 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
                 this@ToDoTasksFragment
             )
         }
+        binding.btnTdtTaskDelete.setOnClickListener {
+            toDoViewModel.deleteList(toDoList)
+            findNavController().popBackStack()
+        }
         binding.btnTdtTaskEdit.setOnClickListener {
             val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoListFragment()
             findNavController().navigate(action)
@@ -83,12 +87,12 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
 
     override fun onItemClicked(view: View, task: ToDoTask) {
         toDoViewModel.setCurrentTask(task)
-        val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoTaskFragment()
-        findNavController().navigate(action)
+        if(!task.isCompleted)  task.complete() else task.unComplete()
+        toDoViewModel.saveCurrentTask()
     }
 
     override fun onItemDelete(view: View, task: ToDoTask) {
-        TODO("Not yet implemented")
+        toDoViewModel.deleteTask(task)
     }
 
 }

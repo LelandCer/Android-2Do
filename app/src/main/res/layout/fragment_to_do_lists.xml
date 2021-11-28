@@ -27,7 +27,7 @@
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <Button
-        android:id="@+id/tv_tdl_delete"
+        android:id="@+id/btn_tdl_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"

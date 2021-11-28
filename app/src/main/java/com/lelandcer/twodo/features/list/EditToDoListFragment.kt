@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -24,9 +25,11 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
     private lateinit var binding: FragmentEditToDoListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
+
     @Inject
     lateinit var toDoListDisplay: ToDoListDisplay
-    private lateinit var toDoList: ToDoList;
+    private lateinit var toDoList: ToDoList
+    private val listForm = ListForm()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,13 +37,13 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentEditToDoListBinding.inflate(inflater, container, false)
-        bindClickListeners()
+        bindInteractionListeners()
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
 
         return binding.root
     }
 
-    private fun bindClickListeners() {
+    private fun bindInteractionListeners() {
         binding.btnTdlEditCancel.setOnClickListener {
             onCancel()
         }
@@ -52,6 +55,10 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
         binding.btnTdlEditDate.setOnClickListener {
             launchDateSelector()
         }
+
+        binding.etTdlEditName.doAfterTextChanged {
+            listForm.name = it.toString()
+        }
     }
 
     private fun onCancel() {
@@ -59,6 +66,11 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     }
 
     private fun onSubmit() {
+
+        toDoList.name = listForm.name
+        toDoList.dueAt = listForm.dueAt
+        toDoViewModel.saveCurrentList()
+
         findNavController().popBackStack()
     }
 
@@ -71,10 +83,8 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
         datePicker.addOnPositiveButtonClickListener {
             val selectedDate = convertDateToLocal(it)
-            toDoList.dueAt = selectedDate
-            bindList(toDoList)
-            binding.tvTdlEditSelectedDate.text = toDoListDisplay.dueAtDateFormat()
-
+            listForm.dueAt = selectedDate
+            bindForm(listForm)
         }
         activity?.supportFragmentManager?.let { datePicker.show(it, "") }
     }
@@ -105,9 +115,23 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     }
 
     private fun bindList(toDoList: ToDoList) {
+        listForm.name = toDoList.name
+        listForm.dueAt = toDoList.dueAt
+        bindForm(listForm)
+    }
+
+    private fun bindForm(listForm: ListForm) {
         val display = toDoListDisplay.forToDoList(toDoList)
-        binding.etTdlEditName.setText(display.name())
-        binding.tvTdlEditSelectedDate.text = display.dueAtDateFormat()
+        binding.etTdlEditName.setText(listForm.name)
+        binding.tvTdlEditSelectedDate.text = display.formatDate(listForm.dueAt)
+    }
+
+    private class ListForm(var name: String = "", var dueAt: Date = Date()) {
+
+        fun validate():Boolean {
+            // TODO validate the form data
+            return true
+        }
     }
 
 }
