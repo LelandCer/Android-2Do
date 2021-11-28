@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lelandcer.twodo.databinding.FragmentToDoTasksListBinding
 import com.lelandcer.twodo.features.list.ToDoListDisplay
@@ -67,6 +68,14 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
                 toDoList.toDoTasks.toList(),
                 this@ToDoTasksFragment
             )
+        }
+        binding.btnTdtTaskEdit.setOnClickListener {
+            val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoListFragment()
+            findNavController().navigate(action)
+        }
+        binding.fabTdlNew.setOnClickListener {
+            val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoTaskFragment()
+            findNavController().navigate(action)
         }
 
     }
