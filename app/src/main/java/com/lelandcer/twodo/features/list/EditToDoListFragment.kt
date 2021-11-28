@@ -4,23 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.set
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR
+import com.lelandcer.twodo.R
 import com.lelandcer.twodo.databinding.FragmentEditToDoListBinding
+import com.lelandcer.twodo.main.ToDoViewModel
+import com.lelandcer.twodo.models.list.ToDoList
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
+import javax.inject.Inject
 
-
-class EditToDoListFragment : DialogFragment() {
+/** Fragment for creating and editing a ToDoList */
+@AndroidEntryPoint
+class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
     private lateinit var binding: FragmentEditToDoListBinding
+    private val toDoViewModel: ToDoViewModel by activityViewModels()
+    @Inject lateinit var toDoListDisplay: ToDoListDisplay
+    private lateinit var toDoList: ToDoList;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +34,13 @@ class EditToDoListFragment : DialogFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentEditToDoListBinding.inflate(inflater, container, false)
+        bindClickListeners()
+        toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
 
+        return binding.root
+    }
+
+    private fun bindClickListeners() {
         binding.btnTdlEditCancel.setOnClickListener {
             onCancel()
         }
@@ -40,7 +52,6 @@ class EditToDoListFragment : DialogFragment() {
         binding.btnTdlEditDate.setOnClickListener {
             launchDateSelector()
         }
-        return binding.root
     }
 
     private fun onCancel() {
@@ -54,24 +65,30 @@ class EditToDoListFragment : DialogFragment() {
     private fun launchDateSelector() {
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
-                .setTitleText("When do you want 2 do it?")
+                .setTitleText(getString(R.string.tdl_edit_when_picker_title))
                 .setInputMode(INPUT_MODE_CALENDAR)
                 .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            val selectedDate = Date(it)
-            var newText = ""
-            if(selectedDate < Date()) {
-                newText = "Too late now!"
-            } else {
-                val format = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
-                format.timeZone = TimeZone.getTimeZone("UTC")
-                newText = format.format(Date(it))
-            }
-
-            binding.tvTdlEditSelectedDate.text = newText
+            toDoList.dueAt = Date(it)
+            bindList(toDoList)
+            binding.tvTdlEditSelectedDate.text = toDoListDisplay.dueAtDateFormat()
 
         }
-        activity?.supportFragmentManager?.let { datePicker.show(it, "") };
+        activity?.supportFragmentManager?.let { datePicker.show(it, "") }
     }
+
+    override fun onChanged(toDoList: ToDoList?) {
+        toDoList?.let {
+            this.toDoList = it
+            bindList(toDoList)
+        }
+    }
+
+    private fun bindList(toDoList: ToDoList) {
+        val display = toDoListDisplay.forToDoLIst(toDoList)
+        binding.etTdlEditName.setText(display.name())
+        binding.tvTdlEditSelectedDate.text = display.dueAtDateFormat()
+    }
+
 }
