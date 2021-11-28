@@ -65,6 +65,7 @@ class ToDoViewModel @Inject constructor(
         val toDoList = currentToDoList.value!!
         val toDoTask = currentToDoTask.value!!
         toDoTaskRepository.store(toDoList, toDoTask)
+        _currentToDoList.postValue(toDoList)
         _currentToDoTask.postValue(toDoTask)
     }
 

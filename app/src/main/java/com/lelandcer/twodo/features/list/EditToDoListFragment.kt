@@ -1,13 +1,9 @@
 package com.lelandcer.twodo.features.list
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -41,15 +37,13 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentEditToDoListBinding.inflate(inflater, container, false)
-        bindClickListeners()
+        bindInteractionListeners()
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
-        binding.etTdlEditName.doAfterTextChanged {
-            listForm.name = it.toString()
-        }
+
         return binding.root
     }
 
-    private fun bindClickListeners() {
+    private fun bindInteractionListeners() {
         binding.btnTdlEditCancel.setOnClickListener {
             onCancel()
         }
@@ -60,6 +54,10 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
         binding.btnTdlEditDate.setOnClickListener {
             launchDateSelector()
+        }
+
+        binding.etTdlEditName.doAfterTextChanged {
+            listForm.name = it.toString()
         }
     }
 
