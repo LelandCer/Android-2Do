@@ -1,5 +1,6 @@
 package com.lelandcer.twodo.features.list
 
+import android.util.Log
 import com.lelandcer.twodo.models.list.ToDoList
 import java.text.SimpleDateFormat
 import java.util.*
@@ -72,14 +73,14 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
     private fun getDifferenceInDays(date: Date): Int {
         val daysInMilli = 24 * 60 * 60 * 1000
         val difference = date.time - getDateForToday().time
-
-        if (difference < 10) {
+        val days = (kotlin.math.floor((difference / daysInMilli).toDouble())).toInt()
+        if (days in -10..10) {
             val calendarToday = Calendar.getInstance()
             val calendarDate = Calendar.getInstance()
             calendarDate.time = date
             return calendarDate[Calendar.DAY_OF_YEAR] - calendarToday[Calendar.DAY_OF_YEAR]
         }
-        return (kotlin.math.floor((difference / daysInMilli).toDouble())).toInt()
+        return days
 
     }
 }
