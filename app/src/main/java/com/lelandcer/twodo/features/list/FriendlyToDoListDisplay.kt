@@ -46,15 +46,19 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
         return "?.?"
     }
 
+    override fun formatDate(date: Date): String {
+        val format = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
+        format.timeZone = Calendar.getInstance().timeZone
+        return format.format(date)
+    }
+
     private fun dateToString(date: Date): String {
         val newText: String
 
         if (getDifferenceInDays(date) < 0) {
             newText = "Too late now!"
         } else {
-            val format = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
-            format.timeZone = Calendar.getInstance().timeZone
-            newText = format.format(date)
+            newText = formatDate(date)
         }
 
         return newText
