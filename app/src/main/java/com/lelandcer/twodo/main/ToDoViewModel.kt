@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.list.ToDoListRepository
+import com.lelandcer.twodo.models.task.ToDoTask
 import com.lelandcer.twodo.models.task.ToDoTaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.*
@@ -18,19 +19,29 @@ class ToDoViewModel @Inject constructor(
 ) : ViewModel() {
     private val _toDoLists = MutableLiveData<Collection<ToDoList>>()
     private val _currentToDoList = MutableLiveData<ToDoList?>()
+    private val _currentToDoTask = MutableLiveData<ToDoTask?>()
     var toDoLists: LiveData<Collection<ToDoList>> = _toDoLists
     var currentToDoList: LiveData<ToDoList?> = _currentToDoList
+    var currentToDoTask: LiveData<ToDoTask?> = _currentToDoTask
 
     init {
         _toDoLists.value = toDoListRepository.index()
     }
 
-    fun setCurrent(toDoList: ToDoList) {
+    fun setCurrentList(toDoList: ToDoList) {
         _currentToDoList.value = toDoList;
     }
 
-    fun setNewCurrent() {
+    fun setNewCurrentList() {
         _currentToDoList.value = toDoListRepository.create("", Date())
+    }
+
+    fun setCurrentTask(toDoTask: ToDoTask) {
+        _currentToDoTask.value = toDoTask;
+    }
+
+    fun setNewCurrentTask() {
+        _currentToDoTask.value = currentToDoList.value?.let { toDoTaskRepository.create(it, "") }
     }
 
 
