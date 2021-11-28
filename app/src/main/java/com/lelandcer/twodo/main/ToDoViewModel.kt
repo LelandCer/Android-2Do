@@ -82,5 +82,10 @@ class ToDoViewModel @Inject constructor(
         _currentToDoList.postValue(toDoList)
     }
 
+    fun deleteList(toDoList: ToDoList) {
+        toDoListRepository.delete(toDoList)
+        _currentToDoList.postValue(toDoList)
+    }
+
 
 }

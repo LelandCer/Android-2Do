@@ -21,7 +21,7 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
-    ToDoListRecyclerViewAdapter.OnToDoListItemClickedListener {
+    ToDoListRecyclerViewAdapter.OnInteractionListener {
 
     @Inject
     lateinit var toDoListDisplay: ToDoListDisplay
@@ -57,9 +57,14 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
         }
     }
 
-    override fun onToDoListItemClicked(pos: Int, toDoList: ToDoList) {
-        toDoViewModel.setCurrentList(toDoList)
+    override fun onItemClicked(position: Int, list: ToDoList) {
+        toDoViewModel.setCurrentList(list)
         findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToToDoTasksFragment())
+    }
+
+    override fun onItemDelete(view: View, list: ToDoList) {
+        // TODO require confirmation
+        toDoViewModel.deleteList(list)
 
     }
 }
