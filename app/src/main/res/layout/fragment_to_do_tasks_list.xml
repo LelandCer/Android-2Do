@@ -93,7 +93,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/task_margin_start"
         android:layout_marginTop="@dimen/task_margin_top"
-        android:layout_marginEnd="16dp"
+
         app:layoutManager="LinearLayoutManager"
         tools:context=".features.task.ToDoTasksFragment"
         tools:listitem="@layout/fragment_to_do_tasks">
