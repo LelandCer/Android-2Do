@@ -16,24 +16,16 @@
         android:layout_gravity="center"/>
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
         android:layout_marginTop="@dimen/list_margin_top"
-        android:background="@color/black"
-        />
+        style="@style/horizontal_line" />
     <View
-        android:layout_width="2dp"
-        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/list_margin_start"
-        android:background="@color/black"
-        />
+        style="@style/vertical_line" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lv_tdl_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/list_margin_start"
-        android:layout_marginRight="@dimen/list_margin_start"
         android:layout_marginTop="@dimen/list_margin_top"
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/fragment_to_do_lists" />
