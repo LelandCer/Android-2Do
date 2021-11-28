@@ -1,6 +1,5 @@
 package com.lelandcer.twodo.features.list
 
-import android.util.Log
 import com.lelandcer.twodo.models.list.ToDoList
 import java.text.SimpleDateFormat
 import java.util.*
