@@ -64,8 +64,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
 
     override fun onToDoListItemClicked(pos: Int, toDoList: ToDoList) {
         toDoViewModel.setCurrent(toDoList)
-        //TODO direct to ToDoTasksFragment rather than EditToDoListFragment
-        findNavController().navigate(ToDoListsFragmentDirections.actionTwoDoListsFragmentToEditToDoListFragment())
+        findNavController().navigate(ToDoListsFragmentDirections.actionTwoDoListsFragmentToTwoDoTasksFragment())
 
     }
 }

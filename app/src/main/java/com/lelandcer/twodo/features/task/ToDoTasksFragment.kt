@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.lelandcer.twodo.R
+import com.lelandcer.twodo.databinding.FragmentToDoTasksListBinding
 import com.lelandcer.twodo.models.PlaceholderContent
 
 /**
@@ -16,6 +15,7 @@ import com.lelandcer.twodo.models.PlaceholderContent
  */
 class ToDoTasksFragment : Fragment() {
 
+    private lateinit var binding: FragmentToDoTasksListBinding
     private var columnCount = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,19 +30,18 @@ class ToDoTasksFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_to_do_tasks_list, container, false)
+        binding = FragmentToDoTasksListBinding.inflate(inflater, container, false)
 
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = ToDoTaskRecyclerViewAdapter(PlaceholderContent.ITEMS)
+        with(binding.rvTdtTasks) {
+            layoutManager = when {
+                columnCount <= 1 -> LinearLayoutManager(context)
+                else -> GridLayoutManager(context, columnCount)
             }
+            adapter = ToDoTaskRecyclerViewAdapter(PlaceholderContent.ITEMS)
         }
-        return view
+
+        return binding.root
     }
 
     companion object {
