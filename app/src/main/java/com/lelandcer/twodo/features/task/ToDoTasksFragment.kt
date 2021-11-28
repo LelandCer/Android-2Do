@@ -74,6 +74,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
             findNavController().navigate(action)
         }
         binding.fabTdlNew.setOnClickListener {
+            toDoViewModel.setNewCurrentTask()
             val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoTaskFragment()
             findNavController().navigate(action)
         }
@@ -81,7 +82,9 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
     }
 
     override fun onItemClicked(view: View, task: ToDoTask) {
-        TODO("Not yet implemented")
+        toDoViewModel.setCurrentTask(task)
+        val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoTaskFragment()
+        findNavController().navigate(action)
     }
 
     override fun onItemDelete(view: View, task: ToDoTask) {
