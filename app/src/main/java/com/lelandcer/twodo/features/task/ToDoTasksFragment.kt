@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lelandcer.twodo.databinding.FragmentToDoTasksListBinding
 import com.lelandcer.twodo.features.list.ToDoListDisplay
 import com.lelandcer.twodo.main.ToDoViewModel
-import com.lelandcer.twodo.models.PlaceholderContent
 import com.lelandcer.twodo.models.list.ToDoList
+import com.lelandcer.twodo.models.task.ToDoTask
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -21,7 +21,8 @@ import javax.inject.Inject
  * A fragment representing a list of Items.
  */
 @AndroidEntryPoint
-class ToDoTasksFragment : Fragment(), Observer<ToDoList?> {
+class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
+    ToDoTaskRecyclerViewAdapter.OnInteractionListener {
 
     @Inject
     lateinit var toDoListDisplay: ToDoListDisplay
@@ -34,12 +35,6 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?> {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentToDoTasksListBinding.inflate(inflater, container, false)
-
-        // Set the adapter
-        with(binding.rvTdtTasks) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = ToDoTaskRecyclerViewAdapter(PlaceholderContent.ITEMS)
-        }
 
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
         return binding.root
@@ -64,6 +59,24 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?> {
         binding.tvTdtCompletion.text = display.completionRatio()
         binding.tvTdtDueAt.text = display.dueAt()
         binding.tvTdtDueAtFormatted.text = display.dueAtDateFormat()
+
+        // Set the adapter
+        with(binding.rvTdtTasks) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = ToDoTaskRecyclerViewAdapter(
+                toDoList.toDoTasks.toList(),
+                this@ToDoTasksFragment
+            )
+        }
+
+    }
+
+    override fun onItemClicked(view: View, task: ToDoTask) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onItemDelete(view: View, task: ToDoTask) {
+        TODO("Not yet implemented")
     }
 
 }
