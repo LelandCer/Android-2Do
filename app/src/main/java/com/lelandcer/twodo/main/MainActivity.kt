@@ -14,8 +14,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_TwoDo)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val hostFragment = supportFragmentManager.findFragmentById(
             R.id.nav_host_fragment
         )
@@ -25,10 +27,13 @@ class MainActivity : AppCompatActivity() {
             val appBarConfiguration = AppBarConfiguration.Builder(nc.graph).build()
             NavigationUI.setupActionBarWithNavController(this, it, appBarConfiguration)
         }
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp(
         )
     }
+
 }
