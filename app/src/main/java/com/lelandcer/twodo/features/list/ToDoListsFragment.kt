@@ -35,7 +35,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
         binding = FragmentToDoListsListBinding.inflate(inflater, container, false)
 
         binding.fabTdlNew.setOnClickListener {
-            toDoViewModel.setNewCurrent()
+            toDoViewModel.setNewCurrentList()
             findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToEditToDoListFragment())
         }
         toDoViewModel.toDoLists.observe(viewLifecycleOwner, this)
@@ -58,7 +58,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
     }
 
     override fun onToDoListItemClicked(pos: Int, toDoList: ToDoList) {
-        toDoViewModel.setCurrent(toDoList)
+        toDoViewModel.setCurrentList(toDoList)
         findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToToDoTasksFragment())
 
     }
