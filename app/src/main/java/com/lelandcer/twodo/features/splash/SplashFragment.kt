@@ -21,8 +21,8 @@ class SplashFragment : Fragment() {
         lifecycleScope.launchWhenStarted {
             // TODO Connect to any "ready" events if initial loading is needed
             delay(2000)
-            val action = SplashFragmentDirections.actionSplashFragmentToTwoDoListsFragment()
-            findNavController().navigate(action)
+//            val action = SplashFragmentDirections.actionSplashFragmentToTwoDoListsFragment()
+//            findNavController().navigate(action)
         }
     }
 
