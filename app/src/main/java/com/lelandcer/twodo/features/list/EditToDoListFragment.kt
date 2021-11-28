@@ -35,7 +35,7 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
         // Inflate the layout for this fragment
         binding = FragmentEditToDoListBinding.inflate(inflater, container, false)
         bindClickListeners()
-        toDoViewModel.currentToDoList.observe(this, this)
+        toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
 
         return binding.root
     }

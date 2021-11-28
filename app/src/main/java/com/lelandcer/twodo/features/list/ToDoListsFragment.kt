@@ -28,13 +28,6 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
     private lateinit var binding: FragmentToDoListsListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        toDoViewModel.toDoLists.observe(this, this)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +38,8 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
             toDoViewModel.setNewCurrent()
             findNavController().navigate(ToDoListsFragmentDirections.actionTwoDoListsFragmentToEditToDoListFragment())
         }
+        toDoViewModel.toDoLists.observe(viewLifecycleOwner, this)
+
         return binding.root
     }
 
