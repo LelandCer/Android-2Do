@@ -27,7 +27,7 @@ class ToDoListRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val toDoList = values[position]
-        val display = toDoListDisplay.forToDoLIst(toDoList)
+        val display = toDoListDisplay.forToDoList(toDoList)
         holder.completionView.text = display.completionRatio()
         holder.nameView.text = display.name()
         holder.dueDateView.text =

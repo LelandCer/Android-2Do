@@ -15,7 +15,6 @@ import com.lelandcer.twodo.databinding.FragmentEditToDoListBinding
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.list.ToDoList
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -86,7 +85,7 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     }
 
     private fun bindList(toDoList: ToDoList) {
-        val display = toDoListDisplay.forToDoLIst(toDoList)
+        val display = toDoListDisplay.forToDoList(toDoList)
         binding.etTdlEditName.setText(display.name())
         binding.tvTdlEditSelectedDate.text = display.dueAtDateFormat()
     }

@@ -4,59 +4,79 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.lelandcer.twodo.R
-import com.lelandcer.twodo.models.PlaceholderContent
+import com.lelandcer.twodo.databinding.FragmentToDoTasksListBinding
+import com.lelandcer.twodo.features.list.ToDoListDisplay
+import com.lelandcer.twodo.main.ToDoViewModel
+import com.lelandcer.twodo.models.list.ToDoList
+import com.lelandcer.twodo.models.task.ToDoTask
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * A fragment representing a list of Items.
  */
-class ToDoTasksFragment : Fragment() {
+@AndroidEntryPoint
+class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
+    ToDoTaskRecyclerViewAdapter.OnInteractionListener {
 
-    private var columnCount = 1
+    @Inject
+    lateinit var toDoListDisplay: ToDoListDisplay
+    private lateinit var binding: FragmentToDoTasksListBinding
+    private val toDoViewModel: ToDoViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_to_do_tasks_list, container, false)
+        binding = FragmentToDoTasksListBinding.inflate(inflater, container, false)
+
+        toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
+        return binding.root
+    }
+
+    override fun onChanged(toDoList: ToDoList?) {
+        toDoList?.let { bindToView(it) }
+    }
+
+    private fun bindToView(toDoList: ToDoList) {
+        val display = toDoListDisplay.forToDoList(toDoList)
+
+        val actionbar = (activity as AppCompatActivity?)?.supportActionBar
+        actionbar?.let {
+            //if we have an actionbar put the title there, otherwise use the in-fragment name textview
+            actionbar.title = display.name()
+            binding.tvTdtName.visibility = View.INVISIBLE
+
+        }
+
+        binding.tvTdtName.text = display.name()
+        binding.tvTdtCompletion.text = display.completionRatio()
+        binding.tvTdtDueAt.text = display.dueAt()
+        binding.tvTdtDueAtFormatted.text = display.dueAtDateFormat()
 
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = ToDoTaskRecyclerViewAdapter(PlaceholderContent.ITEMS)
-            }
+        with(binding.rvTdtTasks) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = ToDoTaskRecyclerViewAdapter(
+                toDoList.toDoTasks.toList(),
+                this@ToDoTasksFragment
+            )
         }
-        return view
+
     }
 
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ToDoTasksFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
+    override fun onItemClicked(view: View, task: ToDoTask) {
+        TODO("Not yet implemented")
     }
+
+    override fun onItemDelete(view: View, task: ToDoTask) {
+        TODO("Not yet implemented")
+    }
+
 }
