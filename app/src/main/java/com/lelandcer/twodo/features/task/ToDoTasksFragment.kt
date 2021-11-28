@@ -87,8 +87,8 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
 
     override fun onItemClicked(view: View, task: ToDoTask) {
         toDoViewModel.setCurrentTask(task)
-        val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoTaskFragment()
-        findNavController().navigate(action)
+        if(!task.isCompleted)  task.complete() else task.unComplete()
+        toDoViewModel.saveCurrentTask()
     }
 
     override fun onItemDelete(view: View, task: ToDoTask) {
