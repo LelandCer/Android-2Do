@@ -29,27 +29,33 @@ Sprint 1
 [x] Create Repository interfaces, static data for initial dev, setup DI dependency
 
 Sprint 2
-[] Refactor Sprint 1
-[] Wireframe Screens
-[] Create DialogFragments for Create/Edit modals for Lists/Tasks
-[] Update views with basic screen representations for Lists
-[] Update views with basic screen representations for Lists Create/Edit
-[] Create ViewModel, create prototype views, connect repositories to viewmodel to views
+[x] Refactor Sprint 1
+[x] Wireframe Screens
+[x] Create DialogFragments for Create/Edit modals for Lists/Tasks
+[x] Update views with basic screen representations for Lists
+[x] Update views with basic screen representations for Lists Create/Edit
 
 Sprint 3
+[x] Create ViewModel, create prototype views, connect repositories to viewmodel 
+[x] Connect View Model to Lists screen
+[x] Create injectable module for displaying list data
+[x] Add the ability to "complete" tasks
+[x] Better placeholder data
+[x] Bugfixes
+
+Sprint 4
 [] Update views with basic screen representations for Tasks
 [] Update views with basic screen representations for Lists Tasks/Edit
 [] Connect creation / update / delete events for lists
 [] Connect creation / update / delete events for tasks
-[] Add the ability to "complete" tasks
 [] Create real repositories for persistent storage
 [] Update the UI to better surface state
 
-Sprint 4
+Sprint 5
 [] Cleanup
 [] UI polish
 
-Sprint 5 (optional)
+Sprint 6 (optional)
 [] Add Sorting
 [] Add Filtering
 [] Add actual assets
