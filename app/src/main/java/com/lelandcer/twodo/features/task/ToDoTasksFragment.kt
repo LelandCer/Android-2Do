@@ -88,7 +88,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
     }
 
     override fun onItemDelete(view: View, task: ToDoTask) {
-        TODO("Not yet implemented")
+        toDoViewModel.deleteTask(task)
     }
 
 }

@@ -76,5 +76,11 @@ class ToDoViewModel @Inject constructor(
 
     }
 
+    fun deleteTask(toDoTask: ToDoTask) {
+        val toDoList = currentToDoList.value!!
+        toDoTaskRepository.delete(toDoTask)
+        _currentToDoList.postValue(toDoList)
+    }
+
 
 }
