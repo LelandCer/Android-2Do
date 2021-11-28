@@ -24,7 +24,8 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
     private lateinit var binding: FragmentEditToDoListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
-    @Inject lateinit var toDoListDisplay: ToDoListDisplay
+    @Inject
+    lateinit var toDoListDisplay: ToDoListDisplay
     private lateinit var toDoList: ToDoList;
 
     override fun onCreateView(
@@ -69,12 +70,31 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
                 .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            toDoList.dueAt = Date(it)
+            val selectedDate = convertDateToLocal(it)
+            toDoList.dueAt = selectedDate
             bindList(toDoList)
             binding.tvTdlEditSelectedDate.text = toDoListDisplay.dueAtDateFormat()
 
         }
         activity?.supportFragmentManager?.let { datePicker.show(it, "") }
+    }
+
+    private fun convertDateToLocal(it: Long): Date {
+        //The MaterialDatePicker always returns the utc representation in millis
+        // We only want the "Day of the month/year" which means different user timezones often get an
+        // off by one error.
+
+        // Issue: https://github.com/material-components/material-components-android/issues/1468
+
+        // For now I just use the calendar to get the day in "UTC" since that's what the user selected
+        // And then set it to a calendar instance for the devices local tz
+        val calLocal = Calendar.getInstance()
+        val calUTC = Calendar.getInstance(TimeZone.getTimeZone("utc"))
+        calUTC.time = Date(it)
+
+        calLocal[Calendar.DAY_OF_YEAR] = calUTC[Calendar.DAY_OF_YEAR]
+        calLocal[Calendar.HOUR_OF_DAY] = 0
+        return calLocal.time
     }
 
     override fun onChanged(toDoList: ToDoList?) {
