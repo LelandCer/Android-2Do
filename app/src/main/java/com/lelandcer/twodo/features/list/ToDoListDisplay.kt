@@ -4,7 +4,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 
 /** Converts a ToDoList into Displayable strings */
 interface ToDoListDisplay {
-    fun forToDoLIst(toDoList: ToDoList):  ToDoListDisplay
+    fun forToDoList(toDoList: ToDoList):  ToDoListDisplay
     fun completionRatio(): String
     fun name(): String
     fun dueAt(): String
