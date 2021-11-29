@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:background="?android:attr/selectableItemBackground">
+    android:background="@drawable/blue_ripple">
 
     <TextView
         android:id="@+id/tv_tdt_task_list_name"
