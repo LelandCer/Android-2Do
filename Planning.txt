@@ -48,14 +48,15 @@ Sprint 4
 [] Update views with basic screen representations for Lists Tasks/Edit
 [] Connect creation / update / delete events for lists
 [] Connect creation / update / delete events for tasks
-[] Create real repositories for persistent storage
-[] Update the UI to better surface state
 
 Sprint 5
+[] Create real repositories for persistent storage
+[] Update the UI to better surface state
 [] Cleanup
 [] UI polish
 
-Sprint 6 (optional)
+Sprint 6 (canceled)
 [] Add Sorting
 [] Add Filtering
 [] Add actual assets
+[] Handle exceptions
