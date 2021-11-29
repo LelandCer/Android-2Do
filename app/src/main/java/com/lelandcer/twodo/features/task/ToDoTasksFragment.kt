@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lelandcer.twodo.databinding.FragmentToDoTasksListBinding
 import com.lelandcer.twodo.features.list.ToDoListDisplay
+import com.lelandcer.twodo.main.MainActivity
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.task.ToDoTask
@@ -88,7 +89,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
             val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoListFragment()
             findNavController().navigate(action)
         }
-        binding.fabTdlNew.setOnClickListener {
+        (activity as MainActivity?)?.fab?.setOnClickListener {
             toDoViewModel.setNewCurrentTask()
             val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoTaskFragment()
             findNavController().navigate(action)

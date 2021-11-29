@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lelandcer.twodo.databinding.FragmentToDoListsListBinding
+import com.lelandcer.twodo.main.MainActivity
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.list.ToDoList
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +37,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
     ): View? {
         binding = FragmentToDoListsListBinding.inflate(inflater, container, false)
 
-        binding.fabTdlNew.setOnClickListener {
+        (activity as MainActivity?)?.fab?.setOnClickListener {
             toDoViewModel.setNewCurrentList()
             findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToEditToDoListFragment())
         }
