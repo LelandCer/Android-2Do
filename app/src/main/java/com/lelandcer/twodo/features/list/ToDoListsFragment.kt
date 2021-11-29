@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lelandcer.twodo.R
 import com.lelandcer.twodo.databinding.FragmentToDoListsListBinding
 import com.lelandcer.twodo.main.MainActivity
 import com.lelandcer.twodo.main.ToDoViewModel
@@ -43,12 +46,17 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
         }
         with(binding.rvTdlList) {
             layoutManager = LinearLayoutManager(context)
+            val dividerItemDecoration =
+                DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+            dividerItemDecoration.setDrawable(AppCompatResources.getDrawable(this.context, R.drawable.blue_divider)!!)
+            addItemDecoration(dividerItemDecoration)
             adapter =
                 ToDoListRecyclerViewAdapter(
                     toDoListItems,
                     this@ToDoListsFragment,
                     toDoListDisplay
                 )
+
 
         }
         toDoViewModel.toDoLists.observe(viewLifecycleOwner, this)
@@ -60,7 +68,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
         toDoLists?.let {
 
             // Todo move to state handling
-            if(it.isEmpty()) {
+            if (it.isEmpty()) {
                 binding.rvTdlList.visibility = View.GONE
                 binding.vTdlEmpty.visibility = View.VISIBLE
             } else {
