@@ -40,7 +40,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
             toDoViewModel.setNewCurrentList()
             findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToEditToDoListFragment())
         }
-        with(binding.lvTdlList) {
+        with(binding.rvTdlList) {
             layoutManager = LinearLayoutManager(context)
             adapter =
                 ToDoListRecyclerViewAdapter(
@@ -57,9 +57,18 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
 
     override fun onChanged(toDoLists: Collection<ToDoList>?) {
         toDoLists?.let {
+
+            // Todo move to state handling
+            if(it.isEmpty()) {
+                binding.rvTdlList.visibility = View.GONE
+                binding.vTdlEmpty.visibility = View.VISIBLE
+            } else {
+                binding.rvTdlList.visibility = View.VISIBLE
+                binding.vTdlEmpty.visibility = View.GONE
+            }
             toDoListItems.clear()
             toDoListItems.addAll(it.sortedBy { tdl -> tdl.dueAt })
-            binding.lvTdlList.adapter?.notifyDataSetChanged()
+            binding.rvTdlList.adapter?.notifyDataSetChanged()
         }
     }
 

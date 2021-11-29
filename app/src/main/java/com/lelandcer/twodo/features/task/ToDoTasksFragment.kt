@@ -72,7 +72,13 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
         toDoTaskItems.addAll(toDoList.toDoTasks.sortedBy { tdt -> tdt.createdAt })
         binding.rvTdtTasks.adapter?.notifyDataSetChanged()
 
-
+        if (toDoTaskItems.isEmpty()) {
+            binding.rvTdtTasks.visibility = View.GONE
+            binding.vTdtEmpty.visibility = View.VISIBLE
+        } else {
+            binding.rvTdtTasks.visibility = View.VISIBLE
+            binding.vTdtEmpty.visibility = View.GONE
+        }
 
         binding.btnTdtTaskDelete.setOnClickListener {
             toDoViewModel.deleteList(toDoList)
