@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:name="com.lelandcer.twodo.fragments.TwoDoTasksFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/paper_white">
 
     <View
         style="@style/horizontal_line"

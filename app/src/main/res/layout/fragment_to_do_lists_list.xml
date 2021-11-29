@@ -5,6 +5,7 @@
     android:name="com.lelandcer.twodo.fragments.TwoDoListsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/paper_white"
     tools:context=".features.list.ToDoListsFragment">
 
     <com.google.android.material.textview.MaterialTextView
