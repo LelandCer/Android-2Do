@@ -29,6 +29,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
     lateinit var toDoListDisplay: ToDoListDisplay
     private lateinit var binding: FragmentToDoTasksListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
+    private val toDoTaskItems: MutableList<ToDoTask> = ArrayList()
 
 
     override fun onCreateView(
@@ -36,7 +37,13 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentToDoTasksListBinding.inflate(inflater, container, false)
-
+        with(binding.rvTdtTasks) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = ToDoTaskRecyclerViewAdapter(
+                toDoTaskItems,
+                this@ToDoTasksFragment
+            )
+        }
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
         return binding.root
     }
@@ -61,14 +68,12 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
         binding.tvTdtDueAt.text = display.dueAt()
         binding.tvTdtDueAtFormatted.text = display.formatDate(toDoList.dueAt)
 
-        // Set the adapter
-        with(binding.rvTdtTasks) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = ToDoTaskRecyclerViewAdapter(
-                toDoList.toDoTasks.toList(),
-                this@ToDoTasksFragment
-            )
-        }
+        toDoTaskItems.clear()
+        toDoTaskItems.addAll(toDoList.toDoTasks.sortedBy { tdt -> tdt.createdAt })
+        binding.rvTdtTasks.adapter?.notifyDataSetChanged()
+
+
+
         binding.btnTdtTaskDelete.setOnClickListener {
             toDoViewModel.deleteList(toDoList)
             findNavController().popBackStack()
@@ -87,7 +92,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
 
     override fun onItemClicked(view: View, task: ToDoTask) {
         toDoViewModel.setCurrentTask(task)
-        if(!task.isCompleted)  task.complete() else task.unComplete()
+        if (!task.isCompleted) task.complete() else task.unComplete()
         toDoViewModel.saveCurrentTask()
     }
 

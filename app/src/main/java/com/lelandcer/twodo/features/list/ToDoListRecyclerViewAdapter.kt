@@ -8,16 +8,24 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
 import com.lelandcer.twodo.models.list.ToDoList
-import com.lelandcer.twodo.models.task.ToDoTask
 
 class ToDoListRecyclerViewAdapter(
-    private val values: List<ToDoList>,
+    private var values: List<ToDoList>,
     private val onInteractionListener: OnInteractionListener,
     private val toDoListDisplay: ToDoListDisplay
 ) : RecyclerView.Adapter<ToDoListRecyclerViewAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    init {
+        setHasStableIds(true)
 
+    }
+
+
+   fun setValues (values: List<ToDoList>) {
+       this.values = values
+        notifyDataSetChanged()
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             FragmentToDoListsBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -43,6 +51,11 @@ class ToDoListRecyclerViewAdapter(
             onInteractionListener.onItemDelete(it, toDoList)
         }
     }
+
+    override fun getItemId(position: Int): Long {
+        return values[position].id.getKey().hashCode().toLong()
+    }
+
 
     override fun getItemCount(): Int = values.size
 

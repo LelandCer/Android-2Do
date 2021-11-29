@@ -14,6 +14,9 @@ class ToDoTaskRecyclerViewAdapter(
     private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.Adapter<ToDoTaskRecyclerViewAdapter.ViewHolder>() {
 
+    init {
+        setHasStableIds(true)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -47,6 +50,10 @@ class ToDoTaskRecyclerViewAdapter(
         override fun toString(): String {
             return super.toString() + " '" + nameView.text + "'"
         }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return values[position].id.getKey().hashCode().toLong()
     }
 
     interface OnInteractionListener {

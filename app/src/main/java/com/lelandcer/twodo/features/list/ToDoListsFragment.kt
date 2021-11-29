@@ -15,6 +15,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 /**
  * A fragment representing a list of Items.
@@ -27,6 +28,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
     lateinit var toDoListDisplay: ToDoListDisplay
     private lateinit var binding: FragmentToDoListsListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
+    private val toDoListItems: MutableList<ToDoList> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,22 +40,26 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
             toDoViewModel.setNewCurrentList()
             findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToEditToDoListFragment())
         }
+        with(binding.lvTdlList) {
+            layoutManager = LinearLayoutManager(context)
+            adapter =
+                ToDoListRecyclerViewAdapter(
+                    toDoListItems,
+                    this@ToDoListsFragment,
+                    toDoListDisplay
+                )
+
+        }
         toDoViewModel.toDoLists.observe(viewLifecycleOwner, this)
 
         return binding.root
     }
 
     override fun onChanged(toDoLists: Collection<ToDoList>?) {
-        with(binding.lvTdlList) {
-            layoutManager = LinearLayoutManager(context)
-            adapter =
-                toDoLists?.toList()?.let {
-                    ToDoListRecyclerViewAdapter(
-                        it.sortedBy { tdl -> tdl.dueAt },
-                        this@ToDoListsFragment,
-                        toDoListDisplay
-                    )
-                }
+        toDoLists?.let {
+            toDoListItems.clear()
+            toDoListItems.addAll(it.sortedBy { tdl -> tdl.dueAt })
+            binding.lvTdlList.adapter?.notifyDataSetChanged()
         }
     }
 
