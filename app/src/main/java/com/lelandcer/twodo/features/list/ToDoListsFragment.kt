@@ -21,7 +21,7 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
-    ToDoListRecyclerViewAdapter.OnToDoListItemClickedListener {
+    ToDoListRecyclerViewAdapter.OnInteractionListener {
 
     @Inject
     lateinit var toDoListDisplay: ToDoListDisplay
@@ -35,8 +35,8 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
         binding = FragmentToDoListsListBinding.inflate(inflater, container, false)
 
         binding.fabTdlNew.setOnClickListener {
-            toDoViewModel.setNewCurrent()
-            findNavController().navigate(ToDoListsFragmentDirections.actionTwoDoListsFragmentToEditToDoListFragment())
+            toDoViewModel.setNewCurrentList()
+            findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToEditToDoListFragment())
         }
         toDoViewModel.toDoLists.observe(viewLifecycleOwner, this)
 
@@ -57,10 +57,14 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
         }
     }
 
-    override fun onToDoListItemClicked(pos: Int, toDoList: ToDoList) {
-        toDoViewModel.setCurrent(toDoList)
-        //TODO direct to ToDoTasksFragment rather than EditToDoListFragment
-        findNavController().navigate(ToDoListsFragmentDirections.actionTwoDoListsFragmentToEditToDoListFragment())
+    override fun onItemClicked(position: Int, list: ToDoList) {
+        toDoViewModel.setCurrentList(list)
+        findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToToDoTasksFragment())
+    }
+
+    override fun onItemDelete(view: View, list: ToDoList) {
+        // TODO require confirmation
+        toDoViewModel.deleteList(list)
 
     }
 }

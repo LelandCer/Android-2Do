@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -15,7 +16,6 @@ import com.lelandcer.twodo.databinding.FragmentEditToDoListBinding
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.list.ToDoList
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -25,8 +25,11 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
     private lateinit var binding: FragmentEditToDoListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
-    @Inject lateinit var toDoListDisplay: ToDoListDisplay
-    private lateinit var toDoList: ToDoList;
+
+    @Inject
+    lateinit var toDoListDisplay: ToDoListDisplay
+    private lateinit var toDoList: ToDoList
+    private val listForm = ListForm()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,13 +37,13 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentEditToDoListBinding.inflate(inflater, container, false)
-        bindClickListeners()
+        bindInteractionListeners()
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
 
         return binding.root
     }
 
-    private fun bindClickListeners() {
+    private fun bindInteractionListeners() {
         binding.btnTdlEditCancel.setOnClickListener {
             onCancel()
         }
@@ -52,6 +55,10 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
         binding.btnTdlEditDate.setOnClickListener {
             launchDateSelector()
         }
+
+        binding.etTdlEditName.doAfterTextChanged {
+            listForm.name = it.toString()
+        }
     }
 
     private fun onCancel() {
@@ -59,6 +66,11 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     }
 
     private fun onSubmit() {
+
+        toDoList.name = listForm.name
+        toDoList.dueAt = listForm.dueAt
+        toDoViewModel.saveCurrentList()
+
         findNavController().popBackStack()
     }
 
@@ -70,12 +82,29 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
                 .build()
 
         datePicker.addOnPositiveButtonClickListener {
-            toDoList.dueAt = Date(it)
-            bindList(toDoList)
-            binding.tvTdlEditSelectedDate.text = toDoListDisplay.dueAtDateFormat()
-
+            val selectedDate = convertDateToLocal(it)
+            listForm.dueAt = selectedDate
+            bindForm(listForm)
         }
         activity?.supportFragmentManager?.let { datePicker.show(it, "") }
+    }
+
+    private fun convertDateToLocal(it: Long): Date {
+        //The MaterialDatePicker always returns the utc representation in millis
+        // We only want the "Day of the month/year" which means different user timezones often get an
+        // off by one error.
+
+        // Issue: https://github.com/material-components/material-components-android/issues/1468
+
+        // For now I just use the calendar to get the day in "UTC" since that's what the user selected
+        // And then set it to a calendar instance for the devices local tz
+        val calLocal = Calendar.getInstance()
+        val calUTC = Calendar.getInstance(TimeZone.getTimeZone("utc"))
+        calUTC.time = Date(it)
+
+        calLocal[Calendar.DAY_OF_YEAR] = calUTC[Calendar.DAY_OF_YEAR]
+        calLocal[Calendar.HOUR_OF_DAY] = 0
+        return calLocal.time
     }
 
     override fun onChanged(toDoList: ToDoList?) {
@@ -86,9 +115,23 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     }
 
     private fun bindList(toDoList: ToDoList) {
-        val display = toDoListDisplay.forToDoLIst(toDoList)
-        binding.etTdlEditName.setText(display.name())
-        binding.tvTdlEditSelectedDate.text = display.dueAtDateFormat()
+        listForm.name = toDoList.name
+        listForm.dueAt = toDoList.dueAt
+        bindForm(listForm)
+    }
+
+    private fun bindForm(listForm: ListForm) {
+        val display = toDoListDisplay.forToDoList(toDoList)
+        binding.etTdlEditName.setText(listForm.name)
+        binding.tvTdlEditSelectedDate.text = display.formatDate(listForm.dueAt)
+    }
+
+    private class ListForm(var name: String = "", var dueAt: Date = Date()) {
+
+        fun validate():Boolean {
+            // TODO validate the form data
+            return true
+        }
     }
 
 }

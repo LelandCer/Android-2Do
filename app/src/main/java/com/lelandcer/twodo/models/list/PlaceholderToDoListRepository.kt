@@ -1,5 +1,6 @@
 package com.lelandcer.twodo.models.list
 
+import android.util.Log
 import com.lelandcer.twodo.models.id.Id
 import com.lelandcer.twodo.models.id.IdFactory
 import com.lelandcer.twodo.models.id.UUIDIdFactory
@@ -13,11 +14,9 @@ import kotlin.collections.ArrayList
  * TODO remove once implemented */
 class PlaceholderToDoListRepository @Inject constructor() : ToDoListRepository {
     private val toDoTaskRepository: ToDoTaskRepository = PlaceholderToDoTaskRepository()
-    private val toDoLists: MutableList<ToDoList>
     private val idFactory: IdFactory = UUIDIdFactory()
 
     init {
-        toDoLists = ArrayList()
 
         createPlaceholder("Important")
         createPlaceholder("First")
@@ -44,11 +43,14 @@ class PlaceholderToDoListRepository @Inject constructor() : ToDoListRepository {
         val now = Date().time
         val daysInMillis = 1000 * 60 * 60 * 24;
         val days = Random().nextInt(5) - 1
-        if(days > 3) Random().nextInt(300) + 3
+        if (days > 3) Random().nextInt(300) + 3
         return Date(now + days * daysInMillis)
     }
 
     override fun index(): MutableList<ToDoList> {
+        toDoLists.forEach {
+            loadTasksFor(it)
+        }
         return toDoLists
     }
 
@@ -73,15 +75,24 @@ class PlaceholderToDoListRepository @Inject constructor() : ToDoListRepository {
         toDoLists.remove(toDoList)
     }
 
+    private fun loadTasksFor(toDoList: ToDoList) {
+        toDoList.toDoTasks = toDoTaskRepository.indexFor(toDoList)
+    }
+
     private fun addPlaceholderTasks(toDoList: ToDoList) {
         val numberOfTasks = Random().nextInt(10)
         for (i in 0..numberOfTasks) {
             val task = toDoTaskRepository.create(toDoList, "Need to do: " + Random().nextLong())
-            if(Random().nextBoolean()) {
+            if (Random().nextBoolean()) {
                 task.complete()
             }
+
             toDoTaskRepository.store(toDoList, task)
         }
+    }
+
+    companion object {
+        private val toDoLists: MutableList<ToDoList> = ArrayList()
 
     }
 }
