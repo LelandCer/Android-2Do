@@ -76,7 +76,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
 
         binding.btnTdtTaskDelete.setOnClickListener {
             toDoViewModel.deleteList(toDoList)
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
         binding.btnTdtTaskEdit.setOnClickListener {
             val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoListFragment()
