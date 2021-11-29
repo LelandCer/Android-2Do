@@ -5,6 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoTasksBinding
 import com.lelandcer.twodo.models.task.ToDoTask
@@ -17,6 +20,7 @@ class ToDoTaskRecyclerViewAdapter(
     init {
         setHasStableIds(true)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -38,6 +42,21 @@ class ToDoTaskRecyclerViewAdapter(
         holder.itemView.setOnClickListener {
             onInteractionListener.onItemClicked(holder.itemView, item)
         }
+
+
+        with(holder.completionLineView) {
+            if (item.isCompleted) {
+                // If showing for the first time animate it
+                // Note I think this only works be stable Ids is true so the view gets reused
+                if (isVisible) return
+                isVisible = true
+                translationX = -width.toFloat()
+                animate().translationX(0F).duration = 300
+            } else {
+                // Important, using Gone results in no animation the first time
+                isInvisible = true
+            }
+        }
     }
 
     override fun getItemCount(): Int = values.size
@@ -46,6 +65,7 @@ class ToDoTaskRecyclerViewAdapter(
         RecyclerView.ViewHolder(binding.root) {
         val nameView: TextView = binding.tvTdtTaskListName
         val deleteButton: Button = binding.btnTdtTaskListDelete
+        val completionLineView: View = binding.vTdtTaskListCompletionLine
 
         override fun toString(): String {
             return super.toString() + " '" + nameView.text + "'"
