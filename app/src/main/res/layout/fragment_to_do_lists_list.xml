@@ -6,23 +6,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/paper_white"
-    tools:context=".main.MainActivity"
->
+    tools:context=".main.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_margin_top">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_lists_list_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/list_margin_start" />
+
+        <TextView
+            style="@style/header_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tdl_header_completion"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/gl_lists_list_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/header_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_margin"
+            android:text="@string/tdl_header_name"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gl_lists_list_margin"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/header_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/text_margin"
+            android:text="@string/tdl_header_due_at"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/v_tdl_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/fragment_to_do_lists_placeholder"
-        android:visibility="invisible"
-        android:layout_gravity="center"/>
+        android:visibility="invisible" />
 
     <View
-        android:layout_marginTop="@dimen/list_margin_top"
-        style="@style/horizontal_line" />
+        style="@style/horizontal_line"
+        android:layout_marginTop="@dimen/list_margin_top" />
+
     <View
-        android:layout_marginStart="@dimen/list_margin_start"
-        style="@style/vertical_line" />
+        style="@style/vertical_line"
+        android:layout_marginStart="@dimen/list_margin_start" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tdl_list"

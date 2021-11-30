@@ -17,4 +17,7 @@
     <string name="tdt_edit_button">Edit</string>
     <string name="tdl_edit_name_hint">What do you wanna do?</string>
     <string name="tdt_edit_name_hint">What do you wanna do?</string>
+    <string name="tdl_header_completion">Done</string>
+    <string name="tdl_header_name">What</string>
+    <string name="tdl_header_due_at">When</string>
 </resources>
