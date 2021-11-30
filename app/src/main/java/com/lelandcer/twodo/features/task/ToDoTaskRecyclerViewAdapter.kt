@@ -36,6 +36,9 @@ class ToDoTaskRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
         holder.nameView.text = item.name
+
+        // With Slide to delete hide the button. Flag for removal
+        holder.deleteButton.isGone = true
         holder.deleteButton.setOnClickListener {
             onInteractionListener.onItemDelete(holder.itemView, item)
         }

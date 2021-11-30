@@ -11,7 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.R
 import com.lelandcer.twodo.databinding.FragmentToDoTasksListBinding
 import com.lelandcer.twodo.features.list.ToDoListDisplay
@@ -51,6 +53,24 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
                 toDoTaskItems,
                 this@ToDoTasksFragment
             )
+
+            // Add a touch helper to slide delete a task
+            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    //Note we remove it from the adapter's list first to avoid a delay
+                    val task = toDoTaskItems.removeAt(viewHolder.absoluteAdapterPosition)
+                    toDoViewModel.deleteTask(task)
+                    adapter?.notifyItemRemoved(viewHolder.absoluteAdapterPosition)
+                }
+            }).attachToRecyclerView(this)
         }
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
         return binding.root
