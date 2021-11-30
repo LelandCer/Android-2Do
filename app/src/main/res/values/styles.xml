@@ -12,4 +12,8 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/maroon</item>
     </style>
+
+    <style name="paper_style">
+        <item name="fontFamily">cursive</item>
+    </style>
 </resources>

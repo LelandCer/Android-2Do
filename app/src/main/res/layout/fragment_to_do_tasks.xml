@@ -11,11 +11,12 @@
         android:id="@+id/gl_tdt_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintGuide_begin="@dimen/task_margin_start"
-        android:orientation="vertical"/>
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/task_margin_start" />
 
     <TextView
         android:id="@+id/tv_tdt_task_list_name"
+        style="@style/paper_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
@@ -24,8 +25,8 @@
         android:focusable="false"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/gl_tdt_list"
         app:layout_constraintEnd_toStartOf="@id/btn_tdt_task_list_delete"
+        app:layout_constraintStart_toStartOf="@id/gl_tdt_list"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -33,21 +34,21 @@
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/btn_close"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/btn_close" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/v_tdt_task_list_completion_line"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginEnd="10dp"
         android:background="@color/maroon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
