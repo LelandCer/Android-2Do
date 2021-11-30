@@ -20,12 +20,7 @@ class ToDoListRecyclerViewAdapter(
         setHasStableIds(true)
 
     }
-
-
-   fun setValues (values: List<ToDoList>) {
-       this.values = values
-        notifyDataSetChanged()
-    }
+    
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             FragmentToDoListsBinding.inflate(
