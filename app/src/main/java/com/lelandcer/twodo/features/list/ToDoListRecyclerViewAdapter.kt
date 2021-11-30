@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
 import com.lelandcer.twodo.models.list.ToDoList
@@ -41,8 +42,11 @@ class ToDoListRecyclerViewAdapter(
         val display = toDoListDisplay.forToDoList(toDoList)
         holder.completionView.text = display.completionRatio()
         holder.nameView.text = display.name()
+
+        // With slide delete implemented, hide the button. Flag for removal
+        holder.deleteButton.isGone = true
         holder.dueDateView.text =
-            display.dueAt() //SimpleDateFormat("dd/MM", Locale.getDefault()).format(toDoList.dueAt)
+            display.dueAt()
         holder.itemView.setOnClickListener {
             onInteractionListener.onItemClicked(position, toDoList)
         }

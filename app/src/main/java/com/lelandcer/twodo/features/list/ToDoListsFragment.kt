@@ -1,5 +1,6 @@
 package com.lelandcer.twodo.features.list
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.R
 import com.lelandcer.twodo.databinding.FragmentToDoListsListBinding
 import com.lelandcer.twodo.main.MainActivity
@@ -20,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+
 
 /**
  * A fragment representing a list of Items.
@@ -48,7 +52,12 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
             layoutManager = LinearLayoutManager(context)
             val dividerItemDecoration =
                 DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
-            dividerItemDecoration.setDrawable(AppCompatResources.getDrawable(this.context, R.drawable.blue_divider)!!)
+            dividerItemDecoration.setDrawable(
+                AppCompatResources.getDrawable(
+                    this.context,
+                    R.drawable.blue_divider
+                )!!
+            )
             addItemDecoration(dividerItemDecoration)
             adapter =
                 ToDoListRecyclerViewAdapter(
@@ -57,6 +66,24 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
                     toDoListDisplay
                 )
 
+            // Add a touch helper to slide delete a list
+            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    //Note we remove it from the adapter's list first to avoid a delay
+                    val list = toDoListItems.removeAt(viewHolder.absoluteAdapterPosition)
+                    toDoViewModel.deleteList(list)
+                    adapter?.notifyItemRemoved(viewHolder.absoluteAdapterPosition)
+                }
+            }).attachToRecyclerView(this)
+
 
         }
         toDoViewModel.toDoLists.observe(viewLifecycleOwner, this)
@@ -64,6 +91,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
         return binding.root
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onChanged(toDoLists: Collection<ToDoList>?) {
         toDoLists?.let {
 
