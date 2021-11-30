@@ -41,17 +41,18 @@
             android:layout_marginStart="@dimen/task_margin_date_start"
             android:layout_marginTop="@dimen/task_margin_date_top"
             android:text="Today"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/gl_tdt_vertical"
+            app:layout_constraintBottom_toTopOf="@id/tv_tdt_due_at_formatted" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_tdt_due_at_formatted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/task_margin_date_space"
+            android:layout_marginBottom="@dimen/task_margin_date_space"
             android:text="Fri, 12/21 \n 20201"
             app:layout_constraintStart_toStartOf="@id/tv_tdt_due_at"
-            app:layout_constraintTop_toBottomOf="@id/tv_tdt_due_at" />
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_tdt_name"
@@ -61,17 +62,18 @@
             android:layout_marginTop="@dimen/task_margin_frame"
             android:text="IMportan task"
             app:layout_constraintStart_toStartOf="@id/gl_tdt_vertical"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_tdt_due_at"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_tdt_completion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/task_margin_frame"
             android:layout_marginBottom="@dimen/task_margin_frame"
             android:text="2/2"
+            app:layout_constraintEnd_toEndOf="@id/gl_tdt_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/gl_tdt_vertical" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_tdt_task_edit"
@@ -100,9 +102,7 @@
         android:id="@+id/rv_tdt_tasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/task_margin_start"
         android:layout_marginTop="@dimen/task_margin_top"
-
         app:layoutManager="LinearLayoutManager"
         tools:context=".features.task.ToDoTasksFragment"
         tools:listitem="@layout/fragment_to_do_tasks">
