@@ -29,7 +29,7 @@ class ToDoViewModel @Inject constructor(
     var currentToDoList: LiveData<ToDoList?> = _currentToDoList
     var currentToDoTask: LiveData<ToDoTask?> = _currentToDoTask
 
-    private val  listsFlow =  flow {
+    private val listsFlow = flow {
         while (true) {
             emit(toDoListRepository.index())
             delay(500)
@@ -64,27 +64,39 @@ class ToDoViewModel @Inject constructor(
     fun saveCurrentTask() {
         val toDoList = currentToDoList.value!!
         val toDoTask = currentToDoTask.value!!
-        toDoTaskRepository.store(toDoList, toDoTask)
-        _currentToDoList.postValue(toDoList)
-        _currentToDoTask.postValue(toDoTask)
+        viewModelScope.launch {
+            toDoTaskRepository.store(toDoList, toDoTask)
+            _currentToDoList.postValue(toDoList)
+            _currentToDoTask.postValue(toDoTask)
+        }
+
     }
 
     fun saveCurrentList() {
         val toDoList = currentToDoList.value!!
-        toDoListRepository.store(toDoList)
-        _currentToDoList.postValue(toDoList)
+        viewModelScope.launch {
+
+            toDoListRepository.store(toDoList)
+            _currentToDoList.postValue(toDoList)
+        }
 
     }
 
     fun deleteTask(toDoTask: ToDoTask) {
         val toDoList = currentToDoList.value!!
-        toDoTaskRepository.delete(toDoTask)
-        _currentToDoList.postValue(toDoList)
+        viewModelScope.launch {
+
+            toDoTaskRepository.delete(toDoTask)
+            _currentToDoList.postValue(toDoList)
+        }
     }
 
     fun deleteList(toDoList: ToDoList) {
-        toDoListRepository.delete(toDoList)
-        _currentToDoList.postValue(toDoList)
+        viewModelScope.launch {
+
+            toDoListRepository.delete(toDoList)
+            _currentToDoList.postValue(toDoList)
+        }
     }
 
 

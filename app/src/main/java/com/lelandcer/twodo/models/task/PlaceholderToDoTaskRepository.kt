@@ -13,13 +13,13 @@ import kotlin.collections.HashMap
  * TODO remove once implemented */
 class PlaceholderToDoTaskRepository @Inject constructor() : ToDoTaskRepository {
     private val idFactory: IdFactory = UUIDIdFactory()
-    override fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask> {
+    override suspend fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask> {
         val id = toDoList.id.getKey()
         val list = tasksForListId(id)
         return list.values
     }
 
-    override fun store(toDoList: ToDoList, toDoTask: ToDoTask) {
+    override suspend fun store(toDoList: ToDoList, toDoTask: ToDoTask) {
         val tasks = tasksForListId(toDoList.id.getKey())
         tasks.put(toDoTask.id.getKey(), toDoTask)
 
@@ -29,7 +29,7 @@ class PlaceholderToDoTaskRepository @Inject constructor() : ToDoTaskRepository {
         return ToDoTask(idFactory.makeId(), toDoList.id, name)
     }
 
-    override fun delete(toDoTask: ToDoTask) {
+    override suspend fun delete(toDoTask: ToDoTask) {
         val taskList = taskMap[toDoTask.listId.getKey()]
         taskList?.remove(toDoTask.id.getKey())
     }

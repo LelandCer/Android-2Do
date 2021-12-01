@@ -11,12 +11,12 @@ interface ToDoListRepository {
      * Note: no pagination
      * TODO add either limitations or pagination
      */
-    fun index(): MutableCollection<ToDoList>
+    suspend fun index(): MutableCollection<ToDoList>
 
     /**
      * Get a specific List for a provided Id
      */
-    fun getById(id: Id): ToDoList?
+    suspend fun getById(id: Id): ToDoList?
 
     /**
      * Create a new List
@@ -26,10 +26,10 @@ interface ToDoListRepository {
     /**
      * Store a List
      */
-    fun store(toDoList: ToDoList)
+    suspend fun store(toDoList: ToDoList)
 
     /**
      * Delete a List from storage
      */
-    fun delete(toDoList: ToDoList)
+    suspend fun delete(toDoList: ToDoList)
 }
