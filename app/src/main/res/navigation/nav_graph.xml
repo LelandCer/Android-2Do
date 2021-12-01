@@ -12,10 +12,19 @@
         tools:layout="@layout/fragment_to_do_lists_list">
         <action
             android:id="@+id/action_toDoListsFragment_to_toDoTasksFragment"
-            app:destination="@id/toDoTasksFragment" />
+            app:destination="@id/toDoTasksFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_right"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_left"
+            />
         <action
             android:id="@+id/action_toDoListsFragment_to_editToDoListFragment"
-            app:destination="@id/editToDoListFragment" />
+            app:destination="@id/editToDoListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/toDoTasksFragment"
@@ -24,10 +33,18 @@
         tools:layout="@layout/fragment_to_do_tasks_list">
         <action
             android:id="@+id/action_toDoTasksFragment_to_editToDoTaskFragment"
-            app:destination="@id/editToDoTaskFragment" />
+            app:destination="@id/editToDoTaskFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
         <action
             android:id="@+id/action_toDoTasksFragment_to_editToDoListFragment"
-            app:destination="@id/editToDoListFragment" />
+            app:destination="@id/editToDoListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
     </fragment>
     <dialog
         android:id="@+id/editToDoListFragment"

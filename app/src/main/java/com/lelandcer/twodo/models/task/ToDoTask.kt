@@ -7,12 +7,14 @@ class ToDoTask(
     var id: Id,
     var listId: Id,
     var name: String,
+    val createdAt:Date = Date()
 ) {
     var isCompleted: Boolean = false
     private set
 
     var completedAt: Date? = null
     private set
+
 
     override fun equals(other: Any?): Boolean =
         other is ToDoTask && id == other.id

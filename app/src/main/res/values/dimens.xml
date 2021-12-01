@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_margin">16dp</dimen>
-    <dimen name="list_margin_top">20dp</dimen>
-    <dimen name="list_margin_start">20dp</dimen>
+    <dimen name="list_margin_top">40dp</dimen>
+    <dimen name="list_margin_start">50dp</dimen>
     <dimen name="task_margin_top">100dp</dimen>
-    <dimen name="task_margin_start">100dp</dimen>
+    <dimen name="task_margin_start">@dimen/list_margin_start</dimen>
     <dimen name="task_margin_frame">16dp</dimen>
     <dimen name="task_margin_date_start">@dimen/task_margin_frame</dimen>
     <dimen name="task_margin_date_top">@dimen/task_margin_frame</dimen>

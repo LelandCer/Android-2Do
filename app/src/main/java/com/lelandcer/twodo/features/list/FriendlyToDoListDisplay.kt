@@ -8,6 +8,7 @@ import javax.inject.Inject
 /** A display implementation for ToDoList that is less "business" and more "fun" */
 class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
     private var toDoList: ToDoList? = null
+
     override fun forToDoList(toDoList: ToDoList): ToDoListDisplay {
         this.toDoList = toDoList
         return this
@@ -26,12 +27,13 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
 
     override fun dueAt(): String {
         toDoList?.let {
-            var difference = getDifferenceInDays(it.dueAt)
-            if (difference < 0) return "Failed"
+            if (isComplete()) return DONE_LABEL
+            val difference = getDifferenceInDays(it.dueAt)
+            if (difference < 0) return LATE_LABEL
             return when (difference) {
-                0 -> "Today"
-                1 -> "Tomorrow"
-                in 2..9 -> "$difference Days"
+                0 -> TODAY_LABEL
+                in 1..SOON_DATE -> SOON_LABEL
+                in (SOON_DATE + 1)..9 -> "$difference $COUNTER_LABEL"
                 else -> dueAtDateFormat()
             }
 
@@ -41,29 +43,32 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
 
     override fun dueAtDateFormat(): String {
         toDoList?.let {
-            return dateToString(it.dueAt)
+            return formatDate(it.dueAt)
         }
         return "?.?"
     }
 
     override fun formatDate(date: Date): String {
-        val format = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault())
+        val format = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
         format.timeZone = Calendar.getInstance().timeZone
         return format.format(date)
     }
 
-    private fun dateToString(date: Date): String {
-        val newText: String
-
-        if (getDifferenceInDays(date) < 0) {
-            newText = "Too late now!"
-        } else {
-            newText = formatDate(date)
-        }
-
-        return newText
+    override fun isComplete(): Boolean {
+        return toDoList!!.isCompleted()
     }
 
+    override fun isSoon(): Boolean {
+        val difference = getDifferenceInDays(toDoList!!.dueAt)
+        return difference in 0..SOON_DATE
+    }
+
+    override fun isLate(): Boolean {
+        val difference = getDifferenceInDays(toDoList!!.dueAt)
+        return difference < 0
+    }
+
+    /** Get the date for today, without any time components */
     private fun getDateForToday(): Date {
         val calendar = Calendar.getInstance()
         calendar[Calendar.HOUR_OF_DAY] = 0
@@ -73,6 +78,7 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
         return calendar.time
     }
 
+    /** Get the difference from now to the provided date in calendar days. */
     private fun getDifferenceInDays(date: Date): Int {
         val daysInMilli = 24 * 60 * 60 * 1000
         val difference = date.time - getDateForToday().time
@@ -85,5 +91,18 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
         }
         return days
 
+    }
+
+    companion object {
+        // TODO convert to translatable resources
+        private const val DONE_LABEL: String = "Done"
+        private const val LATE_LABEL: String = "Late"
+        private const val SOON_LABEL: String = "Soon"
+        private const val TODAY_LABEL: String = "Today"
+        private const val DATE_FORMAT: String = "yyyy.MM.dd"
+        private const val COUNTER_LABEL: String = "Days"
+
+        // Number of days that is considered soon.
+        private const val SOON_DATE = 1
     }
 }

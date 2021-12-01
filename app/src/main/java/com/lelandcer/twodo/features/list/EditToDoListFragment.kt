@@ -35,7 +35,6 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentEditToDoListBinding.inflate(inflater, container, false)
         bindInteractionListeners()
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
@@ -128,7 +127,7 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
     private class ListForm(var name: String = "", var dueAt: Date = Date()) {
 
-        fun validate():Boolean {
+        fun validate(): Boolean {
             // TODO validate the form data
             return true
         }

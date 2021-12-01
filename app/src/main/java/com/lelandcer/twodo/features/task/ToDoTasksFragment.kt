@@ -5,13 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.lelandcer.twodo.R
 import com.lelandcer.twodo.databinding.FragmentToDoTasksListBinding
 import com.lelandcer.twodo.features.list.ToDoListDisplay
+import com.lelandcer.twodo.main.MainActivity
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.task.ToDoTask
@@ -29,6 +35,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
     lateinit var toDoListDisplay: ToDoListDisplay
     private lateinit var binding: FragmentToDoTasksListBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
+    private val toDoTaskItems: MutableList<ToDoTask> = ArrayList()
 
 
     override fun onCreateView(
@@ -36,7 +43,35 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentToDoTasksListBinding.inflate(inflater, container, false)
+        with(binding.rvTdtTasks) {
+            layoutManager = LinearLayoutManager(context)
+            val dividerItemDecoration =
+                DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+            dividerItemDecoration.setDrawable(AppCompatResources.getDrawable(this.context, R.drawable.blue_divider)!!)
+            addItemDecoration(dividerItemDecoration)
+            adapter = ToDoTaskRecyclerViewAdapter(
+                toDoTaskItems,
+                this@ToDoTasksFragment
+            )
 
+            // Add a touch helper to slide delete a task
+            ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    //Note we remove it from the adapter's list first to avoid a delay
+                    val task = toDoTaskItems.removeAt(viewHolder.absoluteAdapterPosition)
+                    toDoViewModel.deleteTask(task)
+                    adapter?.notifyItemRemoved(viewHolder.absoluteAdapterPosition)
+                }
+            }).attachToRecyclerView(this)
+        }
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
         return binding.root
     }
@@ -59,25 +94,29 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
         binding.tvTdtName.text = display.name()
         binding.tvTdtCompletion.text = display.completionRatio()
         binding.tvTdtDueAt.text = display.dueAt()
-        binding.tvTdtDueAtFormatted.text = display.dueAtDateFormat()
+        binding.tvTdtDueAtFormatted.text = display.formatDate(toDoList.dueAt)
 
-        // Set the adapter
-        with(binding.rvTdtTasks) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = ToDoTaskRecyclerViewAdapter(
-                toDoList.toDoTasks.toList(),
-                this@ToDoTasksFragment
-            )
+        toDoTaskItems.clear()
+        toDoTaskItems.addAll(toDoList.toDoTasks.sortedBy { tdt -> tdt.createdAt })
+        binding.rvTdtTasks.adapter?.notifyDataSetChanged()
+
+        if (toDoTaskItems.isEmpty()) {
+            binding.rvTdtTasks.visibility = View.GONE
+            binding.vTdtEmpty.visibility = View.VISIBLE
+        } else {
+            binding.rvTdtTasks.visibility = View.VISIBLE
+            binding.vTdtEmpty.visibility = View.GONE
         }
+
         binding.btnTdtTaskDelete.setOnClickListener {
             toDoViewModel.deleteList(toDoList)
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
         binding.btnTdtTaskEdit.setOnClickListener {
             val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoListFragment()
             findNavController().navigate(action)
         }
-        binding.fabTdlNew.setOnClickListener {
+        (activity as MainActivity?)?.fab?.setOnClickListener {
             toDoViewModel.setNewCurrentTask()
             val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoTaskFragment()
             findNavController().navigate(action)
@@ -87,7 +126,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
 
     override fun onItemClicked(view: View, task: ToDoTask) {
         toDoViewModel.setCurrentTask(task)
-        if(!task.isCompleted)  task.complete() else task.unComplete()
+        if (!task.isCompleted) task.complete() else task.unComplete()
         toDoViewModel.saveCurrentTask()
     }
 

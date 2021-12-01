@@ -5,19 +5,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.task.ToDoTask
 
+/** Adapter for the ToDoLists Items */
 class ToDoListRecyclerViewAdapter(
-    private val values: List<ToDoList>,
+    private var values: List<ToDoList>,
     private val onInteractionListener: OnInteractionListener,
-    private val toDoListDisplay: ToDoListDisplay
+    private val toDoListDisplay: ToDoListDisplay,
+    private val colorList: ColorList
 ) : RecyclerView.Adapter<ToDoListRecyclerViewAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    init {
+        setHasStableIds(true)
 
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             FragmentToDoListsBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -29,12 +36,15 @@ class ToDoListRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val toDoList = values[position]
+        val toDoList = getItemAt(position)
         val display = toDoListDisplay.forToDoList(toDoList)
         holder.completionView.text = display.completionRatio()
         holder.nameView.text = display.name()
+
+        // With slide delete implemented, hide the button. Flag for removal
+        holder.deleteButton.isGone = true
         holder.dueDateView.text =
-            display.dueAt() //SimpleDateFormat("dd/MM", Locale.getDefault()).format(toDoList.dueAt)
+            display.dueAt()
         holder.itemView.setOnClickListener {
             onInteractionListener.onItemClicked(position, toDoList)
         }
@@ -42,6 +52,25 @@ class ToDoListRecyclerViewAdapter(
         holder.deleteButton.setOnClickListener {
             onInteractionListener.onItemDelete(it, toDoList)
         }
+
+        if (display.isComplete()) bindColor(holder, colorList.completed)
+        else if (display.isLate()) bindColor(holder, colorList.late)
+        else if (display.isSoon()) bindColor(holder, colorList.soon)
+    }
+
+    private fun bindColor(holder: ToDoListRecyclerViewAdapter.ViewHolder, color: Int) {
+        holder.nameView.setTextColor(color)
+        holder.completionView.setTextColor(color)
+        holder.dueDateView.setTextColor(color)
+
+    }
+
+    override fun getItemId(position: Int): Long {
+        return getItemAt(position).id.getKey().hashCode().toLong()
+    }
+
+    private fun getItemAt(position: Int): ToDoList {
+        return values[position]
     }
 
     override fun getItemCount(): Int = values.size
@@ -52,13 +81,22 @@ class ToDoListRecyclerViewAdapter(
         val nameView: TextView = binding.tvTdlName
         val dueDateView: TextView = binding.tvTdlDueAt
         val deleteButton: Button = binding.btnTdlDelete
-
-
     }
 
     interface OnInteractionListener {
         fun onItemClicked(position: Int, list: ToDoList)
-        fun onItemDelete(view: View, list:ToDoList)
+        fun onItemDelete(view: View, list: ToDoList)
     }
+
+    // This is the most straightforward solution for now
+    // The primary problem was using color resources, which was difficult inside the adapter
+    // since it requires context calls. So instead the adapter is given a list of colors to use
+    // TODO find a way to abstract this into styles or states
+    class ColorList(
+        val completed: Int,
+        val late: Int,
+        val soon: Int
+    )
+
 
 }
