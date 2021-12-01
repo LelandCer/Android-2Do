@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -63,7 +64,12 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
                 ToDoListRecyclerViewAdapter(
                     toDoListItems,
                     this@ToDoListsFragment,
-                    toDoListDisplay
+                    toDoListDisplay,
+                    ToDoListRecyclerViewAdapter.ColorList(
+                        ContextCompat.getColor(context, R.color.list_completed),
+                        ContextCompat.getColor(context, R.color.list_failed),
+                        ContextCompat.getColor(context, R.color.list_soon),
+                    )
                 )
 
             // Add a touch helper to slide delete a list

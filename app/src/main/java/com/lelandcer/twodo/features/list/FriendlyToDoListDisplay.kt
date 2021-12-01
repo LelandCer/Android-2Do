@@ -8,6 +8,8 @@ import javax.inject.Inject
 /** A display implementation for ToDoList that is less "business" and more "fun" */
 class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
     private var toDoList: ToDoList? = null
+
+    private val soonDate = 1
     override fun forToDoList(toDoList: ToDoList): ToDoListDisplay {
         this.toDoList = toDoList
         return this
@@ -26,12 +28,14 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
 
     override fun dueAt(): String {
         toDoList?.let {
-            var difference = getDifferenceInDays(it.dueAt)
-            if (difference < 0) return "Oops"
+            if (isComplete()) return "Done"
+            val difference = getDifferenceInDays(it.dueAt)
+            // TODO resources
+            if (difference < 0) return "Late"
             return when (difference) {
                 0 -> "Today"
-                1 -> "Soon"
-                in 2..9 -> "$difference Days"
+                in 1..soonDate -> "Soon"
+                in (soonDate+1)..9 -> "$difference Days"
                 else -> dueAtDateFormat()
             }
 
@@ -41,7 +45,7 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
 
     override fun dueAtDateFormat(): String {
         toDoList?.let {
-            return dateToString(it.dueAt)
+            return formatDate(it.dueAt)
         }
         return "?.?"
     }
@@ -52,16 +56,18 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
         return format.format(date)
     }
 
-    private fun dateToString(date: Date): String {
-        val newText: String
+    override fun isComplete(): Boolean {
+         return toDoList!!.isCompleted()
+    }
 
-        if (getDifferenceInDays(date) < 0) {
-            newText = "Too late now!"
-        } else {
-            newText = formatDate(date)
-        }
+    override fun isSoon(): Boolean {
+        val difference = getDifferenceInDays(toDoList!!.dueAt)
+        return difference in 0..soonDate
+    }
 
-        return newText
+    override fun isLate(): Boolean {
+        val difference = getDifferenceInDays(toDoList!!.dueAt)
+        return difference < 0
     }
 
     private fun getDateForToday(): Date {

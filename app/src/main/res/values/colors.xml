@@ -12,4 +12,12 @@
     <color name="maroon">#800000</color>
     <color name="pink_maroon">#C34664</color>
     <color name="paper_white">#F9FBFF</color>
+    <color name="orange">#FF9800</color>
+    <color name="green">#009688</color>
+
+
+
+    <color name="list_completed">@color/green</color>
+    <color name="list_failed">@color/maroon</color>
+    <color name="list_soon">@color/orange</color>
 </resources>

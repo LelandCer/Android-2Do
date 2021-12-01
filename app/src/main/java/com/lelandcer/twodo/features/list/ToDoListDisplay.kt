@@ -11,4 +11,7 @@ interface ToDoListDisplay {
     fun dueAt(): String
     fun dueAtDateFormat():String
     fun formatDate(date:Date): String
+    fun isComplete(): Boolean
+    fun isSoon(): Boolean
+    fun isLate(): Boolean
 }
