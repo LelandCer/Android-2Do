@@ -35,7 +35,7 @@ class ToDoTaskRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
+        val item = getItemAt(position)
         holder.nameView.text = item.name
 
         // With Slide to delete hide the button. Flag for removal
@@ -46,7 +46,6 @@ class ToDoTaskRecyclerViewAdapter(
         holder.itemView.setOnClickListener {
             onInteractionListener.onItemClicked(holder.itemView, item)
         }
-
 
         with(holder.completionLineView) {
             if (item.isCompleted) {
@@ -76,7 +75,11 @@ class ToDoTaskRecyclerViewAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return values[position].id.getKey().hashCode().toLong()
+        return getItemAt(position).id.getKey().hashCode().toLong()
+    }
+
+    private fun getItemAt(position: Int): ToDoTask {
+        return values[position]
     }
 
     interface OnInteractionListener {

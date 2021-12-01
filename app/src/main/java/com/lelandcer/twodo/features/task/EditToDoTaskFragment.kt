@@ -25,7 +25,6 @@ class EditToDoTaskFragment : DialogFragment(), Observer<ToDoTask?> {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentEditToDoTaskBinding.inflate(inflater, container, false)
         toDoViewModel.currentToDoTask.observe(viewLifecycleOwner, this)
         bindInteractionListeners()
@@ -65,6 +64,7 @@ class EditToDoTaskFragment : DialogFragment(), Observer<ToDoTask?> {
     private fun bindTask(toDoTask: ToDoTask) {
         this.toDoTask = toDoTask
         taskForm.name = toDoTask.name
+        bindForm(taskForm)
     }
 
     private fun bindForm(taskForm: TaskForm) {

@@ -49,6 +49,8 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
             toDoViewModel.setNewCurrentList()
             findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToEditToDoListFragment())
         }
+
+        // Set up the RecyclerView
         with(binding.rvTdlList) {
             layoutManager = LinearLayoutManager(context)
             val dividerItemDecoration =
@@ -111,6 +113,9 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
             }
             toDoListItems.clear()
             toDoListItems.addAll(it.sortedBy { tdl -> tdl.dueAt })
+
+            // Right now I'm passing in a new list every time, so understanding
+            // what changed would take more than a notify all call would
             binding.rvTdlList.adapter?.notifyDataSetChanged()
         }
     }
@@ -121,7 +126,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
     }
 
     override fun onItemDelete(view: View, list: ToDoList) {
-        // TODO require confirmation
+        // TODO require confirmation or allow undo
         toDoViewModel.deleteList(list)
 
     }

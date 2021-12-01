@@ -9,6 +9,7 @@ import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
 import com.lelandcer.twodo.models.list.ToDoList
+import com.lelandcer.twodo.models.task.ToDoTask
 
 /** Adapter for the ToDoLists Items */
 class ToDoListRecyclerViewAdapter(
@@ -35,7 +36,7 @@ class ToDoListRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val toDoList = values[position]
+        val toDoList = getItemAt(position)
         val display = toDoListDisplay.forToDoList(toDoList)
         holder.completionView.text = display.completionRatio()
         holder.nameView.text = display.name()
@@ -65,7 +66,11 @@ class ToDoListRecyclerViewAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return values[position].id.getKey().hashCode().toLong()
+        return getItemAt(position).id.getKey().hashCode().toLong()
+    }
+
+    private fun getItemAt(position: Int): ToDoList {
+        return values[position]
     }
 
     override fun getItemCount(): Int = values.size
@@ -76,8 +81,6 @@ class ToDoListRecyclerViewAdapter(
         val nameView: TextView = binding.tvTdlName
         val dueDateView: TextView = binding.tvTdlDueAt
         val deleteButton: Button = binding.btnTdlDelete
-
-
     }
 
     interface OnInteractionListener {
@@ -86,6 +89,8 @@ class ToDoListRecyclerViewAdapter(
     }
 
     // This is the most straightforward solution for now
+    // The primary problem was using color resources, which was difficult inside the adapter
+    // since it requires context calls. So instead the adapter is given a list of colors to use
     // TODO find a way to abstract this into styles or states
     class ColorList(
         val completed: Int,
