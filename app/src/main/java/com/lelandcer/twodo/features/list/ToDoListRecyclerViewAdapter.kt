@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
 import com.lelandcer.twodo.models.list.ToDoList
 
+/** Adapter for the ToDoLists Items */
 class ToDoListRecyclerViewAdapter(
     private var values: List<ToDoList>,
     private val onInteractionListener: OnInteractionListener,
@@ -51,9 +52,9 @@ class ToDoListRecyclerViewAdapter(
             onInteractionListener.onItemDelete(it, toDoList)
         }
 
-        if(display.isComplete()) bindColor(holder, colorList.completed)
-        else if(display.isLate()) bindColor(holder, colorList.late )
-        else if(display.isSoon()) bindColor(holder, colorList.soon)
+        if (display.isComplete()) bindColor(holder, colorList.completed)
+        else if (display.isLate()) bindColor(holder, colorList.late)
+        else if (display.isSoon()) bindColor(holder, colorList.soon)
     }
 
     private fun bindColor(holder: ToDoListRecyclerViewAdapter.ViewHolder, color: Int) {
@@ -66,7 +67,6 @@ class ToDoListRecyclerViewAdapter(
     override fun getItemId(position: Int): Long {
         return values[position].id.getKey().hashCode().toLong()
     }
-
 
     override fun getItemCount(): Int = values.size
 

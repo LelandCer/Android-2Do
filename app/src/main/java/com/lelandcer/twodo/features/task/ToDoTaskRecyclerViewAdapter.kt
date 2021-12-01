@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoTasksBinding
 import com.lelandcer.twodo.models.task.ToDoTask
 
+/** An adapter for a ToDoTask list item */
 class ToDoTaskRecyclerViewAdapter(
     private val values: List<ToDoTask>,
     private val onInteractionListener: OnInteractionListener
@@ -53,8 +54,7 @@ class ToDoTaskRecyclerViewAdapter(
                 // Note I think this only works be stable Ids is true so the view gets reused
                 if (isVisible) return
                 isVisible = true
-                translationX = -width.toFloat()
-                animate().translationX(0F).duration = 300
+                StrikeThroughAnimator(this).animate()
             } else {
                 // Important, using Gone results in no animation the first time
                 isInvisible = true
