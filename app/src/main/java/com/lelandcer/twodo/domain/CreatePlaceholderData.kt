@@ -1,13 +1,19 @@
 package com.lelandcer.twodo.domain
 
 import com.lelandcer.twodo.models.list.ToDoList
+import com.lelandcer.twodo.models.list.ToDoListFactory
 import com.lelandcer.twodo.models.list.ToDoListRepository
+import com.lelandcer.twodo.models.task.ToDoTaskFactory
 import com.lelandcer.twodo.models.task.ToDoTaskRepository
 import kotlinx.coroutines.runBlocking
 import java.util.*
 import javax.inject.Inject
 
-class CreatePlaceholderData @Inject constructor(private val toDoListRepository: ToDoListRepository, private val toDoTaskRepository: ToDoTaskRepository) {
+class CreatePlaceholderData @Inject constructor(
+    private val toDoListRepository: ToDoListRepository,
+    private val toDoTaskRepository: ToDoTaskRepository,
+    private val toDoListFactory: ToDoListFactory,
+    private val toDoTaskFactory: ToDoTaskFactory) {
 
     fun create() {
         runBlocking {
@@ -28,7 +34,7 @@ class CreatePlaceholderData @Inject constructor(private val toDoListRepository: 
     private suspend fun addPlaceholderTasks(toDoList: ToDoList) {
         val numberOfTasks = Random().nextInt(10)
         for (i in 0..numberOfTasks) {
-            val task = toDoTaskRepository.create(toDoList, "Need to do: " + Random().nextLong())
+            val task = toDoTaskFactory.makeToDoTask(toDoList, "Need to do: " + Random().nextLong())
             if (Random().nextBoolean()) {
                 task.complete()
             }
@@ -40,7 +46,7 @@ class CreatePlaceholderData @Inject constructor(private val toDoListRepository: 
 
 
     private suspend fun createPlaceholder(name: String) {
-        val list = toDoListRepository.create(name, randomDate())
+        val list = toDoListFactory.makeToDoList(name, randomDate())
         addPlaceholderTasks(list)
         toDoListRepository.store(list)
 

@@ -16,10 +16,6 @@ interface ToDoTaskRepository {
      */
     suspend fun store(toDoList: ToDoList, toDoTask: ToDoTask)
 
-    /**
-     * Create a new Task instance
-     */
-    fun create(toDoList: ToDoList, name: String): ToDoTask
 
     /**
      * Delete a Task from storage

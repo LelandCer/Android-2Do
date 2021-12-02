@@ -19,11 +19,6 @@ interface ToDoListRepository {
     suspend fun getById(id: Id): ToDoList?
 
     /**
-     * Create a new List
-     */
-    fun create(name: String, dueAt: Date): ToDoList
-
-    /**
      * Store a List
      */
     suspend fun store(toDoList: ToDoList)

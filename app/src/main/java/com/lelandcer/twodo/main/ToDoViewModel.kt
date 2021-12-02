@@ -4,24 +4,31 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lelandcer.twodo.domain.CreatePlaceholderData
+import com.lelandcer.twodo.domain.*
 import com.lelandcer.twodo.models.list.ToDoList
-import com.lelandcer.twodo.models.list.ToDoListRepository
+import com.lelandcer.twodo.models.list.ToDoListFactory
 import com.lelandcer.twodo.models.task.ToDoTask
-import com.lelandcer.twodo.models.task.ToDoTaskRepository
+import com.lelandcer.twodo.models.task.ToDoTaskFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import javax.inject.Inject
 
 
 @HiltViewModel
 class ToDoViewModel @Inject constructor(
-    private val toDoListRepository: ToDoListRepository,
-    private val toDoTaskRepository: ToDoTaskRepository
+    createPlaceholderData: CreatePlaceholderData,
+    private val saveToDoTask: SaveToDoTask,
+    private val saveToDoList: SaveToDoList,
+    private val deleteToDoList: DeleteToDoList,
+    private val deleteToDoTask: DeleteToDoTask,
+    private val toDoListFactory: ToDoListFactory,
+    private val toDoTaskFactory: ToDoTaskFactory,
+    private val getLists: GetLists
 ) : ViewModel() {
     private val _toDoLists = MutableLiveData<Collection<ToDoList>>()
     private val _currentToDoList = MutableLiveData<ToDoList?>()
@@ -32,8 +39,9 @@ class ToDoViewModel @Inject constructor(
 
     private val listsFlow = flow {
         while (true) {
-            emit(toDoListRepository.index())
+            emit(getLists.execute())
             delay(500)
+            break;
         }
     }
 
@@ -44,8 +52,15 @@ class ToDoViewModel @Inject constructor(
             }
         }
 
-        CreatePlaceholderData(toDoListRepository, toDoTaskRepository).create()
 
+        createPlaceholderData.create()
+
+    }
+
+    private fun updateLists() {
+        viewModelScope.launch {
+            _toDoLists.postValue(getLists.execute())
+        }
     }
 
     fun setCurrentList(toDoList: ToDoList) {
@@ -53,7 +68,7 @@ class ToDoViewModel @Inject constructor(
     }
 
     fun setNewCurrentList() {
-        _currentToDoList.value = toDoListRepository.create("", Date())
+        _currentToDoList.value = toDoListFactory.makeToDoList("", Date())
     }
 
     fun setCurrentTask(toDoTask: ToDoTask) {
@@ -61,14 +76,15 @@ class ToDoViewModel @Inject constructor(
     }
 
     fun setNewCurrentTask() {
-        _currentToDoTask.value = currentToDoList.value?.let { toDoTaskRepository.create(it, "") }
+        _currentToDoTask.value = currentToDoList.value?.let { toDoTaskFactory.makeToDoTask(it, "") }
     }
 
     fun saveCurrentTask() {
         val toDoList = currentToDoList.value!!
         val toDoTask = currentToDoTask.value!!
         viewModelScope.launch {
-            toDoTaskRepository.store(toDoList, toDoTask)
+            saveToDoTask.execute(toDoTask)
+            updateLists()
             _currentToDoList.postValue(toDoList)
             _currentToDoTask.postValue(toDoTask)
         }
@@ -78,8 +94,8 @@ class ToDoViewModel @Inject constructor(
     fun saveCurrentList() {
         val toDoList = currentToDoList.value!!
         viewModelScope.launch {
-
-            toDoListRepository.store(toDoList)
+            saveToDoList.execute(toDoList)
+            updateLists()
             _currentToDoList.postValue(toDoList)
         }
 
@@ -88,17 +104,21 @@ class ToDoViewModel @Inject constructor(
     fun deleteTask(toDoTask: ToDoTask) {
         val toDoList = currentToDoList.value!!
         viewModelScope.launch {
-
-            toDoTaskRepository.delete(toDoTask)
+            if (currentToDoTask.value == toDoTask) {
+                _currentToDoTask.postValue(null)
+            }
+            deleteToDoTask.execute(toDoTask)
             _currentToDoList.postValue(toDoList)
         }
     }
 
     fun deleteList(toDoList: ToDoList) {
-        viewModelScope.launch {
-
-            toDoListRepository.delete(toDoList)
-            _currentToDoList.postValue(toDoList)
+        runBlocking {
+            if (currentToDoList.value == toDoList) _currentToDoList.postValue(null)
+            if (currentToDoList.value?.id == currentToDoTask.value?.listId) _currentToDoTask.postValue(
+                null
+            )
+            deleteToDoList.execute(toDoList)
         }
     }
 
