@@ -1,10 +1,11 @@
-package com.lelandcer.twodo.models.list
+package com.lelandcer.twodo.models.list.repositories
 
 import com.lelandcer.twodo.models.id.Id
+import com.lelandcer.twodo.models.list.ToDoList
 import javax.inject.Inject
 
 /** A repository for saving lists in memory */
-class CacheToDoListRepository @Inject constructor() : ToDoListRepository {
+class MemCacheToDoListRepository @Inject constructor() : CacheToDoListRepository {
 
     override suspend fun index(): MutableList<ToDoList> {
         return toDoLists

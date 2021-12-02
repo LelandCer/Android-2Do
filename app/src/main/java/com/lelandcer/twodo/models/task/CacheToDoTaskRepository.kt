@@ -8,7 +8,7 @@ class CacheToDoTaskRepository @Inject constructor() : ToDoTaskRepository {
     override suspend fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask> {
         val id = toDoList.id.getKey()
         val list = tasksForListId(id)
-        return list.values
+        return ArrayList(list.values)
     }
 
     override suspend fun store(toDoList: ToDoList, toDoTask: ToDoTask) {

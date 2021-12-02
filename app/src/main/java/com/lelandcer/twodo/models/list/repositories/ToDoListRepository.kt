@@ -1,7 +1,7 @@
-package com.lelandcer.twodo.models.list
+package com.lelandcer.twodo.models.list.repositories
 
 import com.lelandcer.twodo.models.id.Id
-import java.util.*
+import com.lelandcer.twodo.models.list.ToDoList
 
 /** Manages the storage and retrieval of Lists */
 interface ToDoListRepository {

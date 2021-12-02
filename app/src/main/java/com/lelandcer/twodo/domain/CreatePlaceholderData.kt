@@ -2,7 +2,7 @@ package com.lelandcer.twodo.domain
 
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.list.ToDoListFactory
-import com.lelandcer.twodo.models.list.ToDoListRepository
+import com.lelandcer.twodo.models.list.repositories.ToDoListRepository
 import com.lelandcer.twodo.models.task.ToDoTaskFactory
 import com.lelandcer.twodo.models.task.ToDoTaskRepository
 import kotlinx.coroutines.runBlocking
