@@ -3,9 +3,8 @@ package com.lelandcer.twodo.models.task
 import com.lelandcer.twodo.models.list.ToDoList
 import javax.inject.Inject
 
-/** A static placeholder repository for lists
- * TODO remove once implemented */
-class PlaceholderToDoTaskRepository @Inject constructor() : ToDoTaskRepository {
+/** A repository for saving the tasks in memory */
+class CacheToDoTaskRepository @Inject constructor() : ToDoTaskRepository {
     override suspend fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask> {
         val id = toDoList.id.getKey()
         val list = tasksForListId(id)
@@ -14,7 +13,7 @@ class PlaceholderToDoTaskRepository @Inject constructor() : ToDoTaskRepository {
 
     override suspend fun store(toDoList: ToDoList, toDoTask: ToDoTask) {
         val tasks = tasksForListId(toDoList.id.getKey())
-        tasks.put(toDoTask.id.getKey(), toDoTask)
+        tasks[toDoTask.id.getKey()] = toDoTask
 
     }
 

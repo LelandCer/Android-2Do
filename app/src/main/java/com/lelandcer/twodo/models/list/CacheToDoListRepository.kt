@@ -3,9 +3,8 @@ package com.lelandcer.twodo.models.list
 import com.lelandcer.twodo.models.id.Id
 import javax.inject.Inject
 
-/** A static placeholder repository for lists
- * TODO remove once implemented */
-class PlaceholderToDoListRepository @Inject constructor() : ToDoListRepository {
+/** A repository for saving lists in memory */
+class CacheToDoListRepository @Inject constructor() : ToDoListRepository {
 
     override suspend fun index(): MutableList<ToDoList> {
         return toDoLists
@@ -31,6 +30,5 @@ class PlaceholderToDoListRepository @Inject constructor() : ToDoListRepository {
 
     companion object {
         private val toDoLists: MutableList<ToDoList> = ArrayList()
-
     }
 }

@@ -13,6 +13,6 @@ import dagger.hilt.android.components.ViewModelComponent
 abstract class ToDoListRepositoryModule {
 
     @Binds
-    abstract fun bind(listRepository: PlaceholderToDoListRepository): ToDoListRepository
+    abstract fun bind(listRepository: CacheToDoListRepository): ToDoListRepository
 
 }
