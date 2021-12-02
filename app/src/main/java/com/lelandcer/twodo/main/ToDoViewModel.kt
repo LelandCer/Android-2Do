@@ -109,6 +109,8 @@ class ToDoViewModel @Inject constructor(
             }
             deleteToDoTask.execute(toDoTask)
             _currentToDoList.postValue(toDoList)
+            updateLists()
+
         }
     }
 
@@ -119,6 +121,7 @@ class ToDoViewModel @Inject constructor(
                 null
             )
             deleteToDoList.execute(toDoList)
+            updateLists()
         }
     }
 

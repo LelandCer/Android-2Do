@@ -4,7 +4,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.list.ToDoListFactory
 import com.lelandcer.twodo.models.list.repositories.ToDoListRepository
 import com.lelandcer.twodo.models.task.ToDoTaskFactory
-import com.lelandcer.twodo.models.task.ToDoTaskRepository
+import com.lelandcer.twodo.models.task.repositories.ToDoTaskRepository
 import kotlinx.coroutines.runBlocking
 import java.util.*
 import javax.inject.Inject

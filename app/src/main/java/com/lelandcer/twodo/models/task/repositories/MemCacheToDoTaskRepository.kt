@@ -1,10 +1,11 @@
-package com.lelandcer.twodo.models.task
+package com.lelandcer.twodo.models.task.repositories
 
 import com.lelandcer.twodo.models.list.ToDoList
+import com.lelandcer.twodo.models.task.ToDoTask
 import javax.inject.Inject
 
 /** A repository for saving the tasks in memory */
-class CacheToDoTaskRepository @Inject constructor() : ToDoTaskRepository {
+class MemCacheToDoTaskRepository @Inject constructor() : CacheToDoTaskRepository {
     override suspend fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask> {
         val id = toDoList.id.getKey()
         val list = tasksForListId(id)

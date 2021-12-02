@@ -1,6 +1,7 @@
-package com.lelandcer.twodo.models.task
+package com.lelandcer.twodo.models.task.repositories
 
 import com.lelandcer.twodo.models.list.ToDoList
+import com.lelandcer.twodo.models.task.ToDoTask
 
 /** Manages the storage and retrieval of Tasks
  * TODO evaluate the need for this vs managed completely by the list repository */
