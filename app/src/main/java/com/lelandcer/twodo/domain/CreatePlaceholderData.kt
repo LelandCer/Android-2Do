@@ -5,7 +5,9 @@ import com.lelandcer.twodo.models.list.ToDoListFactory
 import com.lelandcer.twodo.models.list.repositories.ToDoListRepository
 import com.lelandcer.twodo.models.task.ToDoTaskFactory
 import com.lelandcer.twodo.models.task.repositories.ToDoTaskRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -17,16 +19,19 @@ class CreatePlaceholderData @Inject constructor(
 
     fun create() {
         runBlocking {
-            createPlaceholder("Important")
-            createPlaceholder("First")
-            createPlaceholder("Second")
-            createPlaceholder("Third")
-            createPlaceholder("Do this!!!!")
-            createPlaceholder("Whenever")
-            createPlaceholder("Ooops put in way to long of a description, maybe I should add some kind of limit to this")
-            createPlaceholder("short")
-            createPlaceholder("\uD83D\uDE1C")
-            createPlaceholder("Whenever")
+            withContext(Dispatchers.IO){
+                createPlaceholder("Important")
+                createPlaceholder("First")
+                createPlaceholder("Second")
+                createPlaceholder("Third")
+                createPlaceholder("Do this!!!!")
+                createPlaceholder("Whenever")
+                createPlaceholder("Ooops put in way to long of a description, maybe I should add some kind of limit to this")
+                createPlaceholder("short")
+                createPlaceholder("\uD83D\uDE1C")
+                createPlaceholder("Whenever")
+            }
+
         }
     }
 

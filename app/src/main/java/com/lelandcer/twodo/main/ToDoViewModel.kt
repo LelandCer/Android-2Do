@@ -10,11 +10,10 @@ import com.lelandcer.twodo.models.list.ToDoListFactory
 import com.lelandcer.twodo.models.task.ToDoTask
 import com.lelandcer.twodo.models.task.ToDoTaskFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -37,29 +36,22 @@ class ToDoViewModel @Inject constructor(
     var currentToDoList: LiveData<ToDoList?> = _currentToDoList
     var currentToDoTask: LiveData<ToDoTask?> = _currentToDoTask
 
-    private val listsFlow = flow {
-        while (true) {
-            emit(getLists.execute())
-            delay(500)
-            break;
-        }
-    }
 
     init {
         viewModelScope.launch {
-            listsFlow.collect {
-                _toDoLists.value = it
-            }
+            createPlaceholderData.create()
+            updateLists()
         }
 
-
-        createPlaceholderData.create()
 
     }
 
     private fun updateLists() {
         viewModelScope.launch {
-            _toDoLists.postValue(getLists.execute())
+            withContext(Dispatchers.IO) {
+                _toDoLists.postValue(getLists.execute())
+
+            }
         }
     }
 
