@@ -8,13 +8,17 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.lelandcer.twodo.R
+import com.lelandcer.twodo.domain.CreatePlaceholderData
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import javax.inject.Provider
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     lateinit var fab: FloatingActionButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_TwoDo)
@@ -23,7 +27,6 @@ class MainActivity : AppCompatActivity() {
 
         fab = findViewById(R.id.fab_main)
         enableUpNavigation()
-
 
     }
 

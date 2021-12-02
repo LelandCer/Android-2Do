@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lelandcer.twodo.domain.CreatePlaceholderData
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.list.ToDoListRepository
 import com.lelandcer.twodo.models.task.ToDoTask
@@ -42,6 +43,8 @@ class ToDoViewModel @Inject constructor(
                 _toDoLists.value = it
             }
         }
+
+        CreatePlaceholderData(toDoListRepository, toDoTaskRepository).create()
 
     }
 
