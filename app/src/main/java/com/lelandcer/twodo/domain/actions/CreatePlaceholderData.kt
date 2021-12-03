@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.domain
+package com.lelandcer.twodo.domain.actions
 
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.list.ToDoListFactory

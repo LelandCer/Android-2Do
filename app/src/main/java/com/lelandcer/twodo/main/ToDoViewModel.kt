@@ -4,16 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lelandcer.twodo.domain.*
+import com.lelandcer.twodo.domain.ActionHandler
+import com.lelandcer.twodo.domain.actions.*
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.list.ToDoListFactory
 import com.lelandcer.twodo.models.task.ToDoTask
 import com.lelandcer.twodo.models.task.ToDoTaskFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -29,6 +27,7 @@ class ToDoViewModel @Inject constructor(
     private val toDoTaskFactory: ToDoTaskFactory,
     private val getLists: GetLists
 ) : ViewModel() {
+    private val actionHandler = ActionHandler(viewModelScope)
     private val _toDoLists = MutableLiveData<Collection<ToDoList>>()
     private val _currentToDoList = MutableLiveData<ToDoList?>()
     private val _currentToDoTask = MutableLiveData<ToDoTask?>()
@@ -42,16 +41,16 @@ class ToDoViewModel @Inject constructor(
             createPlaceholderData.create()
             updateLists()
         }
-
-
     }
 
     private fun updateLists() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _toDoLists.postValue(getLists.execute())
-
-            }
+        actionHandler.perform(getLists, GetLists.getParameters()) {
+            _toDoLists.postValue(it.toDoLists)
+            val currentList = it.toDoLists.firstOrNull { l -> l == _currentToDoList.value }
+            _currentToDoList.postValue(currentList)
+            val currentTask =
+                currentList?.toDoTasks?.firstOrNull { t -> t == _currentToDoTask.value }
+            _currentToDoTask.postValue(currentTask)
         }
     }
 
@@ -74,19 +73,19 @@ class ToDoViewModel @Inject constructor(
     fun saveCurrentTask() {
         val toDoList = currentToDoList.value!!
         val toDoTask = currentToDoTask.value!!
-        viewModelScope.launch {
-            saveToDoTask.execute(toDoTask)
+
+        actionHandler.perform(saveToDoTask, SaveToDoTask.getParameters(toDoTask)) {
             updateLists()
             _currentToDoList.postValue(toDoList)
             _currentToDoTask.postValue(toDoTask)
         }
 
+
     }
 
     fun saveCurrentList() {
         val toDoList = currentToDoList.value!!
-        viewModelScope.launch {
-            saveToDoList.execute(toDoList)
+        actionHandler.perform(saveToDoList, SaveToDoList.getParameters(toDoList)) {
             updateLists()
             _currentToDoList.postValue(toDoList)
         }
@@ -95,27 +94,31 @@ class ToDoViewModel @Inject constructor(
 
     fun deleteTask(toDoTask: ToDoTask) {
         val toDoList = currentToDoList.value!!
-        viewModelScope.launch {
-            if (currentToDoTask.value == toDoTask) {
-                _currentToDoTask.postValue(null)
-            }
-            deleteToDoTask.execute(toDoTask)
-            _currentToDoList.postValue(toDoList)
+        if (currentToDoTask.value == toDoTask) {
+            _currentToDoTask.postValue(null)
+        }
+        if (toDoList.id == toDoTask.listId) {
+            toDoList.toDoTasks.remove(toDoTask)
+        }
+        _currentToDoList.postValue(toDoList)
+
+        actionHandler.perform(deleteToDoTask, DeleteToDoTask.getParameters(toDoTask)) {
             updateLists()
 
         }
     }
 
     fun deleteList(toDoList: ToDoList) {
-        runBlocking {
-            if (currentToDoList.value == toDoList) _currentToDoList.postValue(null)
-            if (currentToDoList.value?.id == currentToDoTask.value?.listId) _currentToDoTask.postValue(
-                null
-            )
-            deleteToDoList.execute(toDoList)
+        if (currentToDoList.value == toDoList) _currentToDoList.postValue(null)
+        if (currentToDoList.value?.id == currentToDoTask.value?.listId) _currentToDoTask.postValue(
+            null
+        )
+
+        actionHandler.perform(deleteToDoList, DeleteToDoList.getParameters(toDoList)) {
             updateLists()
         }
+
     }
-
-
 }
+
+

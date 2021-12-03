@@ -8,10 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.lelandcer.twodo.R
-import com.lelandcer.twodo.domain.CreatePlaceholderData
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-import javax.inject.Provider
 
 
 @AndroidEntryPoint
