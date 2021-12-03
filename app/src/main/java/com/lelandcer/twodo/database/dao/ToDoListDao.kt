@@ -1,9 +1,6 @@
 package com.lelandcer.twodo.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.lelandcer.twodo.database.models.ToDoList
 
 @Dao
@@ -14,7 +11,7 @@ interface ToDoListDao {
     @Query("SELECT * FROM todolist WHERE id = :listId")
     fun loadById(listId: String): ToDoList?
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(toDoList: ToDoList)
 
     @Delete

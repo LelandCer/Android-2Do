@@ -12,18 +12,18 @@ class MultiToDoListRepository @Inject constructor(
 
 
     override suspend fun index(): MutableCollection<ToDoList> {
-        return cacheToDoListRepository.index()
+        return localStorageToDoListRepository.index()
     }
 
     override suspend fun getById(id: Id): ToDoList? {
-        return cacheToDoListRepository.getById(id)
+        return localStorageToDoListRepository.getById(id)
     }
 
     override suspend fun store(toDoList: ToDoList) {
-        return cacheToDoListRepository.store(toDoList)
+        return localStorageToDoListRepository.store(toDoList)
     }
 
     override suspend fun delete(toDoList: ToDoList) {
-        return cacheToDoListRepository.delete(toDoList)
+        return localStorageToDoListRepository.delete(toDoList)
     }
 }

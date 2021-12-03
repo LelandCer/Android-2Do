@@ -1,5 +1,6 @@
 package com.lelandcer.twodo.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,7 +39,7 @@ class ToDoViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            createPlaceholderData.create()
+//            createPlaceholderData.create()
             updateLists()
         }
     }
@@ -46,8 +47,10 @@ class ToDoViewModel @Inject constructor(
     private fun updateLists() {
         actionHandler.perform(getLists, GetLists.getParameters()) {
             _toDoLists.postValue(it.toDoLists)
-            val currentList = it.toDoLists.firstOrNull { l -> l == _currentToDoList.value }
+
+            val currentList = it.toDoLists.find { l -> l.id == _currentToDoList.value?.id }
             _currentToDoList.postValue(currentList)
+            
             val currentTask =
                 currentList?.toDoTasks?.firstOrNull { t -> t == _currentToDoTask.value }
             _currentToDoTask.postValue(currentTask)
@@ -73,11 +76,11 @@ class ToDoViewModel @Inject constructor(
     fun saveCurrentTask() {
         val toDoList = currentToDoList.value!!
         val toDoTask = currentToDoTask.value!!
-
+        _currentToDoList.postValue(toDoList)
+        _currentToDoTask.postValue(toDoTask)
         actionHandler.perform(saveToDoTask, SaveToDoTask.getParameters(toDoTask)) {
             updateLists()
-            _currentToDoList.postValue(toDoList)
-            _currentToDoTask.postValue(toDoTask)
+
         }
 
 
@@ -85,9 +88,9 @@ class ToDoViewModel @Inject constructor(
 
     fun saveCurrentList() {
         val toDoList = currentToDoList.value!!
+        _currentToDoList.postValue(toDoList)
         actionHandler.perform(saveToDoList, SaveToDoList.getParameters(toDoList)) {
             updateLists()
-            _currentToDoList.postValue(toDoList)
         }
 
     }

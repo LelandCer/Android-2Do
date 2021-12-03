@@ -1,22 +1,20 @@
 package com.lelandcer.twodo.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.lelandcer.twodo.database.models.ToDoTask
+import com.lelandcer.twodo.models.id.Id
 
 @Dao
 interface ToDoTaskDao {
     @Query("SELECT * FROM ToDoTask WHERE listId = :listId")
-    fun getAllForList(listId: String): List<ToDoTask>
+    fun getAllForList(listId: Id): List<ToDoTask>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(toDoTask: ToDoTask)
 
     @Delete
     fun delete(toDoTask: ToDoTask)
 
     @Query("DELETE  FROM ToDoTask WHERE listId = :listId")
-    fun deleteForList(listId: String)
+    fun deleteForList(listId: Id)
 }

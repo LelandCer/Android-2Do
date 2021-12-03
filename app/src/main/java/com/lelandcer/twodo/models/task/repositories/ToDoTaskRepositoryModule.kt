@@ -1,5 +1,6 @@
 package com.lelandcer.twodo.models.task.repositories
 
+import com.lelandcer.twodo.database.repositories.RoomLocalStorageToDoTaskRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
