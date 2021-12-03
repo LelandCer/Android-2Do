@@ -1,6 +1,5 @@
 package com.lelandcer.twodo.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -50,7 +49,7 @@ class ToDoViewModel @Inject constructor(
 
             val currentList = it.toDoLists.find { l -> l.id == _currentToDoList.value?.id }
             _currentToDoList.postValue(currentList)
-            
+
             val currentTask =
                 currentList?.toDoTasks?.firstOrNull { t -> t == _currentToDoTask.value }
             _currentToDoTask.postValue(currentTask)

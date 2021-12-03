@@ -2,6 +2,7 @@ package com.lelandcer.twodo.database.dao
 
 import androidx.room.*
 import com.lelandcer.twodo.database.models.ToDoList
+import com.lelandcer.twodo.models.id.Id
 
 @Dao
 interface ToDoListDao {
@@ -9,7 +10,7 @@ interface ToDoListDao {
     fun getAll(): List<ToDoList>
 
     @Query("SELECT * FROM todolist WHERE id = :listId")
-    fun loadById(listId: String): ToDoList?
+    fun loadById(listId: Id): ToDoList?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(toDoList: ToDoList)

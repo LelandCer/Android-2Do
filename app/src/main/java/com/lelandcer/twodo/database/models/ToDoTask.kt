@@ -12,13 +12,16 @@ class ToDoTask(
     @PrimaryKey val id: Id,
     @ColumnInfo val listId: Id,
     @ColumnInfo val name: String,
-    @ColumnInfo val createdAt: Date
+    @ColumnInfo val createdAt: Date,
+    @ColumnInfo val isCompleted: Boolean,
+    @ColumnInfo val completedAt: Date?,
+
 ) {
 
 
     fun toToDoTask(): ExToDoTask {
         return ExToDoTask(
-            id, listId, name, createdAt
+            id, listId, name, createdAt, isCompleted, completedAt
         )
     }
 
@@ -26,7 +29,7 @@ class ToDoTask(
         fun fromToDoTask(toDoTask: ExToDoTask): ToDoTask {
             with(toDoTask) {
                 return ToDoTask(
-                    id, listId, name, createdAt
+                    id, listId, name, createdAt, isCompleted, completedAt
                 )
             }
 

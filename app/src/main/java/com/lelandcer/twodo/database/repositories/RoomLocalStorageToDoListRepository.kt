@@ -23,7 +23,7 @@ class RoomLocalStorageToDoListRepository @Inject constructor() :
     }
 
     override suspend fun getById(id: Id): ToDoList? {
-        return toDoListDao.loadById(id.toString())?.toToDoList()
+        return toDoListDao.loadById(id)?.toToDoList()
     }
 
     override suspend fun store(toDoList: ToDoList) {
