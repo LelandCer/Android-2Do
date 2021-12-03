@@ -10,7 +10,7 @@ import com.lelandcer.twodo.models.list.ToDoList as ExToDoList
 
 @Entity
 class ToDoList(
-    @PrimaryKey var id: String,
+    @PrimaryKey var id: Id,
     @ColumnInfo var name: String,
     @ColumnInfo var dueAt: Date,
     @ColumnInfo var createdAt: Date,
@@ -18,26 +18,21 @@ class ToDoList(
 ) {
 
 
-
     fun toToDoList(): ExToDoList {
-        return ExToDoList(StringId(id), name, ArrayList(), dueAt, createdAt, updatedAt)
+        return ExToDoList(id, name, ArrayList(), dueAt, createdAt, updatedAt)
     }
 
-    class StringId(private val key: String) : Id {
-        override fun getKey(): String {
-            return key
-        }
-
-    }
     companion object {
         fun fromToDoList(toDoList: ExToDoList): ToDoList {
-            return ToDoList(
-                toDoList.id.getKey(),
-                toDoList.name,
-                toDoList.dueAt,
-                toDoList.createdAt,
-                toDoList.updatedAt
-            )
+            with(toDoList) {
+                return ToDoList(
+                    id,
+                    name,
+                    dueAt,
+                    createdAt,
+                    updatedAt
+                )
+            }
         }
     }
 }
