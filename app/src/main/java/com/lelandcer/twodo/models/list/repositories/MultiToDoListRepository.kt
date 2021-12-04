@@ -21,7 +21,7 @@ class MultiToDoListRepository @Inject constructor(
     }
 
     override suspend fun getById(id: Id): ToDoList? {
-        var list: ToDoList?
+        val list: ToDoList?
         if (isCacheFresh) {
             list = cacheToDoListRepository.getById(id)
             if (list != null) return list

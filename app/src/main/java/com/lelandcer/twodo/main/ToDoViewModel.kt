@@ -57,7 +57,7 @@ class ToDoViewModel @Inject constructor(
     }
 
     fun setCurrentList(toDoList: ToDoList) {
-        _currentToDoList.value = toDoList;
+        _currentToDoList.value = toDoList
     }
 
     fun setNewCurrentList() {
@@ -65,7 +65,7 @@ class ToDoViewModel @Inject constructor(
     }
 
     fun setCurrentTask(toDoTask: ToDoTask) {
-        _currentToDoTask.value = toDoTask;
+        _currentToDoTask.value = toDoTask
     }
 
     fun setNewCurrentTask() {

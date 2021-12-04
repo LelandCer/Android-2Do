@@ -34,7 +34,7 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentEditToDoListBinding.inflate(inflater, container, false)
         bindInteractionListeners()
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)

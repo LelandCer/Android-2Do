@@ -26,7 +26,7 @@ class CreatePlaceholderData @Inject constructor(
                 createPlaceholder("Third")
                 createPlaceholder("Do this!!!!")
                 createPlaceholder("Whenever")
-                createPlaceholder("Ooops put in way to long of a description, maybe I should add some kind of limit to this")
+                createPlaceholder("Oops put in way to long of a description, maybe I should add some kind of limit to this")
                 createPlaceholder("short")
                 createPlaceholder("\uD83D\uDE1C")
                 createPlaceholder("Whenever")
@@ -60,7 +60,7 @@ class CreatePlaceholderData @Inject constructor(
     private fun randomDate(): Date {
         // Randomly generate a date, distributed around today, with some in the future and some the past
         val now = Date().time
-        val daysInMillis = 1000 * 60 * 60 * 24;
+        val daysInMillis = 1000 * 60 * 60 * 24
         val days = Random().nextInt(5) - 1
         if (days > 3) Random().nextInt(300) + 3
         return Date(now + days * daysInMillis)

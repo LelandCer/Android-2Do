@@ -25,6 +25,6 @@ class TwoDoApplication : Application() {
 
 
     companion object {
-        public lateinit var db: AppDatabase
+        lateinit var db: AppDatabase
     }
 }

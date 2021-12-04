@@ -25,7 +25,7 @@ class EditToDoTaskFragment : DialogFragment(), Observer<ToDoTask?> {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentEditToDoTaskBinding.inflate(inflater, container, false)
         toDoViewModel.currentToDoTask.observe(viewLifecycleOwner, this)
         bindInteractionListeners()

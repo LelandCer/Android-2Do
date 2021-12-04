@@ -6,9 +6,9 @@ import javax.inject.Inject
 
 /** A repository for saving lists in memory */
 class MemCacheToDoListRepository @Inject constructor() : CacheToDoListRepository {
-    override fun storeAll(cacheToDoLists: Collection<ToDoList>) {
-        toDoLists.clear()
-        toDoLists.addAll(cacheToDoLists)
+    override fun storeAll(toDoLists: Collection<ToDoList>) {
+        MemCacheToDoListRepository.toDoLists.clear()
+        MemCacheToDoListRepository.toDoLists.addAll(toDoLists)
     }
 
     override suspend fun index(): MutableList<ToDoList> {

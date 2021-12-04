@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ActionHandler(val scope: CoroutineScope) {
+class ActionHandler(private val scope: CoroutineScope) {
 
     fun <V : ActionParameters, R : ActionReturnData> perform(
         action: Action<V, R>,

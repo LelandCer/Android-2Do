@@ -9,7 +9,6 @@ import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.databinding.FragmentToDoListsBinding
 import com.lelandcer.twodo.models.list.ToDoList
-import com.lelandcer.twodo.models.task.ToDoTask
 
 /** Adapter for the ToDoLists Items */
 class ToDoListRecyclerViewAdapter(
@@ -53,9 +52,11 @@ class ToDoListRecyclerViewAdapter(
             onInteractionListener.onItemDelete(it, toDoList)
         }
 
-        if (display.isComplete()) bindColor(holder, colorList.completed)
-        else if (display.isLate()) bindColor(holder, colorList.late)
-        else if (display.isSoon()) bindColor(holder, colorList.soon)
+        when {
+            display.isComplete() -> bindColor(holder, colorList.completed)
+            display.isLate() -> bindColor(holder, colorList.late)
+            display.isSoon() -> bindColor(holder, colorList.soon)
+        }
     }
 
     private fun bindColor(holder: ToDoListRecyclerViewAdapter.ViewHolder, color: Int) {
