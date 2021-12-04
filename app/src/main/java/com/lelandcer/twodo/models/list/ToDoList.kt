@@ -27,7 +27,7 @@ class ToDoList(
 
     /** Return the count for the tasks that are complete */
     fun taskCompletedCount(): Int {
-        return toDoTasks.filter { toDoTask -> toDoTask.isCompleted  }.count()
+        return toDoTasks.filter { toDoTask -> toDoTask.isCompleted }.count()
     }
 
     /** Return true if all tasks are marked complete */

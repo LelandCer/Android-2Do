@@ -22,7 +22,7 @@ class MemCacheToDoTaskRepository @Inject constructor() : CacheToDoTaskRepository
 
     override suspend fun store(toDoList: ToDoList, toDoTask: ToDoTask) {
         val tasks = tasksForListId(toDoList.id.getKey())
-        if(tasks.isEmpty()) return
+        if (tasks.isEmpty()) return
         tasks[toDoTask.id.getKey()] = toDoTask
 
     }

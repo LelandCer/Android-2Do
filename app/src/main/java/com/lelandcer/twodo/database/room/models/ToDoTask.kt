@@ -17,7 +17,7 @@ class ToDoTask(
     @ColumnInfo val isCompleted: Boolean,
     @ColumnInfo val completedAt: Date?,
 
-) {
+    ) {
 
 
     fun toToDoTask(): ExToDoTask {

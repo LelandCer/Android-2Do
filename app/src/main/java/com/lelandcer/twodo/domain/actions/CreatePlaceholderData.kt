@@ -15,11 +15,12 @@ class CreatePlaceholderData @Inject constructor(
     private val toDoListRepository: ToDoListRepository,
     private val toDoTaskRepository: ToDoTaskRepository,
     private val toDoListFactory: ToDoListFactory,
-    private val toDoTaskFactory: ToDoTaskFactory) {
+    private val toDoTaskFactory: ToDoTaskFactory
+) {
 
     fun create() {
         runBlocking {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 createPlaceholder("Important")
                 createPlaceholder("First")
                 createPlaceholder("Second")
