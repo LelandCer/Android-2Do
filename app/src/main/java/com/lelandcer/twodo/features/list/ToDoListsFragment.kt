@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.R
 import com.lelandcer.twodo.databinding.FragmentToDoListsListBinding
-import com.lelandcer.twodo.main.MainActivity
+import com.lelandcer.twodo.main.FabActivity
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.list.ToDoList
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,10 +42,10 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentToDoListsListBinding.inflate(inflater, container, false)
 
-        (activity as MainActivity?)?.fab?.setOnClickListener {
+        (activity as FabActivity?)?.fab?.setOnClickListener {
             toDoViewModel.setNewCurrentList()
             findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToEditToDoListFragment())
         }
