@@ -6,6 +6,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.list.repositories.LocalStorageToDoListRepository
 import javax.inject.Inject
 
+/** A Room DB implementation of the ToDoListRepository */
 class RoomLocalStorageToDoListRepository @Inject constructor() :
     LocalStorageToDoListRepository {
     private val toDoListDao = TwoDoApplication.db.toDoListDao()

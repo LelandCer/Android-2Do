@@ -5,6 +5,7 @@ import com.lelandcer.twodo.models.list.repositories.ToDoListRepository
 import com.lelandcer.twodo.models.task.repositories.ToDoTaskRepository
 import javax.inject.Inject
 
+/** An action that will save a ToDoList */
 class SaveToDoList @Inject constructor(
     val toDoListRepository: ToDoListRepository,
     val toDoTaskRepository: ToDoTaskRepository
@@ -12,6 +13,8 @@ class SaveToDoList @Inject constructor(
 
     override suspend fun execute(params: Parameters): ReturnData {
         toDoListRepository.store(params.toDoList)
+
+        // Note, ToDoTasks do not get persisted this way. They must be saved through their own action
         return ReturnData()
     }
 

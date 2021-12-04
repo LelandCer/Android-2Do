@@ -40,6 +40,7 @@ class MultiToDoListRepository @Inject constructor(
     }
 
     companion object {
+        /** Flag for if the cache has been seeded with the initial dataset or not */
         private var isCacheFresh = false
     }
 }

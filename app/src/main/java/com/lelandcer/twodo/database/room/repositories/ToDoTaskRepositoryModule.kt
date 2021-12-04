@@ -9,7 +9,7 @@ import dagger.hilt.android.components.ViewModelComponent
 @Module
 @InstallIn(ViewModelComponent::class)
 /**
- * Bind Task repository interface to implementation
+ * Bind the Room Repository Implementation to the interface.
  */
 abstract class ToDoTaskRepositoryModule {
 

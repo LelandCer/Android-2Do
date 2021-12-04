@@ -11,6 +11,9 @@ import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
+/** Create an initial seed of data for easier development.
+ * TODO Remove before final PR
+ * */
 class CreatePlaceholderData @Inject constructor(
     private val toDoListRepository: ToDoListRepository,
     private val toDoTaskRepository: ToDoTaskRepository,

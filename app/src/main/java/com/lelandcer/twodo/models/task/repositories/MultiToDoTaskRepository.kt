@@ -4,6 +4,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.task.ToDoTask
 import javax.inject.Inject
 
+/** A repository that automatically manages both an cache and a local storage repositories */
 class MultiToDoTaskRepository @Inject constructor(
     private val cacheToDoTaskRepository: CacheToDoTaskRepository,
     private val localStorageToDoTaskRepository: LocalStorageToDoTaskRepository

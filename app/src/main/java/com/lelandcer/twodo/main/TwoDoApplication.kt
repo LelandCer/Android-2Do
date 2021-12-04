@@ -15,6 +15,7 @@ class TwoDoApplication : Application() {
 
     }
 
+    /** Sets up the database */
     private fun buildDatabase() {
         db = Room.databaseBuilder(
             applicationContext,

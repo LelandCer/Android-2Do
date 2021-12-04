@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
-
 @HiltViewModel
 class ToDoViewModel @Inject constructor(
     createPlaceholderData: CreatePlaceholderData,
