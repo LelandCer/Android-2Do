@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TwoDo</string>
+    <string name="app_name">2DO</string>
     <string name="fragment_to_do_lists_placeholder">Nothing2Do?\n Find something!</string>
     <string name="fragment_to_do_tasks_placeholder">Add some things</string>
     <string name="fragment_to_do_list_fab_content_description">Tap to add a new list</string>
