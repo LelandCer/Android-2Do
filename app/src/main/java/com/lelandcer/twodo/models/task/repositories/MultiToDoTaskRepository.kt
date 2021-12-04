@@ -8,7 +8,7 @@ class MultiToDoTaskRepository @Inject constructor(
     private val cacheToDoTaskRepository: CacheToDoTaskRepository,
     private val localStorageToDoTaskRepository: LocalStorageToDoTaskRepository
 ) : ToDoTaskRepository {
-    override suspend fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask> {
+    override suspend fun indexFor(toDoList: ToDoList): Collection<ToDoTask> {
         var toDoTasks = cacheToDoTaskRepository.indexFor(toDoList)
         if (toDoTasks.isEmpty()) {
             toDoTasks = localStorageToDoTaskRepository.indexFor(toDoList)

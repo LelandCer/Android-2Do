@@ -10,7 +10,7 @@ interface ToDoTaskRepository {
     /** Get all stored Tasks for a list
      * Note: no pagination for now
      */
-    suspend fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask>
+    suspend fun indexFor(toDoList: ToDoList): Collection<ToDoTask>
 
     /**
      * Store a Task for a list

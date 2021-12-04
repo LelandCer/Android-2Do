@@ -11,7 +11,7 @@ interface ToDoListRepository {
      * Note: no pagination
      * TODO add either limitations or pagination
      */
-    suspend fun index(): MutableCollection<ToDoList>
+    suspend fun index(): Collection<ToDoList>
 
     /**
      * Get a specific List for a provided Id

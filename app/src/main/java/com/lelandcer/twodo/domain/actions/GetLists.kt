@@ -13,7 +13,7 @@ class GetLists @Inject constructor(
     override suspend fun execute(params: Parameters): ReturnData {
         val lists = toDoListRepository.index()
         lists.forEach {
-            it.toDoTasks = toDoTaskRepository.indexFor(it)
+            it.toDoTasks = ArrayList(toDoTaskRepository.indexFor(it))
         }
         return ReturnData(lists)
     }
