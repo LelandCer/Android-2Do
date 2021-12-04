@@ -19,5 +19,6 @@
     <string name="tdl_header_name">What</string>
     <string name="tdl_header_due_at">When</string>
     <string name="tdl_edit_validate_name">List name is required!</string>
+    <string name="tdt_edit_validate_name">Task is required!</string>
 
 </resources>
