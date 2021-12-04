@@ -6,6 +6,14 @@ import javax.inject.Inject
 
 /** A repository for saving the tasks in memory */
 class MemCacheToDoTaskRepository @Inject constructor() : CacheToDoTaskRepository {
+    override fun storeAll(toDoList: ToDoList, toDoTasks: Collection<ToDoTask>) {
+        val newToDoTaskMapForList = HashMap<String, ToDoTask>()
+        toDoTasks.forEach {
+            newToDoTaskMapForList[it.id.getKey()] = it
+        }
+        taskMap[toDoList.id.getKey()] = newToDoTaskMapForList
+    }
+
     override suspend fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask> {
         val id = toDoList.id.getKey()
         val list = tasksForListId(id)
@@ -14,6 +22,7 @@ class MemCacheToDoTaskRepository @Inject constructor() : CacheToDoTaskRepository
 
     override suspend fun store(toDoList: ToDoList, toDoTask: ToDoTask) {
         val tasks = tasksForListId(toDoList.id.getKey())
+        if(tasks.isEmpty()) return
         tasks[toDoTask.id.getKey()] = toDoTask
 
     }
@@ -24,9 +33,7 @@ class MemCacheToDoTaskRepository @Inject constructor() : CacheToDoTaskRepository
     }
 
     private fun tasksForListId(listId: String): MutableMap<String, ToDoTask> {
-        val list = taskMap[listId] ?: HashMap()
-        taskMap[listId] = list
-        return list
+        return taskMap[listId] ?: HashMap()
     }
 
     companion object {
