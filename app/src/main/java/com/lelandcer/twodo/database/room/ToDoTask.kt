@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.database.models
+package com.lelandcer.twodo.database.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -8,6 +8,7 @@ import java.util.*
 import com.lelandcer.twodo.models.task.ToDoTask as ExToDoTask
 
 @Entity
+// A class for serializing a ToDoTask into a room storable object
 class ToDoTask(
     @PrimaryKey val id: Id,
     @ColumnInfo val listId: Id,

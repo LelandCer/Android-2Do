@@ -1,5 +1,6 @@
-package com.lelandcer.twodo.models.task.repositories
+package com.lelandcer.twodo.database.room
 
+import com.lelandcer.twodo.models.task.repositories.LocalStorageToDoTaskRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,8 +14,6 @@ import dagger.hilt.android.components.ViewModelComponent
 abstract class ToDoTaskRepositoryModule {
 
     @Binds
-    abstract fun bindToDoTaskRepository(taskRepository: MultiToDoTaskRepository): ToDoTaskRepository
+    abstract fun bindLocalStorageToDoTaskRepository(taskRepository: RoomLocalStorageToDoTaskRepository): LocalStorageToDoTaskRepository
 
-    @Binds
-    abstract fun bindCacheToDoTaskRepository(taskRepository: MemCacheToDoTaskRepository): CacheToDoTaskRepository
 }

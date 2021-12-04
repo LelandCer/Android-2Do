@@ -1,7 +1,6 @@
-package com.lelandcer.twodo.database
+package com.lelandcer.twodo.database.room
 
 import androidx.room.TypeConverter
-import com.lelandcer.twodo.database.models.StringId
 import com.lelandcer.twodo.models.id.Id
 import java.util.*
 

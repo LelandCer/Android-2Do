@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.database.models
+package com.lelandcer.twodo.database.room
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,6 +9,7 @@ import kotlin.collections.ArrayList
 import com.lelandcer.twodo.models.list.ToDoList as ExToDoList
 
 @Entity
+// A class for serializing a ToDoList into a room storable object
 class ToDoList(
     @PrimaryKey var id: Id,
     @ColumnInfo var name: String,

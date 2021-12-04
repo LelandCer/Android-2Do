@@ -2,7 +2,7 @@ package com.lelandcer.twodo.main
 
 import android.app.Application
 import androidx.room.Room
-import com.lelandcer.twodo.database.AppDatabase
+import com.lelandcer.twodo.database.room.AppDatabase
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

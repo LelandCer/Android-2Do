@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.database.repositories
+package com.lelandcer.twodo.database.room
 
 
 import com.lelandcer.twodo.main.TwoDoApplication
@@ -6,7 +6,6 @@ import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.task.ToDoTask
 import com.lelandcer.twodo.models.task.repositories.LocalStorageToDoTaskRepository
 import javax.inject.Inject
-import com.lelandcer.twodo.database.models.ToDoTask as DbToDoTask
 
 class RoomLocalStorageToDoTaskRepository @Inject constructor() : LocalStorageToDoTaskRepository {
     private val toDoTaskDao = TwoDoApplication.db.toDoTaskDao()
@@ -22,11 +21,11 @@ class RoomLocalStorageToDoTaskRepository @Inject constructor() : LocalStorageToD
     }
 
     override suspend fun store(toDoList: ToDoList, toDoTask: ToDoTask) {
-        toDoTaskDao.insert(DbToDoTask.fromToDoTask(toDoTask))
+        toDoTaskDao.insert(com.lelandcer.twodo.database.room.ToDoTask.fromToDoTask(toDoTask))
     }
 
     override suspend fun delete(toDoTask: ToDoTask) {
-        toDoTaskDao.delete(DbToDoTask.fromToDoTask(toDoTask))
+        toDoTaskDao.delete(com.lelandcer.twodo.database.room.ToDoTask.fromToDoTask(toDoTask))
     }
 
     override suspend fun deleteAll(toDoList: ToDoList) {

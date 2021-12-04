@@ -1,11 +1,10 @@
-package com.lelandcer.twodo.database.repositories
+package com.lelandcer.twodo.database.room
 
 import com.lelandcer.twodo.main.TwoDoApplication
 import com.lelandcer.twodo.models.id.Id
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.list.repositories.LocalStorageToDoListRepository
 import javax.inject.Inject
-import com.lelandcer.twodo.database.models.ToDoList as DbToDoList
 
 class RoomLocalStorageToDoListRepository @Inject constructor() :
     LocalStorageToDoListRepository {
@@ -28,11 +27,11 @@ class RoomLocalStorageToDoListRepository @Inject constructor() :
 
     override suspend fun store(toDoList: ToDoList) {
         return toDoListDao
-            .insert(DbToDoList.fromToDoList(toDoList))
+            .insert(com.lelandcer.twodo.database.room.ToDoList.fromToDoList(toDoList))
     }
 
     override suspend fun delete(toDoList: ToDoList) {
         return toDoListDao
-            .delete(DbToDoList.fromToDoList(toDoList))
+            .delete(com.lelandcer.twodo.database.room.ToDoList.fromToDoList(toDoList))
     }
 }

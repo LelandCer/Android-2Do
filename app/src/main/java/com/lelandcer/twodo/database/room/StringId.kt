@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.database.models
+package com.lelandcer.twodo.database.room
 
 import com.lelandcer.twodo.models.id.Id
 

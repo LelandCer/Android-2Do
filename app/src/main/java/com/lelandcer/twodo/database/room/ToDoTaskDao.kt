@@ -1,7 +1,6 @@
-package com.lelandcer.twodo.database.dao
+package com.lelandcer.twodo.database.room
 
 import androidx.room.*
-import com.lelandcer.twodo.database.models.ToDoTask
 import com.lelandcer.twodo.models.id.Id
 
 @Dao
