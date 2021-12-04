@@ -1,5 +1,6 @@
 package com.lelandcer.twodo.features.task
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lelandcer.twodo.R
 import com.lelandcer.twodo.databinding.FragmentToDoTasksListBinding
 import com.lelandcer.twodo.features.list.ToDoListDisplay
-import com.lelandcer.twodo.main.MainActivity
+import com.lelandcer.twodo.main.FabActivity
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.task.ToDoTask
@@ -41,13 +42,18 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentToDoTasksListBinding.inflate(inflater, container, false)
         with(binding.rvTdtTasks) {
             layoutManager = LinearLayoutManager(context)
             val dividerItemDecoration =
                 DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
-            dividerItemDecoration.setDrawable(AppCompatResources.getDrawable(this.context, R.drawable.blue_divider)!!)
+            dividerItemDecoration.setDrawable(
+                AppCompatResources.getDrawable(
+                    this.context,
+                    R.drawable.blue_divider
+                )!!
+            )
             addItemDecoration(dividerItemDecoration)
             adapter = ToDoTaskRecyclerViewAdapter(
                 toDoTaskItems,
@@ -80,6 +86,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
         toDoList?.let { bindToView(it) }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun bindToView(toDoList: ToDoList) {
         val display = toDoListDisplay.forToDoList(toDoList)
 
@@ -116,7 +123,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
             val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoListFragment()
             findNavController().navigate(action)
         }
-        (activity as MainActivity?)?.fab?.setOnClickListener {
+        (activity as FabActivity?)?.fab?.setOnClickListener {
             toDoViewModel.setNewCurrentTask()
             val action = ToDoTasksFragmentDirections.actionToDoTasksFragmentToEditToDoTaskFragment()
             findNavController().navigate(action)
