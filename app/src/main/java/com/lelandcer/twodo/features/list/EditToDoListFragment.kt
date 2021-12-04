@@ -38,7 +38,6 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
         binding = FragmentEditToDoListBinding.inflate(inflater, container, false)
         bindInteractionListeners()
         toDoViewModel.currentToDoList.observe(viewLifecycleOwner, this)
-
         return binding.root
     }
 
@@ -66,6 +65,7 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
 
     private fun onSubmit() {
 
+        if (!listForm.validate()) return
         toDoList.name = listForm.name
         toDoList.dueAt = listForm.dueAt
         toDoViewModel.saveCurrentList()
@@ -125,10 +125,16 @@ class EditToDoListFragment : DialogFragment(), Observer<ToDoList?> {
         binding.tvTdlEditSelectedDate.text = display.formatDate(listForm.dueAt)
     }
 
-    private class ListForm(var name: String = "", var dueAt: Date = Date()) {
+    private inner class ListForm(
+        var name: String = "",
+        var dueAt: Date = Date()
+    ) {
 
         fun validate(): Boolean {
-            // TODO validate the form data
+            if (name.isBlank()) {
+                binding.etTdlEditName.error = resources.getString(R.string.tdl_edit_validate_name)
+                return false
+            }
             return true
         }
     }

@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.lelandcer.twodo.R
 import com.lelandcer.twodo.databinding.FragmentEditToDoTaskBinding
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.task.ToDoTask
@@ -50,7 +51,7 @@ class EditToDoTaskFragment : DialogFragment(), Observer<ToDoTask?> {
     }
 
     private fun onSubmit() {
-
+        if (!taskForm.validate()) return
         toDoTask.name = taskForm.name
         toDoViewModel.saveCurrentTask()
 
@@ -72,10 +73,13 @@ class EditToDoTaskFragment : DialogFragment(), Observer<ToDoTask?> {
 
     }
 
-    private class TaskForm(var name: String = "") {
+    private inner class TaskForm(var name: String = "") {
 
         fun validate(): Boolean {
-            // TODO validate the form data
+            if (name.isBlank()) {
+                binding.etTdtEditName.error = getString(R.string.tdt_edit_validate_name)
+                return false
+            }
             return true
         }
     }
