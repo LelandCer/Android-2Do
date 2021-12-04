@@ -10,9 +10,6 @@ class MultiToDoListRepository @Inject constructor(
     private val localStorageToDoListRepository: LocalStorageToDoListRepository
 ) : ToDoListRepository {
 
-    private var isCacheFresh = false;
-
-
     override suspend fun index(): MutableCollection<ToDoList> {
         if (isCacheFresh) {
             return cacheToDoListRepository.index()
@@ -39,6 +36,10 @@ class MultiToDoListRepository @Inject constructor(
 
     override suspend fun delete(toDoList: ToDoList) {
         localStorageToDoListRepository.delete(toDoList)
-        if (isCacheFresh) cacheToDoListRepository.delete(toDoList)
+        cacheToDoListRepository.delete(toDoList)
+    }
+
+    companion object {
+        private var isCacheFresh = false
     }
 }

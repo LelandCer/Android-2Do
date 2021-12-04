@@ -26,4 +26,9 @@ class MultiToDoTaskRepository @Inject constructor(
         localStorageToDoTaskRepository.delete(toDoTask)
         cacheToDoTaskRepository.delete(toDoTask)
     }
+
+    override suspend fun deleteAll(toDoList: ToDoList) {
+        localStorageToDoTaskRepository.deleteAll(toDoList)
+        cacheToDoTaskRepository.deleteAll(toDoList)
+    }
 }

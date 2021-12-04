@@ -28,4 +28,8 @@ class RoomLocalStorageToDoTaskRepository @Inject constructor() : LocalStorageToD
     override suspend fun delete(toDoTask: ToDoTask) {
         toDoTaskDao.delete(DbToDoTask.fromToDoTask(toDoTask))
     }
+
+    override suspend fun deleteAll(toDoList: ToDoList) {
+        toDoTaskDao.deleteForList(toDoList.id)
+    }
 }

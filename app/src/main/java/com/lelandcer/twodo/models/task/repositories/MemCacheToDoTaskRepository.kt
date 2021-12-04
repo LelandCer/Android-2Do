@@ -32,11 +32,16 @@ class MemCacheToDoTaskRepository @Inject constructor() : CacheToDoTaskRepository
         taskList?.remove(toDoTask.id.getKey())
     }
 
+    override suspend fun deleteAll(toDoList: ToDoList) {
+        taskMap.remove(toDoList.id.getKey())
+    }
+
     private fun tasksForListId(listId: String): MutableMap<String, ToDoTask> {
         return taskMap[listId] ?: HashMap()
     }
 
     companion object {
+        // <listId, <taskId, task>>
         private val taskMap: MutableMap<String, MutableMap<String, ToDoTask>> = HashMap()
     }
 }

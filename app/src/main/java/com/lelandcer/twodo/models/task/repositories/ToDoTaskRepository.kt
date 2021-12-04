@@ -23,4 +23,9 @@ interface ToDoTaskRepository {
      */
     suspend fun delete(toDoTask: ToDoTask)
 
+    /**
+     * Delete all Task from storage for a list
+     */
+    suspend fun deleteAll(toDoList: ToDoList)
+
 }

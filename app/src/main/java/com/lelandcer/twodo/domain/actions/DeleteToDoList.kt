@@ -13,10 +13,7 @@ class DeleteToDoList @Inject constructor(
     override suspend fun execute(params: Parameters): ReturnData {
         val toDoList = params.toDoList
         toDoListRepository.delete(toDoList)
-        val tasks = toDoTaskRepository.indexFor(toDoList)
-        tasks.forEach {
-            toDoTaskRepository.delete(it)
-        }
+        toDoTaskRepository.deleteAll(toDoList)
         return ReturnData()
     }
 
