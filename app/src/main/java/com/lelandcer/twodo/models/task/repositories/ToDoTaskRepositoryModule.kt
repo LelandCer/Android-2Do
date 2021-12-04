@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.models.task
+package com.lelandcer.twodo.models.task.repositories
 
 import dagger.Binds
 import dagger.Module
@@ -13,6 +13,8 @@ import dagger.hilt.android.components.ViewModelComponent
 abstract class ToDoTaskRepositoryModule {
 
     @Binds
-    abstract fun bind(taskRepository: PlaceholderToDoTaskRepository): ToDoTaskRepository
+    abstract fun bindToDoTaskRepository(taskRepository: MultiToDoTaskRepository): ToDoTaskRepository
 
+    @Binds
+    abstract fun bindCacheToDoTaskRepository(taskRepository: MemCacheToDoTaskRepository): CacheToDoTaskRepository
 }

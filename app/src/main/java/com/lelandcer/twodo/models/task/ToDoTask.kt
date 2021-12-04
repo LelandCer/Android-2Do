@@ -7,13 +7,22 @@ class ToDoTask(
     var id: Id,
     var listId: Id,
     var name: String,
-    val createdAt:Date = Date()
+    val createdAt: Date = Date(),
+    _isCompleted: Boolean = false,
+    _completedAt: Date? = null
 ) {
+
     var isCompleted: Boolean = false
-    private set
+        private set
 
     var completedAt: Date? = null
-    private set
+        private set
+
+    init {
+        // This lets us recreate ToDoTasks, but not manipulate attributes directly
+        isCompleted = _isCompleted
+        completedAt = _completedAt
+    }
 
 
     override fun equals(other: Any?): Boolean =

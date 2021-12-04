@@ -1,7 +1,7 @@
-package com.lelandcer.twodo.models.list
+package com.lelandcer.twodo.models.list.repositories
 
 import com.lelandcer.twodo.models.id.Id
-import java.util.*
+import com.lelandcer.twodo.models.list.ToDoList
 
 /** Manages the storage and retrieval of Lists */
 interface ToDoListRepository {
@@ -11,25 +11,20 @@ interface ToDoListRepository {
      * Note: no pagination
      * TODO add either limitations or pagination
      */
-    fun index(): MutableCollection<ToDoList>
+    suspend fun index(): Collection<ToDoList>
 
     /**
      * Get a specific List for a provided Id
      */
-    fun getById(id: Id): ToDoList?
-
-    /**
-     * Create a new List
-     */
-    fun create(name: String, dueAt: Date): ToDoList
+    suspend fun getById(id: Id): ToDoList?
 
     /**
      * Store a List
      */
-    fun store(toDoList: ToDoList)
+    suspend fun store(toDoList: ToDoList)
 
     /**
      * Delete a List from storage
      */
-    fun delete(toDoList: ToDoList)
+    suspend fun delete(toDoList: ToDoList)
 }

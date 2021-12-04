@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var fab: FloatingActionButton
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_TwoDo)
         super.onCreate(savedInstanceState)
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
         fab = findViewById(R.id.fab_main)
         enableUpNavigation()
-
 
     }
 
