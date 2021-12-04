@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.database.room
+package com.lelandcer.twodo.database.room.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

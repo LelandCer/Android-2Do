@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.database.room
+package com.lelandcer.twodo.database.room.repositories
 
 
 import com.lelandcer.twodo.main.TwoDoApplication
@@ -21,11 +21,11 @@ class RoomLocalStorageToDoTaskRepository @Inject constructor() : LocalStorageToD
     }
 
     override suspend fun store(toDoList: ToDoList, toDoTask: ToDoTask) {
-        toDoTaskDao.insert(com.lelandcer.twodo.database.room.ToDoTask.fromToDoTask(toDoTask))
+        toDoTaskDao.insert(com.lelandcer.twodo.database.room.models.ToDoTask.fromToDoTask(toDoTask))
     }
 
     override suspend fun delete(toDoTask: ToDoTask) {
-        toDoTaskDao.delete(com.lelandcer.twodo.database.room.ToDoTask.fromToDoTask(toDoTask))
+        toDoTaskDao.delete(com.lelandcer.twodo.database.room.models.ToDoTask.fromToDoTask(toDoTask))
     }
 
     override suspend fun deleteAll(toDoList: ToDoList) {

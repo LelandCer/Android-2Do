@@ -1,4 +1,4 @@
-package com.lelandcer.twodo.database.room
+package com.lelandcer.twodo.database.room.repositories
 
 import com.lelandcer.twodo.models.task.repositories.LocalStorageToDoTaskRepository
 import dagger.Binds
