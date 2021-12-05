@@ -44,16 +44,16 @@ Sprint 3
 [x] Bugfixes
 
 Sprint 4
-[] Update views with basic screen representations for Tasks
-[] Update views with basic screen representations for Lists Tasks/Edit
-[] Connect creation / update / delete events for lists
-[] Connect creation / update / delete events for tasks
+[x] Update views with basic screen representations for Tasks
+[x] Update views with basic screen representations for Lists Tasks/Edit
+[x] Connect creation / update / delete events for lists
+[x] Connect creation / update / delete events for tasks
 
 Sprint 5
-[] Create real repositories for persistent storage
-[] Update the UI to better surface state
-[] Cleanup
-[] UI polish
+[x] Create real repositories for persistent storage
+[x] Update the UI to better surface state
+[x] Cleanup
+[x] UI polish
 
 Sprint 6 (canceled)
 [] Add Sorting
