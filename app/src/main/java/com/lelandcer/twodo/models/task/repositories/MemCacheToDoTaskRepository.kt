@@ -4,7 +4,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 import com.lelandcer.twodo.models.task.ToDoTask
 import javax.inject.Inject
 
-/** A repository for saving the tasks in memory */
+/** A repository for saving the ToDoTasks in memory */
 class MemCacheToDoTaskRepository @Inject constructor() : CacheToDoTaskRepository {
     override fun storeAll(toDoList: ToDoList, toDoTasks: Collection<ToDoTask>) {
         val newToDoTaskMapForList = HashMap<String, ToDoTask>()
@@ -22,7 +22,7 @@ class MemCacheToDoTaskRepository @Inject constructor() : CacheToDoTaskRepository
 
     override suspend fun store(toDoList: ToDoList, toDoTask: ToDoTask) {
         val tasks = tasksForListId(toDoList.id.getKey())
-        if(tasks.isEmpty()) return
+        if (tasks.isEmpty()) return
         tasks[toDoTask.id.getKey()] = toDoTask
 
     }

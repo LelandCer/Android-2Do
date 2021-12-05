@@ -4,7 +4,7 @@ import java.util.*
 import javax.inject.Inject
 
 /** Factory for making Id backed by UUID format */
-class UUIDIdFactory @Inject constructor(): IdFactory {
+class UUIDIdFactory @Inject constructor() : IdFactory {
     override fun makeId(): Id {
         return UUIDId(UUID.randomUUID())
     }

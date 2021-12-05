@@ -8,6 +8,7 @@ import com.lelandcer.twodo.database.room.dao.ToDoTaskDao
 import com.lelandcer.twodo.database.room.models.ToDoList
 import com.lelandcer.twodo.database.room.models.ToDoTask
 
+/** Registers the different database configuration settings */
 @Database(entities = [ToDoList::class, ToDoTask::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

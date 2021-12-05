@@ -5,6 +5,7 @@ import com.lelandcer.twodo.models.task.ToDoTask
 import com.lelandcer.twodo.models.task.repositories.ToDoTaskRepository
 import javax.inject.Inject
 
+/** An action that will delete a ToDoTask */
 class DeleteToDoTask @Inject constructor(
     val toDoListRepository: ToDoListRepository,
     val toDoTaskRepository: ToDoTaskRepository

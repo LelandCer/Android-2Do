@@ -5,6 +5,7 @@ import com.lelandcer.twodo.database.room.models.StringId
 import com.lelandcer.twodo.models.id.Id
 import java.util.*
 
+/** Tells Room how to serialize certain objects into column values */
 class Converters {
     @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
@@ -13,7 +14,7 @@ class Converters {
 
     @TypeConverter
     fun dateToTimestamp(date: Date?): Long? {
-        return date?.time?.toLong()
+        return date?.time
     }
 
     @TypeConverter

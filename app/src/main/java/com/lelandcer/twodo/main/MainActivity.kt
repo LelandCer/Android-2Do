@@ -18,15 +18,18 @@ class MainActivity : AppCompatActivity(), FabActivity {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Hide the splash screen, show our actual app theme
         setTheme(R.style.Theme_TwoDo)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Assign the FAB
         fab = findViewById(R.id.fab_main)
         enableUpNavigation()
 
     }
 
+    // Sets up the navController to show the appBar back button when not on the home fragment
     private fun enableUpNavigation() {
         val hostFragment = supportFragmentManager.findFragmentById(
             R.id.nav_host_fragment
@@ -39,6 +42,7 @@ class MainActivity : AppCompatActivity(), FabActivity {
         }
     }
 
+    // Use the navController for Up navigation
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.nav_host_fragment).navigateUp()
     }

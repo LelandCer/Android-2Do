@@ -4,11 +4,11 @@ import com.lelandcer.twodo.models.id.Id
 import com.lelandcer.twodo.models.list.ToDoList
 import javax.inject.Inject
 
-/** A repository for saving lists in memory */
+/** A repository for saving ToDoLists in memory. Uses a static List to manage data. */
 class MemCacheToDoListRepository @Inject constructor() : CacheToDoListRepository {
-    override fun storeAll(cacheToDoLists: Collection<ToDoList>) {
-        toDoLists.clear()
-        toDoLists.addAll(cacheToDoLists)
+    override fun storeAll(toDoLists: Collection<ToDoList>) {
+        MemCacheToDoListRepository.toDoLists.clear()
+        MemCacheToDoListRepository.toDoLists.addAll(toDoLists)
     }
 
     override suspend fun index(): MutableList<ToDoList> {

@@ -7,6 +7,7 @@ import com.lelandcer.twodo.models.task.ToDoTask
 import com.lelandcer.twodo.models.task.repositories.LocalStorageToDoTaskRepository
 import javax.inject.Inject
 
+/** A Room DB implementation of the ToDoTaskRepository */
 class RoomLocalStorageToDoTaskRepository @Inject constructor() : LocalStorageToDoTaskRepository {
     private val toDoTaskDao = TwoDoApplication.db.toDoTaskDao()
     override suspend fun indexFor(toDoList: ToDoList): MutableCollection<ToDoTask> {

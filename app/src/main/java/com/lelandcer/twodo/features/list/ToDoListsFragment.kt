@@ -45,6 +45,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
     ): View {
         binding = FragmentToDoListsListBinding.inflate(inflater, container, false)
 
+
         (activity as FabActivity?)?.fab?.setOnClickListener {
             toDoViewModel.setNewCurrentList()
             findNavController().navigate(ToDoListsFragmentDirections.actionToDoListsFragmentToEditToDoListFragment())

@@ -32,12 +32,13 @@ class ToDoTask(
         return id.hashCode()
     }
 
-
+    /** Sets this as completed, and assigns a date */
     fun complete() {
         isCompleted = true
         completedAt = Date()
     }
 
+    /** Sets this as incomplete, and clears the date */
     fun unComplete() {
         isCompleted = false
         completedAt = null

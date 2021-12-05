@@ -14,6 +14,11 @@ import com.lelandcer.twodo.databinding.FragmentEditToDoTaskBinding
 import com.lelandcer.twodo.main.ToDoViewModel
 import com.lelandcer.twodo.models.task.ToDoTask
 
+/**
+ * Fragment for creating and editing a ToDoTask
+ * Note, right now the UI does not allow the user to launch this in edit mode for a ToDoTask,
+ * However this fragment is feature complete
+ */
 class EditToDoTaskFragment : DialogFragment(), Observer<ToDoTask?> {
 
     private lateinit var binding: FragmentEditToDoTaskBinding
@@ -25,7 +30,7 @@ class EditToDoTaskFragment : DialogFragment(), Observer<ToDoTask?> {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentEditToDoTaskBinding.inflate(inflater, container, false)
         toDoViewModel.currentToDoTask.observe(viewLifecycleOwner, this)
         bindInteractionListeners()

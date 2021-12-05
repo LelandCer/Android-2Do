@@ -71,7 +71,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    //Note we remove it from the adapter's list first to avoid a delay
+                    //Note we remove it from the adapter's list first to avoid a visual delay
                     val task = toDoTaskItems.removeAt(viewHolder.absoluteAdapterPosition)
                     toDoViewModel.deleteTask(task)
                     adapter?.notifyItemRemoved(viewHolder.absoluteAdapterPosition)
@@ -98,15 +98,18 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
 
         }
 
+        // Bind the display provided strings
         binding.tvTdtName.text = display.name()
         binding.tvTdtCompletion.text = display.completionRatio()
         binding.tvTdtDueAt.text = display.dueAt()
         binding.tvTdtDueAtFormatted.text = display.formatDate(toDoList.dueAt)
 
+        // Set the adapter items to the fresh set
         toDoTaskItems.clear()
         toDoTaskItems.addAll(toDoList.toDoTasks.sortedBy { tdt -> tdt.createdAt })
         binding.rvTdtTasks.adapter?.notifyDataSetChanged()
 
+        // Show the empty state if empty
         if (toDoTaskItems.isEmpty()) {
             binding.rvTdtTasks.visibility = View.GONE
             binding.vTdtEmpty.visibility = View.VISIBLE
@@ -115,6 +118,7 @@ class ToDoTasksFragment : Fragment(), Observer<ToDoList?>,
             binding.vTdtEmpty.visibility = View.GONE
         }
 
+        // Bind interaction listeners
         binding.btnTdtTaskDelete.setOnClickListener {
             toDoViewModel.deleteList(toDoList)
             findNavController().navigateUp()
