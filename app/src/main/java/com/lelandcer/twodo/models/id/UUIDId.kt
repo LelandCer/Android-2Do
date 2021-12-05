@@ -2,16 +2,10 @@ package com.lelandcer.twodo.models.id
 
 import java.util.*
 
-class UUIDId(private val uuid: UUID) : Id {
+/** An Id that is backed by UUID */
+class UUIDId(private val uuid: UUID) : Id() {
     override fun getKey(): String {
         return uuid.toString()
-    }
-
-    override fun equals(other: Any?): Boolean =
-        other is Id && uuid.toString() == other.getKey()
-
-    override fun hashCode(): Int {
-        return uuid.hashCode()
     }
 
 }
