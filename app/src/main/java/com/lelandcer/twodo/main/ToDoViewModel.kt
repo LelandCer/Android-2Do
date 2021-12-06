@@ -93,14 +93,9 @@ class ToDoViewModel @Inject constructor(
     }
 
     fun deleteTask(toDoTask: ToDoTask) {
-        val toDoList = currentToDoList.value!!
         if (currentToDoTask.value == toDoTask) {
             _currentToDoTask.postValue(null)
         }
-        if (toDoList.id == toDoTask.listId) {
-            toDoList.toDoTasks.remove(toDoTask)
-        }
-        _currentToDoList.postValue(toDoList)
 
         actionHandler.perform(deleteToDoTask, DeleteToDoTask.getParameters(toDoTask)) {
             updateLists()
