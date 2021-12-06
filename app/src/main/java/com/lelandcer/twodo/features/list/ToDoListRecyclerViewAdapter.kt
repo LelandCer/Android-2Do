@@ -12,7 +12,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 
 /** Adapter for the ToDoLists Items */
 class ToDoListRecyclerViewAdapter(
-    private var values: List<ToDoList>,
+    private val values: List<ToDoList>,
     private val onInteractionListener: OnInteractionListener,
     private val toDoListDisplay: ToDoListDisplay,
     private val colorList: ColorList

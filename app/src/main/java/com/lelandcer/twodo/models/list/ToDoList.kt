@@ -5,7 +5,7 @@ import com.lelandcer.twodo.models.task.ToDoTask
 import java.util.*
 
 class ToDoList(
-    var id: Id,
+    val id: Id,
     var name: String,
     var toDoTasks: Collection<ToDoTask>,
     var dueAt: Date,

@@ -11,11 +11,11 @@ import com.lelandcer.twodo.models.list.ToDoList as ExToDoList
 @Entity
 /** A class for serializing a ToDoList into a Room storable object */
 class ToDoList(
-    @PrimaryKey var id: Id,
-    @ColumnInfo var name: String,
-    @ColumnInfo var dueAt: Date,
-    @ColumnInfo var createdAt: Date,
-    @ColumnInfo var updatedAt: Date
+    @PrimaryKey val id: Id,
+    @ColumnInfo val name: String,
+    @ColumnInfo val dueAt: Date,
+    @ColumnInfo val createdAt: Date,
+    @ColumnInfo val updatedAt: Date
 ) {
 
     /** Deserializes this into a ToDoList that can be used outside of the package */
