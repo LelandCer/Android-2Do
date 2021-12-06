@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 /** A display implementation for ToDoList that is less "business" and more "fun" */
 class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
-    private var toDoList: ToDoList? = null
+    private lateinit var toDoList: ToDoList
 
     override fun forToDoList(toDoList: ToDoList): ToDoListDisplay {
         this.toDoList = toDoList
@@ -15,37 +15,30 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
     }
 
     override fun completionRatio(): String {
-        toDoList?.let {
-            return " ${it.toDoTaskCompletedCount()} / ${it.toDoTaskTotalCount()} "
-        }
-        return ""
+
+        return " ${toDoList.toDoTaskCompletedCount()} / ${toDoList.toDoTaskTotalCount()} "
+
     }
 
     override fun name(): String {
-        return toDoList?.name ?: ""
+        return toDoList.name
     }
 
     override fun dueAt(): String {
-        toDoList?.let {
-            if (isComplete()) return DONE_LABEL
-            val difference = getDifferenceInDays(it.dueAt)
-            if (difference < 0) return LATE_LABEL
-            return when (difference) {
-                0 -> TODAY_LABEL
-                in 1..SOON_DATE -> SOON_LABEL
-                in (SOON_DATE + 1)..9 -> "$difference $COUNTER_LABEL"
-                else -> dueAtDateFormat()
-            }
-
+        if (isComplete()) return DONE_LABEL
+        val difference = getDifferenceInDays(toDoList.dueAt)
+        if (difference < 0) return LATE_LABEL
+        return when (difference) {
+            0 -> TODAY_LABEL
+            in 1..SOON_DATE -> SOON_LABEL
+            in (SOON_DATE + 1)..9 -> "$difference $COUNTER_LABEL"
+            else -> dueAtDateFormat()
         }
-        return dueAtDateFormat()
     }
 
     override fun dueAtDateFormat(): String {
-        toDoList?.let {
-            return formatDate(it.dueAt)
-        }
-        return "?.?"
+        return formatDate(toDoList.dueAt)
+
     }
 
     override fun formatDate(date: Date): String {
@@ -55,16 +48,16 @@ class FriendlyToDoListDisplay @Inject constructor() : ToDoListDisplay {
     }
 
     override fun isComplete(): Boolean {
-        return toDoList!!.isCompleted()
+        return toDoList.isCompleted()
     }
 
     override fun isSoon(): Boolean {
-        val difference = getDifferenceInDays(toDoList!!.dueAt)
+        val difference = getDifferenceInDays(toDoList.dueAt)
         return difference in 0..SOON_DATE
     }
 
     override fun isLate(): Boolean {
-        val difference = getDifferenceInDays(toDoList!!.dueAt)
+        val difference = getDifferenceInDays(toDoList.dueAt)
         return difference < 0
     }
 
