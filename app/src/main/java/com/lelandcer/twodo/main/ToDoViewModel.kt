@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ToDoViewModel @Inject constructor(
-    createPlaceholderData: CreatePlaceholderData,
     private val saveToDoTask: SaveToDoTask,
     private val saveToDoList: SaveToDoList,
     private val deleteToDoList: DeleteToDoList,
@@ -38,7 +37,6 @@ class ToDoViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-//            createPlaceholderData.create()
             updateLists()
         }
     }
