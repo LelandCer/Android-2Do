@@ -16,7 +16,6 @@
     <color name="green">#009688</color>
 
 
-
     <color name="list_completed">@color/green</color>
     <color name="list_failed">@color/maroon</color>
     <color name="list_soon">@color/orange</color>
