@@ -30,9 +30,10 @@ class ToDoViewModel @Inject constructor(
     private val _toDoLists = MutableLiveData<Collection<ToDoList>>()
     private val _currentToDoList = MutableLiveData<ToDoList?>()
     private val _currentToDoTask = MutableLiveData<ToDoTask?>()
-    var toDoLists: LiveData<Collection<ToDoList>> = _toDoLists
-    var currentToDoList: LiveData<ToDoList?> = _currentToDoList
-    var currentToDoTask: LiveData<ToDoTask?> = _currentToDoTask
+
+    val toDoLists: LiveData<Collection<ToDoList>> = _toDoLists
+    val currentToDoList: LiveData<ToDoList?> = _currentToDoList
+    val currentToDoTask: LiveData<ToDoTask?> = _currentToDoTask
 
 
     init {
