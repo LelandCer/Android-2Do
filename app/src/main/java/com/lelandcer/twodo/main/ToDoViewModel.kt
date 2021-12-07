@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ToDoViewModel @Inject constructor(
-    createPlaceholderData: CreatePlaceholderData,
     private val saveToDoTask: SaveToDoTask,
     private val saveToDoList: SaveToDoList,
     private val deleteToDoList: DeleteToDoList,
@@ -30,14 +29,14 @@ class ToDoViewModel @Inject constructor(
     private val _toDoLists = MutableLiveData<Collection<ToDoList>>()
     private val _currentToDoList = MutableLiveData<ToDoList?>()
     private val _currentToDoTask = MutableLiveData<ToDoTask?>()
-    var toDoLists: LiveData<Collection<ToDoList>> = _toDoLists
-    var currentToDoList: LiveData<ToDoList?> = _currentToDoList
-    var currentToDoTask: LiveData<ToDoTask?> = _currentToDoTask
+
+    val toDoLists: LiveData<Collection<ToDoList>> = _toDoLists
+    val currentToDoList: LiveData<ToDoList?> = _currentToDoList
+    val currentToDoTask: LiveData<ToDoTask?> = _currentToDoTask
 
 
     init {
         viewModelScope.launch {
-//            createPlaceholderData.create()
             updateLists()
         }
     }
@@ -94,14 +93,9 @@ class ToDoViewModel @Inject constructor(
     }
 
     fun deleteTask(toDoTask: ToDoTask) {
-        val toDoList = currentToDoList.value!!
         if (currentToDoTask.value == toDoTask) {
             _currentToDoTask.postValue(null)
         }
-        if (toDoList.id == toDoTask.listId) {
-            toDoList.toDoTasks.remove(toDoTask)
-        }
-        _currentToDoList.postValue(toDoList)
 
         actionHandler.perform(deleteToDoTask, DeleteToDoTask.getParameters(toDoTask)) {
             updateLists()

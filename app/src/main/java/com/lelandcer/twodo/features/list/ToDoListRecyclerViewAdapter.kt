@@ -12,7 +12,7 @@ import com.lelandcer.twodo.models.list.ToDoList
 
 /** Adapter for the ToDoLists Items */
 class ToDoListRecyclerViewAdapter(
-    private var values: List<ToDoList>,
+    private val values: List<ToDoList>,
     private val onInteractionListener: OnInteractionListener,
     private val toDoListDisplay: ToDoListDisplay,
     private val colorList: ColorList
@@ -56,6 +56,7 @@ class ToDoListRecyclerViewAdapter(
             display.isComplete() -> bindColor(holder, colorList.completed)
             display.isLate() -> bindColor(holder, colorList.late)
             display.isSoon() -> bindColor(holder, colorList.soon)
+            else -> bindColor(holder, colorList.default)
         }
     }
 
@@ -96,7 +97,8 @@ class ToDoListRecyclerViewAdapter(
     class ColorList(
         val completed: Int,
         val late: Int,
-        val soon: Int
+        val soon: Int,
+        val default: Int
     )
 
 

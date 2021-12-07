@@ -23,7 +23,7 @@ class EditToDoTaskFragment : DialogFragment(), Observer<ToDoTask?> {
 
     private lateinit var binding: FragmentEditToDoTaskBinding
     private val toDoViewModel: ToDoViewModel by activityViewModels()
-    private var taskForm = TaskForm()
+    private val taskForm = TaskForm()
     private lateinit var toDoTask: ToDoTask
 
 

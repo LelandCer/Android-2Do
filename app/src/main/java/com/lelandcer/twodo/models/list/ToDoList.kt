@@ -5,9 +5,9 @@ import com.lelandcer.twodo.models.task.ToDoTask
 import java.util.*
 
 class ToDoList(
-    var id: Id,
+    val id: Id,
     var name: String,
-    var toDoTasks: MutableCollection<ToDoTask>,
+    var toDoTasks: Collection<ToDoTask>,
     var dueAt: Date,
     var createdAt: Date,
     var updatedAt: Date

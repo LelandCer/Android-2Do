@@ -72,6 +72,7 @@ class ToDoListsFragment : Fragment(), Observer<Collection<ToDoList>>,
                         ContextCompat.getColor(context, R.color.list_completed),
                         ContextCompat.getColor(context, R.color.list_failed),
                         ContextCompat.getColor(context, R.color.list_soon),
+                        ContextCompat.getColor(context, R.color.list_default),
                     )
                 )
 
