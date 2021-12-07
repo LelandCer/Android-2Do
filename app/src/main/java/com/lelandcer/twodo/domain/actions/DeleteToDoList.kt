@@ -20,7 +20,7 @@ class DeleteToDoList @Inject constructor(
         // Note, while this could be handled by a cascading delete, that is a lower level implementation detail
         // So this action must perform this to guarantee completeness
         toDoTaskRepository.deleteAll(toDoList)
-        
+
         return ReturnData()
     }
 

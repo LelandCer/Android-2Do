@@ -33,7 +33,7 @@
         android:ellipsize="end"
         android:lines="1"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:textColor="@color/black"
+        android:textColor="@color/list_default"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_tdl_due_at"

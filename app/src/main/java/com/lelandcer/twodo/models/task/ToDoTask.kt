@@ -4,8 +4,8 @@ import com.lelandcer.twodo.models.id.Id
 import java.util.*
 
 class ToDoTask(
-    var id: Id,
-    var listId: Id,
+    val id: Id,
+    val listId: Id,
     var name: String,
     val createdAt: Date = Date(),
     _isCompleted: Boolean = false,
